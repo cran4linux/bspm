@@ -1,0 +1,3 @@
+OPATH="/org/r_project/linux1/PackageManager"
+IFACE="org.r_project.linux1.PackageManager"
+BUS_NAME="org.r_project.linux1"

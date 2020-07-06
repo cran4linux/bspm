@@ -1,0 +1,25 @@
+#!/bin/sh
+
+. inst/service/dbus-paths
+
+subst() {
+  DIR=$(pwd)
+  cd $1 && cat $2 |
+    sed "s @BUS_NAME@ $BUS_NAME g" |
+    sed "s @R_LIBRARY_DIR@ ${R_LIBRARY_DIR#"$BUILD_ROOT"} g" > $3
+  cd $DIR
+}
+
+if [ -z "$DATA_DIR" ] || [ -z "$SYSCONF_DIR" ]; then
+  echo "Warning: DATA_DIR and SYSCONF_DIR required to install the D-BUS service"
+else
+  if [ -z "$PKG_PREFIX" ]; then
+    echo "Error: PKG_PREFIX required"
+    exit 1
+  fi
+  echo "PREFIX='$PKG_PREFIX'" >> inst/service/PackageManager.conf
+  mkdir -p $DATA_DIR/dbus-1/system-services
+  mkdir -p $SYSCONF_DIR/dbus-1/system.d
+  subst inst/service dbus.service.in $DATA_DIR/dbus-1/system-services/$BUS_NAME.service
+  subst inst/service dbus.conf.in $SYSCONF_DIR/dbus-1/system.d/$BUS_NAME.conf
+fi
