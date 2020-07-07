@@ -1,8 +1,9 @@
 # R Package Manager for Linux
 
-Enables binary package installations on Linux distributions.
-Provides a installation function that talks to a D-Bus service that manages
-package installations via the distribution's package manager.
+Enables binary package installations on Linux distributions
+without administrative privileges. Provides functions to manage packages
+via the distribution's package manager. Also provides transparent
+integration with R's 'install.packages' and a fallback mechanism.
 
 Currently, the following backends are supported: DNF, APT.
 
