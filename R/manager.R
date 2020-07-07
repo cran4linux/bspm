@@ -24,18 +24,35 @@ dbus_call <- function(cmd, pkgs) {
   invisible(out)
 }
 
+backend_call <- function(cmd, pkgs) {
+  if (Sys.info()["effective_user"] != "root")
+    return(dbus_call(cmd, pkgs))
+
+  tmp <- tempfile()
+  on.exit(unlink(tmp))
+
+  mgr <- system.file("service/PackageManager.py", package="PackageManager")
+  args <- c(if (cmd == "remove") "-r", "-o", tmp, "-u", pkgs)
+  system2(mgr, args, stderr=FALSE)
+
+  invisible(readLines(tmp))
+}
+
 #' Install Binary Packages from System Repositories
 #'
-#' Talk to the accompanying D-Bus service to download and install or remove
+#' Talk to the system package manager to download and install or remove
 #' packages from system repositories.
 #'
 #' @param pkgs character vector of CRAN names of packages.
-#'
 #' @return Invisibly, a character vector of the names of packages not available.
 #'
+#' @details The root user talks directly to the system package manager.
+#' Non-root users talk to the accompanying D-Bus service, which performs the
+#' required actions and returns packages that could not be processed.
+#'
 #' @export
-install_sys <- function(pkgs) dbus_call("install", pkgs)
+install_sys <- function(pkgs) backend_call("install", pkgs)
 
 #' @name install_sys
 #' @export
-remove_sys <- function(pkgs) dbus_call("remove", pkgs)
+remove_sys <- function(pkgs) backend_call("remove", pkgs)

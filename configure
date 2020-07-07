@@ -10,14 +10,15 @@ subst() {
   cd $DIR
 }
 
+if [ -z "$PKG_PREFIX" ]; then
+  echo "Error: PKG_PREFIX required"
+  exit 1
+fi
+echo "PREFIX='$PKG_PREFIX'" >> inst/service/PackageManager.conf
+
 if [ -z "$DATA_DIR" ] || [ -z "$SYSCONF_DIR" ]; then
   echo "Warning: DATA_DIR and SYSCONF_DIR required to install the D-BUS service"
 else
-  if [ -z "$PKG_PREFIX" ]; then
-    echo "Error: PKG_PREFIX required"
-    exit 1
-  fi
-  echo "PREFIX='$PKG_PREFIX'" >> inst/service/PackageManager.conf
   mkdir -p $DATA_DIR/dbus-1/system-services
   mkdir -p $SYSCONF_DIR/dbus-1/system.d
   subst inst/service dbus.service.in $DATA_DIR/dbus-1/system-services/$BUS_NAME.service

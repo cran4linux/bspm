@@ -1,6 +1,7 @@
-# PackageManager 0.2.2
+# PackageManager 0.3.0
 
 - New package title, as suggested by @eddelbuettel; improved description.
+- Allow root user to talk directly to the system package manager, without D-Bus.
 
 # PackageManager 0.2.1
 

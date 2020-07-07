@@ -16,6 +16,11 @@ remove_sys(pkgs)
 Invisibly, a character vector of the names of packages not available.
 }
 \description{
-Talk to the accompanying D-Bus service to download and install or remove
+Talk to the system package manager to download and install or remove
 packages from system repositories.
+}
+\details{
+The root user talks directly to the system package manager.
+Non-root users talk to the accompanying D-Bus service, which performs the
+required actions and returns packages that could not be processed.
 }
