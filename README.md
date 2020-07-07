@@ -1,4 +1,4 @@
-# R Bridge to System Package Manager
+# bspm: R Bridge to System Package Manager
 
 Enables binary package installations on Linux distributions
 without administrative privileges. Provides functions to manage packages
@@ -22,7 +22,7 @@ If you plan to run it as a regular user (non-root), these are required too:
 Then, if e.g. your distro's R packages are called "r-cran-[pkgname]",
 
 ```bash
-sudo R CMD INSTALL PackageManager \
+sudo R CMD INSTALL bspm \
   --configure-vars="SYSCONF_DIR=/etc" \
   --configure-vars="DATA_DIR=/usr/share" \
   --configure-vars="PKG_PREFIX=r-cran-"
@@ -34,7 +34,7 @@ don't need the D-Bus service, so only `PKG_PREFIX` is required above.
 To enable it by default, put the following into the `Rprofile.site`:
 
 ```r
-suppressMessages(PackageManager::enable())
+suppressMessages(bspm::enable())
 ```
 
 Then, run `install.packages` as usual, and available system packages will be

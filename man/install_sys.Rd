@@ -10,7 +10,7 @@ install_sys(pkgs)
 remove_sys(pkgs)
 }
 \arguments{
-\item{pkgs}{character vector of CRAN names of packages.}
+\item{pkgs}{character vector of names of packages.}
 }
 \value{
 Invisibly, a character vector of the names of packages not available.

@@ -5,7 +5,7 @@ import backend
 from os.path import realpath, dirname
 path = dirname(realpath(__file__))
 exec(open(path + "/dbus-paths").read())
-exec(open(path + "/PackageManager.conf").read())
+exec(open(path + "/bspm.conf").read())
 
 import argparse
 

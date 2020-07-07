@@ -3,7 +3,7 @@
 \name{enable}
 \alias{enable}
 \alias{disable}
-\title{Enable/Disable Package Manager}
+\title{Enable/Disable Bridge to System Package Manager}
 \usage{
 enable()
 

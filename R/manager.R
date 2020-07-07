@@ -1,12 +1,12 @@
 utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))
 
 dbus_call <- function(cmd, pkgs) {
-  source(system.file("service/dbus-paths", package="PackageManager"))
+  source(system.file("service/dbus-paths", package="bspm"))
 
   args <- c("list", "--no-pager")
   out <- suppressWarnings(system2("busctl", args, stdout=TRUE, stderr=TRUE))
   if (!any(grepl(BUS_NAME, out)))
-    stop("PackageManager service not found")
+    stop("bspm service not found")
 
   args <- c("call", "--timeout=1h", BUS_NAME, OPATH, IFACE,
             cmd, "ias", Sys.getpid(), length(pkgs), pkgs)
@@ -31,7 +31,7 @@ backend_call <- function(cmd, pkgs) {
   tmp <- tempfile()
   on.exit(unlink(tmp))
 
-  mgr <- system.file("service/PackageManager.py", package="PackageManager")
+  mgr <- system.file("service/bspm.py", package="bspm")
   args <- c(if (cmd == "remove") "-r", "-o", tmp, "-u", pkgs)
   system2(mgr, args, stderr=FALSE)
 
@@ -43,7 +43,7 @@ backend_call <- function(cmd, pkgs) {
 #' Talk to the system package manager to download and install or remove
 #' packages from system repositories.
 #'
-#' @param pkgs character vector of CRAN names of packages.
+#' @param pkgs character vector of names of packages.
 #' @return Invisibly, a character vector of the names of packages not available.
 #'
 #' @details The root user talks directly to the system package manager.

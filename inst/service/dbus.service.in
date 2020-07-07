@@ -1,4 +1,4 @@
 [D-BUS Service]
 Name=@BUS_NAME@
-Exec=@R_LIBRARY_DIR@/PackageManager/service/PackageManager.py
+Exec=@R_LIBRARY_DIR@/bspm/service/bspm.py
 User=root

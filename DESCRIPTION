@@ -1,4 +1,4 @@
-Package: PackageManager
+Package: bspm
 Type: Package
 Title: R Bridge to System Package Manager
 Version: 0.3.0
@@ -14,7 +14,7 @@ Encoding: UTF-8
 OS_type: unix
 SystemRequirements: systemd, python3-dbus, python3-gobject,
     python bindings for your distro's package manager
-URL: https://github.com/Enchufa2/PackageManager
-BugReports: https://github.com/Enchufa2/PackageManager/issues
+URL: https://github.com/Enchufa2/bspm
+BugReports: https://github.com/Enchufa2/bspm/issues
 RoxygenNote: 7.1.1
 Roxygen: list(old_usage = TRUE)
