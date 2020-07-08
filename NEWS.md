@@ -1,3 +1,7 @@
+# bspm 0.3.1
+
+- Simplified installation, because D-Bus files are always in the same place.
+
 # bspm 0.3.0
 
 - New package name, as suggested by @eddelbuettel; improved title & description.

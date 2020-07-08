@@ -17,4 +17,5 @@ StripTrailingWhitespace: Yes
 
 BuildType: Package
 PackageUseDevtools: Yes
-PackageInstallArgs: --no-multiarch --with-keep.source
+PackageInstallArgs: --no-multiarch --with-keep.source --configure-vars="PKG_PREFIX=R-"
+PackageCheckArgs: --install-args=--configure-vars="PKG_PREFIX=R-"

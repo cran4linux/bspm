@@ -16,11 +16,11 @@ if [ -z "$PKG_PREFIX" ]; then
 fi
 echo "PREFIX='$PKG_PREFIX'" >> inst/service/bspm.conf
 
-if [ -z "$DATA_DIR" ] || [ -z "$SYSCONF_DIR" ]; then
-  echo "Warning: DATA_DIR and SYSCONF_DIR required to install the D-BUS service"
+if [ "$1" != "--with-dbus-service" ]; then
+  echo "Warning: the D-BUS service won't be installed"
 else
-  mkdir -p $DATA_DIR/dbus-1/system-services
-  mkdir -p $SYSCONF_DIR/dbus-1/system.d
-  subst inst/service dbus.service.in $DATA_DIR/dbus-1/system-services/$BUS_NAME.service
-  subst inst/service dbus.conf.in $SYSCONF_DIR/dbus-1/system.d/$BUS_NAME.conf
+  mkdir -p $BUILD_ROOT/usr/share/dbus-1/system-services
+  mkdir -p $BUILD_ROOT/etc/dbus-1/system.d
+  subst inst/service dbus.service.in $BUILD_ROOT/usr/share/dbus-1/system-services/$BUS_NAME.service
+  subst inst/service dbus.conf.in $BUILD_ROOT/etc/dbus-1/system.d/$BUS_NAME.conf
 fi
