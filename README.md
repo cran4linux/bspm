@@ -22,15 +22,14 @@ If you plan to run it as a regular user (non-root), these are required too:
 Then, if e.g. your distro's R packages are called "r-cran-[pkgname]",
 
 ```bash
-sudo R CMD INSTALL bspm \
-  --configure-args="--with-dbus-service" \
-  --configure-vars="PKG_PREFIX=r-cran-"
+sudo R CMD INSTALL bspm --configure-vars="PKG_PREFIX=r-cran-"
 ```
 
 If you plan to run it only as root (e.g., in a docker container), then you
-don't need the D-Bus service, so only `PKG_PREFIX` is required above. If you
-are installing the package in a build root, instead of its final destination,
-specify `--configure-vars="BUILD_ROOT=[path_to_build_root]"` too.
+don't need the D-Bus service, so you can disable its installation by adding
+`--configure-args="--without-dbus-service"`. If you are installing the
+package in a build root, instead of its final destination, specify
+`--configure-vars="BUILD_ROOT=[path_to_build_root]"` too.
 
 To enable it by default, put the following into the `Rprofile.site`:
 
