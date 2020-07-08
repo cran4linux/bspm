@@ -23,7 +23,7 @@ if [ "$1" != "--without-dbus-service" ]; then
   if [ ! -w "$SERVICE_DIR" ] || [ ! -w "$SYSCONF_DIR" ]; then
     echo "Warning: the D-BUS service couldn't be installed"
   else
-    subst inst/service dbus.service.in $BUILD_ROOT/usr/share/dbus-1/system-services/$BUS_NAME.service
-    subst inst/service dbus.conf.in $BUILD_ROOT/etc/dbus-1/system.d/$BUS_NAME.conf
+    subst inst/service dbus.service.in $SERVICE_DIR/$BUS_NAME.service
+    subst inst/service dbus.conf.in $SYSCONF_DIR/$BUS_NAME.conf
   fi
 fi
