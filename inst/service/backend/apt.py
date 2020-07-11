@@ -14,6 +14,19 @@ class TextInstallProgress(apt.progress.base.InstallProgress):
     def status_change(self, pkg, percent, status):
         print("%s ..." % (status))
 
+def cache_update(cache, aprogress=None):
+    import time
+    from pathlib import Path
+    from os import path
+    cache_file = path.dirname(path.realpath(__file__)) + "/_cache"
+    try:
+        cache_time = path.getmtime(cache_file)
+    except:
+        cache_time = 0
+    if time.time() - cache_time > 48 * 3600:
+        cache.update(aprogress)
+        Path(cache_file).touch()
+
 def operation(op, prefixes, pkgs, exclusions):
     def cc(cache, method):
         def wrapper(pkgname):
@@ -25,7 +38,7 @@ def operation(op, prefixes, pkgs, exclusions):
     iprogress = TextInstallProgress()
     
     cache = apt.Cache(oprogress)
-    cache.update(aprogress)
+    cache_update(cache, aprogress)
     cache.open(oprogress)
     
     notavail = mark(cc(cache, op), prefixes, pkgs, exclusions, trans="lower")

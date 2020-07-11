@@ -2,6 +2,7 @@
 
 - Simplified installation, because D-Bus files are always in the same place.
 - Support for multiple prefixes and exclusions (#1).
+- Improve APT cache management (#4).
 
 # bspm 0.3.0
 
