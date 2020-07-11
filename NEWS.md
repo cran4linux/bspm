@@ -1,6 +1,7 @@
 # bspm 0.3.1
 
 - Simplified installation, because D-Bus files are always in the same place.
+- Support for multiple prefixes and exclusions (#1).
 
 # bspm 0.3.0
 

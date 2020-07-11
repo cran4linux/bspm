@@ -10,11 +10,16 @@ subst() {
   cd $DIR
 }
 
-if [ -z "$PKG_PREFIX" ]; then
-  echo "Error: PKG_PREFIX required"
-  exit 1
+if [ ! -z "$PKG_PREF" ]; then
+  for pref in $PKG_PREF; do
+    echo $pref >> inst/service/bspm.pref
+  done
+  for excl in $PKG_EXCL; do
+    echo $excl >> inst/service/bspm.excl
+  done
+  touch inst/service/nodiscover
+  sed -i '/discover/d' NAMESPACE
 fi
-echo "PREFIX='$PKG_PREFIX'" >> inst/service/bspm.conf
 
 if [ "$1" != "--without-dbus-service" ]; then
   SERVICE_DIR="$BUILD_ROOT/usr/share/dbus-1/system-services"
