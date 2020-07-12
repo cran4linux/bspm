@@ -5,9 +5,6 @@
 
 ## the configure script uses BUILD_ROOT
 export BUILD_ROOT = $(CURDIR)/debian/r-cran-bspm
-## the configure script reads /etc/os-release to determine the os,
-## but the builder chroot does not have that, so pre-setting
-export PKG_PREFIX = r-cran-
 
 %:
 	dh $@ --buildsystem R
