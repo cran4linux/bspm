@@ -1,0 +1,18 @@
+Source: r-cran-bspm
+Section: gnu-r
+Priority: optional
+Maintainer: Dirk Eddelbuettel <edd@debian.org>
+Build-Depends: debhelper (>= 10), r-base-dev (>= 4.0.0), dh-r, python3-apt, python3-dbus, python3-gi
+Standards-Version: 4.5.0
+Vcs-Browser: https://salsa.debian.org/edd/r-cran-bspm
+Vcs-Git: https://salsa.debian.org/edd/r-cran-bspm.git
+Homepage: https://cran.r-project.org/package=bspm
+
+Package: r-cran-bspm
+Architecture: all
+Depends: ${misc:Depends}, ${R:Depends}, python3-apt, python3-dbus, python3-gi
+Description: GNU R package offering a bridge to the system package managers
+ The package enables binary package installations on Linux distributions
+ without administrative privileges. Provides functions to manage packages
+ via the distribution's package manager. Also provides transparent
+ integration with R's 'install.packages' and a fallback mechanism.
