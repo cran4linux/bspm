@@ -9,13 +9,6 @@ def discover():
         "exclusions": []
     }
 
-class TextInstallProgress(apt.progress.base.InstallProgress):
-    def __init__(self):
-        apt.progress.base.InstallProgress.__init__(self)
-    
-    def status_change(self, pkg, percent, status):
-        print("%s ..." % (status), end="\r\n")
-
 def cache_update(cache, aprogress=None):
     import time
     from pathlib import Path
@@ -37,7 +30,6 @@ def operation(op, prefixes, pkgs, exclusions):
     
     oprogress = apt.progress.text.OpProgress()
     aprogress = apt.progress.text.AcquireProgress()
-    iprogress = TextInstallProgress()
     
     cache = apt.Cache(oprogress)
     cache_update(cache, aprogress)
@@ -45,7 +37,7 @@ def operation(op, prefixes, pkgs, exclusions):
     
     notavail = mark(cc(cache, op), prefixes, pkgs, exclusions, trans="lower")
     
-    cache.commit(aprogress, iprogress)
+    cache.commit(aprogress)
     cache.close()
     
     return notavail
