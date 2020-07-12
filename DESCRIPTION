@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 OS_type: unix
 SystemRequirements: systemd, python3-dbus, python3-gobject,
-    python bindings for your distro's package manager
+    python3-dnf (Fedora-like) or python3-apt (Debian-like)
 URL: https://github.com/Enchufa2/bspm
 BugReports: https://github.com/Enchufa2/bspm/issues
 RoxygenNote: 7.1.1
