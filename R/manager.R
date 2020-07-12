@@ -1,7 +1,7 @@
 utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))
 
 dbus_call <- function(cmd, pkgs=NULL) {
-  source(system.file("service/dbus-paths", package="bspm"))
+  source(system.file("service/dbus-paths", package="bspm"), local=TRUE)
 
   args <- c("list", "--no-pager")
   out <- suppressWarnings(system2("busctl", args, stdout=TRUE, stderr=TRUE))
