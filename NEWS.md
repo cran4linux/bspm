@@ -1,3 +1,7 @@
+# bspm 0.3.2
+
+- Implement functions to discover new prefixes dynamically (#3).
+
 # bspm 0.3.1
 
 - Simplified installation, because D-Bus files are always in the same place.

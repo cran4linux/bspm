@@ -4,12 +4,20 @@ import apt
 CACHE_INVALIDATION_TIME = 5 # minutes
 
 def discover():
+    import re
+    
+    cache = apt.Cache()
+    cache_update(cache, apt.progress.text.AcquireProgress(), force=True)
+    cache.open()
+    pkgs = [x for x in cache.keys() if re.match("^r-(.*)-(.*)", x)]
+    prefixes = {"-".join(x.split("-")[0:2]) + "-" for x in pkgs}
+    
     return {
-        "prefixes": ["r-cran-", "r-bioc-", "r-omegahat-", "r-other-"],
+        "prefixes": list(prefixes - {"r-doc-", "r-base-"}),
         "exclusions": []
     }
 
-def cache_update(cache, aprogress=None):
+def cache_update(cache, aprogress=None, force=False):
     import time
     from pathlib import Path
     from os import path
@@ -18,7 +26,7 @@ def cache_update(cache, aprogress=None):
         cache_time = path.getmtime(cache_file)
     except:
         cache_time = 0
-    if time.time() - cache_time > CACHE_INVALIDATION_TIME * 60:
+    if force or time.time() - cache_time > CACHE_INVALIDATION_TIME * 60:
         cache.update(aprogress)
         Path(cache_file).touch()
 

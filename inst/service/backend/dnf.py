@@ -5,8 +5,18 @@ import dnf.cli.progress
 import dnf.cli.output
 
 def discover():
+    progress = dnf.cli.progress.MultiFileProgressMeter(fo=sys.stdout)
+    base = dnf.Base()
+    base.read_all_repos()
+    base.repos.all().set_progress_bar(progress)
+    base.fill_sack()
+    
+    q = base.sack.query()
+    pkgs = q.available().filterm(name__glob="R-*[!-debuginfo][!-devel]")
+    prefixes = {"-".join(x.name.split("-")[:-1]) + "-" for x in pkgs}
+    
     return {
-        "prefixes": ["R-"],
+        "prefixes": sorted(list(prefixes - {"R-TH-"})),
         "exclusions": ["R-core", "R-core-devel", "R-devel", "R-java",
             "R-java-devel", "R-rpm-macros"]
     }
