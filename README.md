@@ -19,17 +19,25 @@ If you plan to run it as a regular user (non-root), these are required too:
 - python3-dbus
 - python3-gobject (Fedora-like), python3-gi (Debian-like)
 
-Then, if e.g. your distro's R packages are called "r-cran-[pkgname]",
+Then, you must install it as a system package (note `sudo`):
 
 ```bash
-sudo R CMD INSTALL bspm \
-  --configure-vars="SYSCONF_DIR=/etc" \
-  --configure-vars="DATA_DIR=/usr/share" \
-  --configure-vars="PKG_PREFIX=r-cran-"
+sudo R CMD INSTALL bspm_[version].tar.gz
 ```
 
-If you plan to run it only as root (e.g., in a docker container), then you
-don't need the D-Bus service, so only `PKG_PREFIX` is required above.
+Further configuration options:
+
+- If you plan to run it only as root (e.g., in a docker container), then you
+  don't need the D-Bus service, so you can disable its installation by adding
+  `--configure-args="--without-dbus-service"`.
+- If you are installing the package in a build root, instead of its final
+  destination, specify `--configure-vars="BUILD_ROOT=[path_to_build_root]"` too.
+- By default, package prefixes and exclusions are automatically discovered from
+  system repositories, and this discovery mechanism is exposed so that the user
+  can install other packages if e.g. new repositories with other prefixes are
+  added. If you want to fix prefixes and exclusions and prevent exposing the
+  discovery mechanism, set `--configure-vars="PKG_PREF='prefix1- prefix2- ...'"`
+  and `--configure-vars="PKG_EXCL='exclusion1 exclusion2 ...'"`.
 
 To enable it by default, put the following into the `Rprofile.site`:
 
@@ -45,9 +53,10 @@ automatically installed.
 New backends for other package managers can be added to `inst/service/backend`.
 Each backend must implement the following functions:
 
-- `def install(prefix : str, pkgs : list) -> list`
-- `def remove(prefix : str, pkgs : list) -> list`
+- `def install(prefixes : list, pkgs : list, exclusions : list) -> list`
+- `def remove(prefixes : list, pkgs : list, exclusions : list) -> list`
 
-Both functions receive a prefix and a list of R package names, and must return
-a list with those package names that could not be processed (i.e., packages not
-found in the system repos). Any progress should be reported to stdout.
+Both functions receive a list of prefixes, a list of R package names and a list
+of exclusions, and must return a list with those package names that could not be
+processed (i.e., packages not found in the system repos). Any progress should be
+reported to stdout.

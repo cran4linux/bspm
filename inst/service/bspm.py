@@ -2,21 +2,26 @@
 
 import backend
 
-from os.path import realpath, dirname
-path = dirname(realpath(__file__))
-exec(open(path + "/dbus-paths").read())
-exec(open(path + "/bspm.conf").read())
+from os import path
+WDIR = path.dirname(path.realpath(__file__))
+exec(open(WDIR + "/dbus-paths").read())
 
-import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-r", action="store_true",
-                    help="remove; otherwise, install (with -u only)")
-parser.add_argument("-o", metavar="file", type=str,
-                    help="output file (with -u only)")
-parser.add_argument("-u", metavar="pkg", type=str, nargs="+",
-                    help="run as a user instead of as a service")
-args = parser.parse_args()
+def read_conf(force_discover=False):
+    global PREF, EXCL
+    pref = WDIR + "/bspm.pref"
+    excl = WDIR + "/bspm.excl"
+    
+    force_discover = force_discover and not path.exists(WDIR + "/nodiscover")
+    if force_discover or not path.exists(pref) or not path.exists(excl):
+        conf = backend.discover()
+        with open(pref, "w") as fpref, open(excl, "w") as fexcl:
+            for i in conf["prefixes"]:
+                print(i, file=fpref)
+            for i in conf["exclusions"]:
+                print(i, file=fexcl)
+    with open(pref) as fpref, open(excl) as fexcl:
+        PREF = [line.rstrip() for line in fpref]
+        EXCL = [line.rstrip() for line in fexcl]
 
 def run_as_service():
     from gi.repository import GLib
@@ -35,35 +40,49 @@ def run_as_service():
     def stderr(pid):
         return open("/proc/" + str(pid) + "/fd/2", "w")
     
-    def redirect_stdout_handle_exceptions(timeout):
-        def _redirect_stdout_handle_exceptions(fn):
+    def redirect_output(fn):
+        @wraps(fn)
+        def wrapper(self, pid, *args, **kw):
+            with stderr(pid) as f, redirect_stdout(f):
+                return fn(self, pid, *args, **kw)
+        return wrapper
+    
+    def handle_exceptions(timeout):
+        def _handle_exceptions(fn):
             @wraps(fn)
-            def wrapper(self, pid, *args, **kw):
+            def wrapper(*args, **kw):
                 signal.alarm(0)
-                with stderr(pid) as f, redirect_stdout(f):
-                    try:
-                        out = fn(self, pid, *args, **kw)
-                    except Exception as err:
-                        raise PackageManagerException(str(err))
-                    finally:
-                        signal.alarm(timeout)
+                try:
+                    out = fn(*args, **kw)
+                except Exception as err:
+                    raise PackageManagerException(str(err))
+                finally:
+                    signal.alarm(timeout)
                 return out
             return wrapper
-        return _redirect_stdout_handle_exceptions
+        return _handle_exceptions
     
     class PackageManager(dbus.service.Object):
         
-        @dbus.service.method(IFACE, in_signature="ias", out_signature="as")
-        @redirect_stdout_handle_exceptions(10)
-        def install(self, pid, pkgs):
-            print("Installing system packages...", flush=True)
-            return backend.install(PREFIX, pkgs)
+        @dbus.service.method(IFACE, in_signature="", out_signature="")
+        @handle_exceptions(10)
+        def discover(self):
+            read_conf(True)
+            return
         
         @dbus.service.method(IFACE, in_signature="ias", out_signature="as")
-        @redirect_stdout_handle_exceptions(10)
+        @handle_exceptions(10)
+        @redirect_output
+        def install(self, pid, pkgs):
+            print("Install system packages...", flush=True)
+            return backend.install(PREF, pkgs, EXCL)
+        
+        @dbus.service.method(IFACE, in_signature="ias", out_signature="as")
+        @handle_exceptions(10)
+        @redirect_output
         def remove(self, pid, pkgs):
-            print("Removing system packages...", flush=True)
-            return backend.remove(PREFIX, pkgs)
+            print("Remove system packages...", flush=True)
+            return backend.remove(PREF, pkgs, EXCL)
     
     def sigterm_handler(_signo, _stack_frame):
         mainloop.quit()
@@ -80,23 +99,37 @@ def run_as_service():
     mainloop = GLib.MainLoop()
     mainloop.run()
 
-def run_as_user():
-    if not args.r:
-        print("Installing system packages...", flush=True)
-        pkgs = backend.install(PREFIX, args.u)
+def run_as_root(args):
+    if "pkg" not in args:
+        read_conf(True)
     else:
-        print("Removing system packages...", flush=True)
-        pkgs = backend.remove(PREFIX, args.u)
-    
-    if args.o is not None:
-        with open(args.o, "a") as f:
-            for pkg in pkgs:
-                f.write(pkg + "\n")
-    else:
-        print("Not processed:", pkgs)
+        print(args.subcmd.capitalize() + " system packages as root...", flush=True)
+        pkgs = getattr(backend, args.subcmd)(PREF, args.pkg, EXCL)
+        if args.o is not None:
+            with open(args.o, "a") as f:
+                for pkg in pkgs:
+                    print(pkg, file=f)
+        else:
+            print("Not processed:", pkgs)
 
 if __name__ == "__main__":
-    if args.u is None:
+    import argparse
+    
+    parser = argparse.ArgumentParser()
+    subparser = parser.add_subparsers(dest="cmd")
+    parser_user = subparser.add_parser(
+        "root", help="run as root instead of as a service")
+    subparser_user = parser_user.add_subparsers(dest="subcmd", required=True)
+    parser_user_discover = subparser_user.add_parser("discover")
+    parser_user_install = subparser_user.add_parser("install", aliases=["remove"])
+    parser_user_install.add_argument("pkg", type=str, nargs="+")
+    parser_user_install.add_argument(
+        "-o", metavar="file", type=str, help="output file")
+    
+    args = parser.parse_args()
+    read_conf()
+    
+    if args.cmd is None:
         run_as_service()
     else:
-        run_as_user()
+        run_as_root(args)

@@ -1,19 +1,20 @@
 utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))
 
-dbus_call <- function(cmd, pkgs) {
-  source(system.file("service/dbus-paths", package="bspm"))
+dbus_call <- function(cmd, pkgs=NULL) {
+  source(system.file("service/dbus-paths", package="bspm"), local=TRUE)
 
   args <- c("list", "--no-pager")
   out <- suppressWarnings(system2("busctl", args, stdout=TRUE, stderr=TRUE))
   if (!any(grepl(BUS_NAME, out)))
     stop("bspm service not found")
 
-  args <- c("call", "--timeout=1h", BUS_NAME, OPATH, IFACE,
-            cmd, "ias", Sys.getpid(), length(pkgs), pkgs)
+  args <- c("call", "--timeout=1h", BUS_NAME, OPATH, IFACE, cmd)
+  if (!is.null(pkgs))
+    args <- c(args, "ias", Sys.getpid(), length(pkgs), pkgs)
   out <- suppressWarnings(system2("busctl", args, stdout=TRUE, stderr=TRUE))
 
   if (!length(out))
-    return(out)
+    return(invisible(out))
   status <- attr(out, "status")
   if (!is.null(status) && status != 0)
     stop(out)
@@ -24,15 +25,18 @@ dbus_call <- function(cmd, pkgs) {
   invisible(out)
 }
 
-backend_call <- function(cmd, pkgs) {
+backend_call <- function(cmd, pkgs=NULL) {
   if (Sys.info()["effective_user"] != "root")
     return(dbus_call(cmd, pkgs))
 
   tmp <- tempfile()
+  file.create(tmp)
   on.exit(unlink(tmp))
 
   mgr <- system.file("service/bspm.py", package="bspm")
-  args <- c(if (cmd == "remove") "-r", "-o", tmp, "-u", pkgs)
+  args <- c("root", cmd)
+  if (!is.null(pkgs))
+    args <- c(args, "-o", tmp, pkgs)
   system2(mgr, args, stderr=FALSE)
 
   invisible(readLines(tmp))
@@ -56,3 +60,14 @@ install_sys <- function(pkgs) backend_call("install", pkgs)
 #' @name install_sys
 #' @export
 remove_sys <- function(pkgs) backend_call("remove", pkgs)
+
+#' Discover Packages from System Repositories
+#'
+#' Talk to the system package manager to discover new packages. Needed only
+#' when e.g. a new repository is added that contains packages with different
+#' prefixes (for example, your system repositories may provide packages called
+#' \code{r-cran-*} and \code{r-bioc-*} and then you add a new repository that
+#' provides packages called \code{r-github-*}).
+#'
+#' @export
+discover <- function() backend_call("discover")

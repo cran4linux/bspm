@@ -2,4 +2,5 @@
 .Rhistory
 .RData
 __pycache__
-inst/service/*.conf
+*.pref
+*.excl
