@@ -53,10 +53,11 @@ automatically installed.
 New backends for other package managers can be added to `inst/service/backend`.
 Each backend must implement the following functions:
 
+- `def discover() -> dict({ "prefixes" : list, "exclusions" : list })`
 - `def install(prefixes : list, pkgs : list, exclusions : list) -> list`
 - `def remove(prefixes : list, pkgs : list, exclusions : list) -> list`
 
-Both functions receive a list of prefixes, a list of R package names and a list
-of exclusions, and must return a list with those package names that could not be
-processed (i.e., packages not found in the system repos). Any progress should be
-reported to stdout.
+The last two functions receive a list of prefixes, a list of R package names and
+a list of exclusions, and must return a list with those package names that could
+not be processed (i.e., packages not found in the system repos). Any progress
+should be reported to stdout.
