@@ -12,7 +12,7 @@ class TextInstallProgress(apt.progress.base.InstallProgress):
         apt.progress.base.InstallProgress.__init__(self)
     
     def status_change(self, pkg, percent, status):
-        print("%s ..." % (status))
+        print("%s ..." % (status), end="\r\n")
 
 def cache_update(cache, aprogress=None):
     import time

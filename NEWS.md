@@ -3,6 +3,7 @@
 - Simplified installation, because D-Bus files are always in the same place.
 - Support for multiple prefixes and exclusions (#1).
 - Improve APT cache management (#4).
+- Fix newlines in APT output (#5).
 - Load D-Bus variables locally instead of in the global environment (#6).
 
 # bspm 0.3.0
