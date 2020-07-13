@@ -1,10 +1,11 @@
 # bspm: R Bridge to System Package Manager
 
-Enables binary package installations on Linux distributions
-without administrative privileges. Provides functions to manage packages
-via the distribution's package manager. Also provides transparent
-integration with R's 'install.packages' and a fallback mechanism.
-
+Enables binary package installations on Linux distributions.
+Provides functions to manage packages via the distribution's package
+manager. Also provides transparent integration with R's 'install.packages'
+and a fallback mechanism. When installed as a system package, interacts
+with the system's package manager without requiring administrative
+privileges via an integrated D-Bus service; otherwise, uses sudo.
 Currently, the following backends are supported: DNF, APT.
 
 ## Installation
@@ -19,7 +20,8 @@ If you plan to run it as a regular user (non-root), these are required too:
 - python3-dbus
 - python3-gobject (Fedora-like), python3-gi (Debian-like)
 
-Then, you must install it as a system package (note `sudo`):
+Then, you should install it as a system package to be able to use it as a
+regular user (note `sudo`):
 
 ```bash
 sudo R CMD INSTALL bspm_[version].tar.gz

@@ -3,6 +3,7 @@
 . inst/service/dbus-paths
 
 subst() {
+  echo "* installing $3"
   DIR=$(pwd)
   cd $1 && cat $2 |
     sed "s @BUS_NAME@ $BUS_NAME g" |
@@ -26,7 +27,7 @@ if [ "$1" != "--without-dbus-service" ]; then
   SYSCONF_DIR="$BUILD_ROOT/etc/dbus-1/system.d"
   mkdir -p $SERVICE_DIR $SYSCONF_DIR
   if [ ! -w "$SERVICE_DIR" ] || [ ! -w "$SYSCONF_DIR" ]; then
-    echo "Warning: the D-BUS service couldn't be installed"
+    echo "* NOT installing D-Bus service"
   else
     subst inst/service dbus.service.in $SERVICE_DIR/$BUS_NAME.service
     subst inst/service dbus.conf.in $SYSCONF_DIR/$BUS_NAME.conf

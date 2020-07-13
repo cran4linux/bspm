@@ -1,6 +1,7 @@
 # bspm 0.3.2
 
 - Implement functions to discover new prefixes dynamically (#3).
+- Fall back to `sudo` if no root permissions nor D-Bus service are available.
 
 # bspm 0.3.1
 
