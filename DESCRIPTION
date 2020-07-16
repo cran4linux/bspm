@@ -16,6 +16,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 OS_type: unix
 SystemRequirements: systemd, python3-dbus, python3-(gobject|gi), python3-(dnf|apt)
+Suggests: tinytest
 URL: https://github.com/Enchufa2/bspm
 BugReports: https://github.com/Enchufa2/bspm/issues
 RoxygenNote: 7.1.1

@@ -1,0 +1,31 @@
+name: build
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {r: '3.6.3'}
+          - {r: 'latest'}
+          - {r: 'devel'}
+
+    runs-on: ubuntu-latest
+    name: R ${{ matrix.config.r }}
+    container:
+      image: rocker/r-ver:${{ matrix.config.r }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          apt update && apt install -y python3-apt r-cran-tinytest
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: |
+          echo $CI
+          R CMD check . --no-manual --as-cran

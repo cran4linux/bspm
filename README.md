@@ -1,5 +1,9 @@
 # bspm: R Bridge to System Package Manager
 
+<!-- badges: start -->
+[![Build Status](https://github.com/Enchufa2/bspm/workflows/build/badge.svg)](https://github.com/Enchufa2/bspm/actions)
+<!-- badges: end -->
+
 Enables binary package installations on Linux distributions.
 Provides functions to manage packages via the distribution's package
 manager. Also provides transparent integration with R's 'install.packages'
