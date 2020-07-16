@@ -1,0 +1,45 @@
+name: build
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {distro: 'fedora'}
+        - {distro: 'debian'}
+
+    runs-on: ubuntu-latest
+    name: ${{ matrix.config.distro }}
+    container:
+      image: ${{ matrix.config.distro }}:latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies (Fedora)
+      if: ${{ matrix.config.distro == 'fedora' }}
+      run: |
+        dnf install -y R-core devscripts-checkbashisms python3-dnf
+
+    - name: Install dependencies (Debian)
+      if: ${{ matrix.config.distro == 'debian' }}
+      run: |
+        apt update && apt install -y r-base-core devscripts python3-apt
+
+    - name: Check
+      env:
+        LANG: C.UTF-8
+        _R_CHECK_CRAN_INCOMING_REMOTE_: false
+      run: |
+        Rscript -e 'install.packages("tinytest", repos="https://cran.r-project.org")'
+        R CMD build . && mkdir check
+        R CMD check bspm_*.tar.gz --no-manual --as-cran -o check
+
+    - name: Upload check results
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@master
+      with:
+        name: r-${{ matrix.config.r }}-results
+        path: check
