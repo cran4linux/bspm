@@ -7,27 +7,33 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {r: '3.6.3'}
-        - {r: 'latest'}
-        - {r: 'devel'}
+        - {distro: 'fedora'}
+        - {distro: 'debian'}
 
     runs-on: ubuntu-latest
-    name: R ${{ matrix.config.r }}
+    name: ${{ matrix.config.distro }}
     container:
-      image: rocker/r-ver:${{ matrix.config.r }}
+      image: ${{ matrix.config.distro }}:latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Install dependencies (Fedora)
+      if: ${{ matrix.config.distro == 'fedora' }}
       run: |
-        apt update && apt install -y python3-apt
-        Rscript -e 'install.packages("tinytest", repos="https://cran.r-project.org")'
+        dnf install -y R-core devscripts-checkbashisms python3-dnf
+
+    - name: Install dependencies (Debian)
+      if: ${{ matrix.config.distro == 'debian' }}
+      run: |
+        apt update && apt install -y r-base-core devscripts python3-apt
 
     - name: Check
       env:
+        LANG: C.UTF-8
         _R_CHECK_CRAN_INCOMING_REMOTE_: false
       run: |
+        Rscript -e 'install.packages("tinytest", repos="https://cran.r-project.org")'
         R CMD build . && mkdir check
         R CMD check bspm_*.tar.gz --no-manual --as-cran -o check
 
