@@ -21,11 +21,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt update && apt install -y python3-apt r-cran-tinytest
+          apt update && apt install -y python3-apt
+          Rscript -e 'install.packages("tinytest", repos="https://cran.r-project.org")'
 
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
-          echo $CI
-          R CMD check . --no-manual --as-cran
+          R CMD build .
+          R CMD check bspm_*.tar.gz --no-manual --as-cran
