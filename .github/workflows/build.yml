@@ -7,9 +7,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {r: '3.6.3'}
-          - {r: 'latest'}
-          - {r: 'devel'}
+        - {r: '3.6.3'}
+        - {r: 'latest'}
+        - {r: 'devel'}
 
     runs-on: ubuntu-latest
     name: R ${{ matrix.config.r }}
@@ -17,16 +17,23 @@ jobs:
       image: rocker/r-ver:${{ matrix.config.r }}
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: |
-          apt update && apt install -y python3-apt
-          Rscript -e 'install.packages("tinytest", repos="https://cran.r-project.org")'
+    - name: Install dependencies
+      run: |
+        apt update && apt install -y python3-apt
+        Rscript -e 'install.packages("tinytest", repos="https://cran.r-project.org")'
 
-      - name: Check
-        env:
-          _R_CHECK_CRAN_INCOMING_REMOTE_: false
-        run: |
-          R CMD build .
-          R CMD check bspm_*.tar.gz --no-manual --as-cran
+    - name: Check
+      env:
+        _R_CHECK_CRAN_INCOMING_REMOTE_: false
+      run: |
+        R CMD build .
+        R CMD check bspm_*.tar.gz --no-manual --as-cran
+
+    - name: Upload check results
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@master
+      with:
+        name: r-${{ matrix.config.r }}-results
+        path: bspm.Rcheck
