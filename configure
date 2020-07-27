@@ -12,12 +12,8 @@ subst() {
 }
 
 if [ ! -z "$PKG_PREF" ]; then
-  for pref in $PKG_PREF; do
-    echo $pref >> inst/service/bspm.pref
-  done
-  for excl in $PKG_EXCL; do
-    echo $excl >> inst/service/bspm.excl
-  done
+  for pref in $PKG_PREF; do echo $pref; done > inst/service/bspm.pref
+  for excl in $PKG_EXCL; do echo $excl; done > inst/service/bspm.excl
   touch inst/service/nodiscover
   sed -i '/discover/d' NAMESPACE
 fi

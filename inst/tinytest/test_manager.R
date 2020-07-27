@@ -13,7 +13,6 @@ bspm.pref <- system.file("service/bspm.pref", package="bspm")
 bspm.excl <- system.file("service/bspm.excl", package="bspm")
 expect_true(all(c(bspm.pref, bspm.excl) != ""))
 
-.libPaths("/usr/lib/R/site-library") # for Debian
 pkgs <- install_sys(c("Rcpp", "NOTAPACKAGE"))
 expect_true(requireNamespace("Rcpp", quietly=TRUE))
 expect_equal(pkgs, "NOTAPACKAGE")

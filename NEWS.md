@@ -1,3 +1,8 @@
+# bspm 0.3.3
+
+- Cosmetic changes suggested by CRAN.
+- Small configure fix.
+
 # bspm 0.3.2
 
 - Implement functions to discover new prefixes dynamically (#3).

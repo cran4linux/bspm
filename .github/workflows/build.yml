@@ -36,11 +36,11 @@ jobs:
       run: |
         Rscript -e 'install.packages("tinytest", repos="https://cran.r-project.org")'
         R CMD build . && mkdir check
-        R CMD check bspm_*.tar.gz --no-manual --as-cran -o check
+        R CMD check bspm_*.tar.gz --no-manual -o check
 
     - name: Upload check results
       if: ${{ failure() }}
       uses: actions/upload-artifact@master
       with:
-        name: r-${{ matrix.config.r }}-results
+        name: r-${{ matrix.config.distro }}-results
         path: check
