@@ -1,6 +1,5 @@
-## New submission
-Enables binary package installations on Linux distributions by connecting
-R with the distribution's package manager.
+## Patch release
+Fixes Solaris installation issues.
 
 ## Test environments
 - local R installation, R 4.0.2
