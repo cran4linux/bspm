@@ -1,3 +1,7 @@
+# bspm 0.3.4
+
+- Fix installation issue reported by CRAN on Solaris.
+
 # bspm 0.3.3
 
 - Cosmetic changes suggested by CRAN.

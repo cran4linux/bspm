@@ -4,7 +4,7 @@
 
 subst() {
   echo "* installing $3"
-  DIR=$(pwd)
+  DIR=`pwd`
   cd $1 && cat $2 |
     sed "s @BUS_NAME@ $BUS_NAME g" |
     sed "s @R_LIBRARY_DIR@ ${R_LIBRARY_DIR#"$BUILD_ROOT"} g" > $3
