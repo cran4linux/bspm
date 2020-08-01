@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+# 							-*- makefile -*-
+# debian/rules file for the Debian/GNU Linux r-cran-bspm package
+# Copyright 2003 - 2020 by Dirk Eddelbuettel <edd@debian.org>
+
+## the configure script uses BUILD_ROOT
+export BUILD_ROOT = $(CURDIR)/debian/r-cran-bspm
+
+%:
+	dh $@ --buildsystem R

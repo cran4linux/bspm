@@ -1,0 +1,11 @@
+r-cran-bspm (0.3.1-2) unstable; urgency=medium
+
+  * Second build
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 12 Jul 2020 06:52:01 -0500
+
+r-cran-bspm (0.3.1-1) unstable; urgency=low
+
+  * Initial build
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 11 Jul 2020 09:34:00 -0500

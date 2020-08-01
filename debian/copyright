@@ -1,0 +1,54 @@
+This is the Debian GNU/Linux r-cran-bspm package of bspm.  The
+bspm package offers convolution-type smoothed quantile regression.
+It was written by Iñaki Ucar.
+
+This package was created by Dirk Eddelbuettel <edd@debian.org>.
+The sources were downloaded from the main CRAN site
+	https://cran.r-project.org/src/contrib/
+and are also available from all CRAN mirrors as e.g.
+	https://cran.us.r-project.org/src/contrib/
+
+The package was renamed from its upstream name 'bspm' to
+'r-cran-bspm' to fit the pattern of CRAN (and non-CRAN)
+packages for R.
+
+Files: *
+Copyright: 2020 -   Iñaki Ucar
+License: MIT
+
+Files: debian/*
+Copyright: 2020  Dirk Eddelbuettel <edd@debian.org>
+License: GPL-2+
+
+On a Debian GNU/Linux system, the GPL license (version 2) is included
+in the file /usr/share/common-licenses/GPL-2.
+
+For reference, the upstream DESCRIPTION file is included below:
+
+  Package: bspm
+  Type: Package
+  Title: R Bridge to System Package Manager
+  Version: 0.3.1
+  Authors@R: c(
+      person("Iñaki", "Ucar", email="iucar@fedoraproject.org",
+        role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")))
+  Description: Enables binary package installations on Linux distributions
+      without administrative privileges. Provides functions to manage packages
+      via the distribution's package manager. Also provides transparent
+      integration with R's 'install.packages' and a fallback mechanism.
+  License: MIT + file LICENSE
+  Encoding: UTF-8
+  OS_type: unix
+  SystemRequirements: systemd, python3-dbus, python3-gobject,
+      python bindings for your distro's package manager
+  URL: https://github.com/Enchufa2/bspm
+  BugReports: https://github.com/Enchufa2/bspm/issues
+  RoxygenNote: 7.1.1
+  Roxygen: list(old_usage = TRUE)
+
+The file LICENSE is included as well:
+
+  YEAR: 2020
+  COPYRIGHT HOLDER: Iñaki Ucar
+
+
