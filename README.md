@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Build Status](https://github.com/Enchufa2/bspm/workflows/build/badge.svg)](https://github.com/Enchufa2/bspm/actions)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/bspm)](https://cran.r-project.org/package=bspm)
 <!-- badges: end -->
 
 Enables binary package installations on Linux distributions.
