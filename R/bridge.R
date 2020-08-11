@@ -40,9 +40,14 @@ root <- function() {
 }
 
 root_call <- function(method, pkgs=NULL, sudo=NULL) {
-  tmp <- tempfile()
+  tmp <- tmp2 <- tempfile()
+  # workaround, see #13
+  if (length(strsplit(tmp2, "/")[[1]]) == 3) {
+    dir.create(tmp)
+    tmp <- paste0(tmp, tempfile(tmpdir=""))
+  }
   file.create(tmp)
-  on.exit(unlink(tmp))
+  on.exit(unlink(tmp2, recursive=TRUE, force=TRUE))
 
   cmd <- system.file("service/bspm.py", package="bspm")
   args <- c("root", method)
