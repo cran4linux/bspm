@@ -20,6 +20,8 @@ NULL
 
 utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))
 
+system2nowarn <- function(...) suppressWarnings(system2(...))
+
 backend_call <- function(method, pkgs=NULL) {
   if (root())
     return(invisible(root_call(method, pkgs)))
@@ -50,7 +52,7 @@ root_call <- function(method, pkgs=NULL, sudo=NULL) {
     args <- c(cmd, args)
     cmd <- sudo
   }
-  out <- suppressWarnings(system2(cmd, args, stderr=FALSE))
+  out <- system2nowarn(cmd, args, stderr=FALSE)
 
   if (out != 0)
     stop("cannot connect to the system package manager", call.=FALSE)
@@ -62,7 +64,7 @@ dbus_service_alive <- function() {
 
   cmd <- Sys.which("busctl")
   args <- c("list", "--no-pager")
-  out <- try(system2(cmd, args, stdout=TRUE, stderr=TRUE), silent=TRUE)
+  out <- try(system2nowarn(cmd, args, stdout=TRUE, stderr=TRUE), silent=TRUE)
 
   if (inherits(out, "try-error") || !any(grepl(BUS_NAME, out)))
     return(FALSE)
@@ -76,7 +78,7 @@ dbus_call <- function(method, pkgs=NULL) {
   args <- c("call", "--timeout=1h", BUS_NAME, OPATH, IFACE, method)
   if (!is.null(pkgs))
     args <- c(args, "ias", Sys.getpid(), length(pkgs), pkgs)
-  out <- suppressWarnings(system2(cmd, args, stdout=TRUE, stderr=TRUE))
+  out <- system2nowarn(cmd, args, stdout=TRUE, stderr=TRUE)
 
   if (!length(out))
     return(out)

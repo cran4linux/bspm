@@ -1,3 +1,7 @@
+# bspm 0.3.4.1
+
+- Fix noise when `busctl` is installed but there's no system bus (docker) (#12).
+
 # bspm 0.3.4
 
 - Fix installation issue reported by CRAN on Solaris.
