@@ -103,8 +103,8 @@ def run_as_root(args):
     if "pkg" not in args:
         read_conf(True)
     else:
-        print(args.subcmd.capitalize() + " system packages as root...", flush=True)
-        pkgs = getattr(backend, args.subcmd)(PREF, args.pkg, EXCL)
+        print(args.cmd.capitalize() + " system packages as root...", flush=True)
+        pkgs = getattr(backend, args.cmd)(PREF, args.pkg, EXCL)
         if args.o is not None:
             with open(args.o, "a") as f:
                 for pkg in pkgs:
@@ -117,14 +117,10 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     subparser = parser.add_subparsers(dest="cmd")
-    parser_user = subparser.add_parser(
-        "root", help="run as root instead of as a service")
-    subparser_user = parser_user.add_subparsers(dest="subcmd", required=True)
-    parser_user_discover = subparser_user.add_parser("discover")
-    parser_user_install = subparser_user.add_parser("install", aliases=["remove"])
-    parser_user_install.add_argument("pkg", type=str, nargs="+")
-    parser_user_install.add_argument(
-        "-o", metavar="file", type=str, help="output file")
+    parser_discover = subparser.add_parser("discover")
+    parser_install = subparser.add_parser("install", aliases=["remove"])
+    parser_install.add_argument("pkg", type=str, nargs="+")
+    parser_install.add_argument("-o", metavar="file", type=str, help="output file")
     
     args = parser.parse_args()
     read_conf()

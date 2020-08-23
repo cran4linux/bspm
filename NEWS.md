@@ -1,7 +1,8 @@
-# bspm 0.3.4.1
+# bspm 0.3.4.2
 
 - Fix noise when `busctl` is installed but there's no system bus (docker) (#12).
 - Workaround issue with file permissions under `/tmp` (#13).
+- Fix compatibility with Python 3.6 (#15).
 
 # bspm 0.3.4
 

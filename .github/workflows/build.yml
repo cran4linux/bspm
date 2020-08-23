@@ -5,16 +5,18 @@ jobs:
   build:
     if: ${{ !contains(github.event.head_commit.message, '[ci skip]') }}
     runs-on: ubuntu-latest
-    name: ${{ matrix.config.distro }}
+    name: ${{ matrix.config.distro }}:${{ matrix.config.version }}
     container:
-      image: ${{ matrix.config.distro }}:latest
+      image: ${{ matrix.config.distro }}:${{ matrix.config.version }}
 
     strategy:
       fail-fast: false
       matrix:
         config:
-        - {distro: 'fedora'}
-        - {distro: 'debian'}
+        - {distro: 'fedora', version: 'latest'}
+        - {distro: 'debian', version: 'latest'}
+        - {distro: 'ubuntu', version: '18.04'}
+        - {distro: 'ubuntu', version: '20.04'}
 
     steps:
     - uses: actions/checkout@v2
@@ -24,8 +26,8 @@ jobs:
       run: |
         dnf install -y R-core devscripts-checkbashisms python3-dnf
 
-    - name: Install dependencies (Debian)
-      if: ${{ matrix.config.distro == 'debian' }}
+    - name: Install dependencies (Debian, Ubuntu)
+      if: ${{ matrix.config.distro != 'fedora' }}
       run: |
         apt update && apt install -y r-base-core devscripts python3-apt
 
@@ -42,5 +44,5 @@ jobs:
       if: ${{ failure() }}
       uses: actions/upload-artifact@master
       with:
-        name: r-${{ matrix.config.distro }}-results
+        name: r-${{ matrix.config.distro }}-${{ matrix.config.version }}-results
         path: check
