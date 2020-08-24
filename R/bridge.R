@@ -26,10 +26,13 @@ backend_call <- function(method, pkgs=NULL) {
   if (root())
     return(invisible(root_call(method, pkgs)))
 
+  if (getOption("bspm.sudo", FALSE))
+    return(invisible(sudo_call(method, pkgs)))
+
   if (dbus_service_alive())
     return(invisible(dbus_call(method, pkgs)))
 
-  if (interactive() || getOption("bspm.sudo", FALSE))
+  if (interactive())
     return(invisible(sudo_call(method, pkgs)))
 
   stop("cannot connect to the system package manager", call.=FALSE)
