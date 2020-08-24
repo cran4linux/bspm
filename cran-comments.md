@@ -1,5 +1,5 @@
 ## Patch release
-Fixes Solaris installation issues.
+Fixes several issues on Ubuntu 18.04.
 
 ## Test environments
 - local R installation, R 4.0.2
