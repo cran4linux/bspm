@@ -1,8 +1,9 @@
-# bspm 0.3.4.2
+# bspm 0.3.4.3
 
 - Fix noise when `busctl` is installed but there's no system bus (docker) (#12).
 - Workaround issue with file permissions under `/tmp` (#13).
 - Fix compatibility with Python 3.6 (#15).
+- Workaround PATH for old versions of APT/dpkg (#15).
 - Prioritize `options(bspm.sudo=TRUE)` over DBus calls (as part of #15), so that
   any DBus error or incompatibility can be at least bypassed with `sudo`.
 

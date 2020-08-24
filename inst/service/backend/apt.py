@@ -1,6 +1,12 @@
 from ._utils import mark
 import apt
 
+# workaround for Ubuntu 18.04
+# https://github.com/Enchufa2/bspm/issues/15
+import os
+if not os.getenv("PATH"):
+    os.environ["PATH"] = "/usr/bin:/usr/sbin:/bin:/sbin"
+
 CACHE_INVALIDATION_TIME = 5 # minutes
 
 def discover():
