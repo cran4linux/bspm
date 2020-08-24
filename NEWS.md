@@ -1,4 +1,4 @@
-# bspm 0.3.4.3
+# bspm 0.3.4.2
 
 - Fix noise when `busctl` is installed but there's no system bus (docker) (#12).
 - Workaround issue with file permissions under `/tmp` (#13).
