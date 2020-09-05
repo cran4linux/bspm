@@ -1,3 +1,7 @@
+# bspm 0.3.5.1
+
+- Make APT call fail if there are unmet dependencies (#20).
+
 # bspm 0.3.5
 
 - Fix noise when `busctl` is installed but there's no system bus (docker) (#12).

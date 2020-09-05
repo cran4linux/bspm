@@ -39,7 +39,9 @@ def cache_update(cache, aprogress=None, force=False):
 def operation(op, prefixes, pkgs, exclusions):
     def cc(cache, method):
         def wrapper(pkgname):
-            getattr(cache[pkgname], method)()
+            getattr(cache[pkgname], "mark_" + method)()
+            if not getattr(cache[pkgname], "marked_" + method):
+                raise Exception("cannot " + method + " " + pkgname)
         return wrapper
     
     oprogress = apt.progress.text.OpProgress()
@@ -57,7 +59,7 @@ def operation(op, prefixes, pkgs, exclusions):
     return notavail
 
 def install(prefixes, pkgs, exclusions):
-    return operation("mark_install", prefixes, pkgs, exclusions)
+    return operation("install", prefixes, pkgs, exclusions)
 
 def remove(prefixes, pkgs, exclusions):
-    return operation("mark_delete", prefixes, pkgs, exclusions)
+    return operation("delete", prefixes, pkgs, exclusions)
