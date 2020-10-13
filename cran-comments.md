@@ -1,5 +1,5 @@
 ## Patch release
-Fixes several issues on Ubuntu 18.04.
+Minor changes and bug fixes.
 
 ## Test environments
 - local R installation, R 4.0.2
