@@ -22,7 +22,7 @@ a character vector of the names of packages not available in the system.
 }
 \description{
 Talk to the system package manager to install/remove... packages from system
-repositories.
+repositories (see details for further options).
 }
 \details{
 If \R runs with root privileges (e.g., in a docker container), these
@@ -33,6 +33,15 @@ If not, these methods fall back on using \code{sudo} to elevate permissions
 (or \code{pkexec} in GUIs such as RStudio) in interactive sessions. Note
 that, if you want to fall back to \code{sudo} in a non-interactive session,
 you need to set \code{options(bspm.sudo=TRUE)}.
+
+By default, if a package is not available in the system repositories, it is
+installed from R's configured repositories along with all its dependencies.
+This behavior can be changed via \code{options(bspm.always.install.deps=TRUE)},
+which tries to install from system repositories recursive dependencies of
+those packages that are not available. For example, if \pkg{A} depends on
+\pkg{B}, and \pkg{B} is available in the system repositories but \pkg{A} is
+not, then only \pkg{A} will be installed from CRAN with this option enabled,
+and both will be installed from CRAN with this option disabled (default).
 
 The \code{discover} method is only needed when e.g. a new repository
 is added that contains packages with different prefixes (for example, your

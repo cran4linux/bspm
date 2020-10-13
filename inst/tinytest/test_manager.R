@@ -1,23 +1,37 @@
-if (!at_home() || !bspm:::root())
-  exit_file("not in a CI environment")
+mock_available <- function(...) readRDS("db.rds")
 
-if (requireNamespace("Rcpp", quietly=TRUE))
-  exit_file("not in a clean environment")
+mock_call <- function(method, pkgs=NULL) {
+  available <- c("Rcpp", "magrittr")
+  installed <<- c(installed, intersect(pkgs, available))
+  setdiff(pkgs, available)
+}
 
-bspm.pref <- system.file("service/bspm.pref", package="bspm")
-bspm.excl <- system.file("service/bspm.excl", package="bspm")
-expect_true(all(c(bspm.pref, bspm.excl) == ""))
+mock <- function(fun, new, pkg) {
+  ns <- asNamespace(pkg)
+  old <- get(fun, ns)
+  unlockBinding(fun, ns)
+  assign(fun, new, ns)
+  lockBinding(fun, ns)
+  old
+}
 
-discover()
-bspm.pref <- system.file("service/bspm.pref", package="bspm")
-bspm.excl <- system.file("service/bspm.excl", package="bspm")
-expect_true(all(c(bspm.pref, bspm.excl) != ""))
+# mock functions
+.available.packages <- mock("available.packages", mock_available, "utils")
+.backend_call <- mock("backend_call", mock_call, "bspm")
 
-pkgs <- install_sys(c("Rcpp", "NOTAPACKAGE"))
-expect_true(requireNamespace("Rcpp", quietly=TRUE))
-expect_equal(pkgs, "NOTAPACKAGE")
+expect_null(getOption("bspm.always.install.deps"))
+installed <- NULL
+pkgs <- install_sys(c("Rcpp", "simmer"))
+expect_equal(pkgs, "simmer")
+expect_equal(installed, "Rcpp")
 
-unloadNamespace("Rcpp")
-pkgs <- remove_sys(c("Rcpp", "NOTAPACKAGE"))
-expect_false(requireNamespace("Rcpp", quietly=TRUE))
-expect_equal(pkgs, "NOTAPACKAGE")
+options(bspm.always.install.deps=TRUE)
+installed <- NULL
+pkgs <- install_sys(c("Rcpp", "simmer"))
+expect_equal(pkgs, "simmer")
+expect_equal(installed, c("Rcpp", "Rcpp", "magrittr"))
+
+# restore mocked functions and options
+options(bspm.always.install.deps=NULL)
+mock("available.packages", .available.packages, "utils")
+mock("backend_call", .backend_call, "bspm")

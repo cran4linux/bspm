@@ -1,6 +1,9 @@
-# bspm 0.3.5.1
+# bspm 0.3.5.2
 
 - Make APT call fail if there are unmet dependencies (#20).
+- Add new `options(bspm.always.install.deps=TRUE)` (not set by default) to
+  always try to install recursive hard dependencies of packages from system
+  repositories even if the requested package is not available (#14, #23).
 
 # bspm 0.3.5
 
