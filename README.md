@@ -15,7 +15,14 @@ Currently, the following backends are supported: DNF, APT.
 
 ## Installation
 
-The following dependencies are required (apart from R):
+Installation from system repositories is preferred, mainly to avoid issues on
+SELinux-enabled systems (see [#19](https://github.com/Enchufa2/bspm/issues/19)).
+
+- For Fedora, see `R-CoprManager` for the
+  [cran2copr](https://copr.fedorainfracloud.org/coprs/iucar/cran/) project.
+- For Ubuntu/Debian, it is available as `r-cran-bspm` via APT.
+
+Installation from source requires the following dependencies (apart from R):
 
 - python3-dnf (Fedora-like), python3-apt (Debian-like)
 
