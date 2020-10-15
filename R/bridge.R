@@ -23,8 +23,6 @@ utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))
 system2nowarn <- function(...) suppressWarnings(system2(...))
 
 backend_call <- function(method, pkgs=NULL) {
-  if (!length(pkgs)) return(pkgs)
-
   if (root())
     return(invisible(root_call(method, pkgs)))
 
