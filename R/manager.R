@@ -40,7 +40,7 @@
 #' @export
 install_sys <- function(pkgs) {
   not.avail <- backend_call("install", pkgs)
-  if (getOption("bspm.always.install.deps", FALSE)) {
+  if (length(not.avail) && getOption("bspm.always.install.deps", FALSE)) {
     deps <- tools::package_dependencies(not.avail, recursive=TRUE)
     deps <- unique(unlist(deps, use.names=FALSE))
     backend_call("install", deps)

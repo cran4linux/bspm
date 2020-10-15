@@ -1,3 +1,7 @@
+# bspm 0.3.7
+
+- Fix spurious error with `options(bspm.always.install.deps=TRUE)` (#24).
+
 # bspm 0.3.6
 
 - Make APT call fail if there are unmet dependencies (#20).

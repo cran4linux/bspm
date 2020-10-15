@@ -1,5 +1,5 @@
 ## Patch release
-Minor changes and bug fixes.
+Fixes a stupid mistake I made in the last update.
 
 ## Test environments
 - local R installation, R 4.0.2
