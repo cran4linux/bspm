@@ -43,7 +43,7 @@ install_sys <- function(pkgs) {
   if (length(not.avail) && getOption("bspm.always.install.deps", FALSE)) {
     deps <- tools::package_dependencies(not.avail, recursive=TRUE)
     deps <- unique(unlist(deps, use.names=FALSE))
-    backend_call("install", deps)
+    if (length(deps)) backend_call("install", deps)
   }
   not.avail
 }

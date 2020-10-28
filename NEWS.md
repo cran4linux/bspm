@@ -1,3 +1,7 @@
+# bspm 0.3.7.1
+
+- Fix spurious error with `options(bspm.always.install.deps=TRUE)` (#25).
+
 # bspm 0.3.7
 
 - Fix spurious error with `options(bspm.always.install.deps=TRUE)` (#24).
