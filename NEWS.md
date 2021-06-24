@@ -1,3 +1,7 @@
+# bspm 0.3.8.1
+
+- Force `sudo` unconditionally also with autodetection (#27, #28).
+
 # bspm 0.3.8
 
 - Fix spurious error with `options(bspm.always.install.deps=TRUE)` (#25).

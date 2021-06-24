@@ -28,7 +28,7 @@ backend_call <- function(method, pkgs=NULL) {
 
   sudo <- getOption("bspm.sudo.autodetect", FALSE) && sudo_available()
   if (sudo || getOption("bspm.sudo", FALSE))
-    return(invisible(sudo_call(method, pkgs)))
+    return(invisible(sudo_call(method, pkgs, force=TRUE)))
 
   if (dbus_service_alive())
     return(invisible(dbus_call(method, pkgs)))
@@ -101,8 +101,8 @@ dbus_call <- function(method, pkgs=NULL) {
   out
 }
 
-sudo_call <- function(method, pkgs=NULL) {
-  if (!isatty(stdin()) && !getOption("bspm.sudo", FALSE))
+sudo_call <- function(method, pkgs=NULL, force=FALSE) {
+  if (!isatty(stdin()) && !force)
     cmd <- "pkexec"
   else cmd <- "sudo"
 
