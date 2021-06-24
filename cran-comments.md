@@ -1,8 +1,8 @@
 ## Patch release
-Fixes a stupid mistake I made in the last update.
+Several fixes.
 
 ## Test environments
-- local R installation, R 4.0.2
+- local R installation, R 4.0.5
 - debian:latest, fedora:latest on GitHub
 
 ## R CMD check results
