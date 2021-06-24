@@ -34,6 +34,11 @@ If not, these methods fall back on using \code{sudo} to elevate permissions
 that, if you want to fall back to \code{sudo} in a non-interactive session,
 you need to set \code{options(bspm.sudo=TRUE)}.
 
+If \code{options(bspm.sudo.autodetect=TRUE)} on start-up, \pkg{bspm} tries
+to detect whether it is running in an environment where password-less
+\code{sudo} can be used (e.g., in a containerized environment such as a
+Fedora Toolbox), and then sets \code{options(bspm.sudo=TRUE)} accordingly.
+
 By default, if a package is not available in the system repositories, it is
 installed from R's configured repositories along with all its dependencies.
 This behavior can be changed via \code{options(bspm.always.install.deps=TRUE)},
