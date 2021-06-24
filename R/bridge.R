@@ -101,7 +101,7 @@ dbus_call <- function(method, pkgs=NULL) {
 }
 
 sudo_call <- function(method, pkgs=NULL) {
-  if (!isatty(stdin()))
+  if (!isatty(stdin()) && !getOption("bspm.sudo", FALSE))
     cmd <- "pkexec"
   else cmd <- "sudo"
 
