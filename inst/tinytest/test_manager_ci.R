@@ -3,17 +3,13 @@ if (!at_home() || !bspm:::root())
 
 sudo.avail <- unname(nchar(Sys.which("sudo")) > 0)
 in.toolbox <- file.exists("/run/.toolboxenv")
-expect_false(getOption("bspm.sudo", FALSE))
-bspm:::sudo_autodetect()
 if (sudo.avail || in.toolbox) {
-  expect_true(getOption("bspm.sudo", FALSE))
+  expect_true(bspm:::sudo_available())
 } else {
-  expect_false(getOption("bspm.sudo", FALSE))
+  expect_false(bspm:::sudo_available())
   file.create("/run/.toolboxenv")
-  bspm:::sudo_autodetect()
-  expect_true(getOption("bspm.sudo", FALSE))
+  expect_true(bspm:::sudo_available())
 }
-options(bspm.sudo = NULL)
 
 if (requireNamespace("Rcpp", quietly=TRUE))
   exit_file("not in a clean environment")

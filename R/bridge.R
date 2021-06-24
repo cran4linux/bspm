@@ -26,7 +26,8 @@ backend_call <- function(method, pkgs=NULL) {
   if (root())
     return(invisible(root_call(method, pkgs)))
 
-  if (getOption("bspm.sudo", FALSE))
+  sudo <- getOption("bspm.sudo.autodetect", FALSE) && sudo_available()
+  if (sudo || getOption("bspm.sudo", FALSE))
     return(invisible(sudo_call(method, pkgs)))
 
   if (dbus_service_alive())
@@ -110,4 +111,10 @@ sudo_call <- function(method, pkgs=NULL) {
     stop(cmd, " command not found", call.=FALSE)
 
   root_call(method, pkgs, sudo=sudo)
+}
+
+sudo_available <- function() {
+  nopass <- !system2nowarn("sudo", c("-n", "true"), stdout=FALSE, stderr=FALSE)
+  toolbox <- file.exists("/run/.toolboxenv") # see #27
+  nopass || toolbox
 }
