@@ -13,6 +13,8 @@ with the system's package manager without requiring administrative
 privileges via an integrated D-Bus service; otherwise, uses sudo.
 Currently, the following backends are supported: DNF, APT.
 
+See [our contributed talk](https://enchufa2.github.io/bspm/slides/20210709-useR2021_talk.html) to _useR! 2021_.
+
 ## Installation
 
 Installation from system repositories is preferred, mainly to avoid issues on
