@@ -127,7 +127,7 @@ $ sudo Rscript -e 'install.packages("bspm", repos="https://cran.r-project.org")'
 Then, to enable it system-wide (alternatively, use your `.Rprofile`):
 
 ```bash
-$ echo "bspm::enable()" | sudo tee -a /etc/R/Rprofile.site
+$ echo "bspm::enable()" | sudo tee -a /usr/lib64/R/etc/Rprofile.site
 ```
 
 Sometimes, a restart is required so that the new systemd service is recognized.
