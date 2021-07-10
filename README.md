@@ -108,7 +108,8 @@ $ echo "bspm::enable()" | sudo tee -a /etc/R/Rprofile.site
 ### openSUSE
 
 There are thousands of binary packages available via the
-[autoCRAN](https://launchpad.net/~marutter/+archive/ubuntu/c2d4u) OBS repo:
+[autoCRAN](https://build.opensuse.org/project/show/devel:languages:R:autoCRAN)
+OBS repo:
 
 ```bash
 $ sudo zypper ar -r https://download.opensuse.org/repositories/devel:/languages:/R:/patched/openSUSE_Tumbleweed/devel:languages:R:patched.repo
