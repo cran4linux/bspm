@@ -93,8 +93,8 @@ The `bspm` package is available as `r-cran-bspm` via the
 [edd/r-4.0](https://launchpad.net/~edd/+archive/ubuntu/r-4.0) PPA repo:
 
 ```bash
-$ sudo add-apt-repository ppa:marutter/c2d4u
-$ sudo add-apt-repository ppa:edd/r-4.0
+$ sudo add-apt-repository ppa:marutter/c2d4u # if using Ubuntu 20.04
+$ sudo add-apt-repository ppa:edd/r-4.0      # if using Debian testing
 $ sudo apt-get update
 $ sudo apt-get install r-cran-bspm
 ```
