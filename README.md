@@ -24,7 +24,7 @@ SELinux-enabled systems (see [#19](https://github.com/Enchufa2/bspm/issues/19)).
 
 - Follow these links if the target system is a desktop/server installation of
   one of the supported distributions:
-  [Fedora](#fedora), [Ubuntu/Debian](#ubuntudebian), [openSUSE](#opensuse)).
+  [Fedora](#fedora), [Ubuntu](#ubuntu), [openSUSE](#opensuse)).
 - If the target system is a containerized application (e.g., a Docker image),
   refer to the [`rocker/r-bspm` images](https://github.com/rocker-org/rocker/tree/master/r-bspm).
 - If you are trying `bspm` in another distro, or you are packaging it as a
@@ -86,18 +86,17 @@ $ sudo dnf copr enable iucar/cran
 $ sudo dnf install R-CoprManager
 ```
 
-### Ubuntu/Debian
+### Ubuntu
 
 There are thousands of binary packages available via the
-[marutter/c2d4u](https://launchpad.net/~marutter/+archive/ubuntu/c2d4u) PPA repo.
-The `bspm` package is available as `r-cran-bspm` via the
-[edd/r-4.0](https://launchpad.net/~edd/+archive/ubuntu/r-4.0) PPA repo:
+[c2d4u.team/c2d4u4.0+](https://launchpad.net/~c2d4u.team/+archive/ubuntu/c2d4u4.0+)
+PPA repo. The `bspm` package is available as `r-cran-bspm`:
 
 ```bash
-$ sudo add-apt-repository ppa:marutter/c2d4u # if using Ubuntu 20.04
-$ sudo add-apt-repository ppa:edd/r-4.0      # if using Debian testing
+$ sudo add-apt-repository ppa:marutter/rrutter4.0   # R v4.0 and higher
+$ sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+  # R packages
 $ sudo apt-get update
-$ sudo apt-get install r-cran-bspm
+$ sudo apt-get install r-cran-bspm python3-{dbus,gi,apt}
 ```
 
 Then, to enable it system-wide (alternatively, use your `.Rprofile`):
