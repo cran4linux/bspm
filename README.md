@@ -24,7 +24,7 @@ SELinux-enabled systems (see [#19](https://github.com/Enchufa2/bspm/issues/19)).
 
 - Follow these links if the target system is a desktop/server installation of
   one of the supported distributions:
-  [Fedora](#fedora), [Ubuntu](#ubuntu), [openSUSE](#opensuse)), [Arch](#arch).
+  [Fedora](#fedora), [Ubuntu](#ubuntu), [openSUSE](#opensuse), [Arch](#arch).
 - If the target system is a containerized application (e.g., a Docker image),
   refer to the [`rocker/r-bspm` images](https://github.com/rocker-org/rocker/tree/master/r-bspm).
 - If you are trying `bspm` in another distro, or you are packaging it as a
