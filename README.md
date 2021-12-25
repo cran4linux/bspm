@@ -11,7 +11,7 @@ manager. Also provides transparent integration with R's install.packages()
 and a fallback mechanism. When installed as a system package, interacts
 with the system's package manager without requiring administrative
 privileges via an integrated D-Bus service; otherwise, uses sudo.
-Currently, the following backends are supported: DNF, APT.
+Currently, the following backends are supported: DNF, APT, ALPM.
 
 See our contributed talk at _useR! 2021_:
 [[video](https://youtu.be/GMMGBlyl_ok?t=1170),
@@ -24,7 +24,7 @@ SELinux-enabled systems (see [#19](https://github.com/Enchufa2/bspm/issues/19)).
 
 - Follow these links if the target system is a desktop/server installation of
   one of the supported distributions:
-  [Fedora](#fedora), [Ubuntu](#ubuntu), [openSUSE](#opensuse)).
+  [Fedora](#fedora), [Ubuntu](#ubuntu), [openSUSE](#opensuse)), [Arch](#arch).
 - If the target system is a containerized application (e.g., a Docker image),
   refer to the [`rocker/r-bspm` images](https://github.com/rocker-org/rocker/tree/master/r-bspm).
 - If you are trying `bspm` in another distro, or you are packaging it as a
@@ -32,16 +32,17 @@ SELinux-enabled systems (see [#19](https://github.com/Enchufa2/bspm/issues/19)).
 
 ### General procedure
 
-Installation from source requires the following dependency (apart from R):
+Installation from source requires (apart from R) the folllowing Python bindings:
 
-- `python3-dnf` (Fedora-, openSUSE-like), `python3-apt` (Debian-like)
+|               | Package manager | DBus (\*)              | GObject (\*)      |
+|---------------|-----------------|------------------------|-------------------|
+| Fedora/RedHat | `python3-dnf`   | `python3-dbus`         | `python3-gobject` |
+| Ubuntu/Debian | `python3-apt`   | `python3-dbus`         | `python3-gi`      |
+|      openSUSE | `python3-dnf`   | `python38-dbus-python` | `python3-gobject` |
+|          Arch | `pyalpm`        | `python-dbus`          | `python-gobject`  |
 
-If you plan to run it as a regular user (non-root) in a desktop/server setting,
-these dependencies are required too:
-
-- `systemd` (should be already installed in all distros nowadays).
-- `python3-dbus` (Fedora-, Debian-like), `python38-dbus-python` (openSUSE-like)
-- `python3-gobject` (Fedora-, openSUSE-like), `python3-gi` (Debian-like)
+(*) Optional, only required if you plan to run `bspm` as a regular user
+(non-root) in a (systemd-based) desktop/server setting.
 
 Then, you should install `bspm` as a system package to be able to use it as a
 regular user. Download the latest version from CRAN or GitHub and proceed with
@@ -131,6 +132,29 @@ $ echo "bspm::enable()" | sudo tee -a /usr/lib64/R/etc/Rprofile.site
 ```
 
 Sometimes, a restart is required so that the new systemd service is recognized.
+
+### Arch
+
+There are a number of binary packages available via the
+[ArchRPkgs](https://github.com/dvdesolve/ArchRPkgs) repo:
+
+```bash
+$ echo -e "\n[desolve]\nServer = https://desolve.ru/archrepo/\$arch" \
+  | sudo tee -a /etc/pacman.conf
+$ sudo pacman -Sy && sudo pacman -S r pyaplm python-{dbus,gobject}
+```
+
+Then, install `bspm` as a system package from CRAN:
+
+```bash
+$ sudo Rscript -e 'install.packages("bspm", repos="https://cran.r-project.org")'
+```
+
+Then, to enable it system-wide (alternatively, use your `.Rprofile`):
+
+```bash
+$ echo "bspm::enable()" | sudo tee -a /usr/lib64/R/etc/Rprofile.site
+```
 
 ## Developing new backends
 
