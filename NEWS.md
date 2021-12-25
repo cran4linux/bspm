@@ -1,6 +1,7 @@
-# bspm 0.3.8.1
+# bspm 0.3.8.2
 
 - Force `sudo` unconditionally also with autodetection (#27, #28).
+- Call `update_cache` in DNF install transactions (#29).
 
 # bspm 0.3.8
 

@@ -26,6 +26,7 @@ def install(prefixes, pkgs, exclusions):
     base = dnf.Base()
     base.read_all_repos()
     base.repos.all().set_progress_bar(progress)
+    base.update_cache()
     base.fill_sack()
     
     notavail = mark(base.install, prefixes, pkgs, exclusions, post=base.upgrade)
