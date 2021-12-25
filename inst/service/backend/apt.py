@@ -1,5 +1,6 @@
 from ._utils import mark, cache_update
 from functools import partial
+import re
 import apt
 
 # workaround for Ubuntu 18.04
@@ -9,10 +10,9 @@ if not os.getenv("PATH"):
     os.environ["PATH"] = "/usr/bin:/usr/sbin:/bin:/sbin"
 
 def discover():
-    import re
-    
+    aprogress = apt.progress.text.AcquireProgress()
     cache = apt.Cache()
-    cache_update(cache, apt.progress.text.AcquireProgress(), force=True)
+    cache_update(partial(cache.update, aprogress), force=True)
     cache.open()
     pkgs = [x for x in cache.keys() if re.match("^r-(.*)-(.*)", x)]
     prefixes = {"-".join(x.split("-")[0:2]) + "-" for x in pkgs}

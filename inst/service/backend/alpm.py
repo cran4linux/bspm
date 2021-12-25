@@ -1,6 +1,6 @@
 from ._utils import mark, cache_update
 from functools import partial
-import pycman, pyalpm
+import pycman
 
 def discover():
     # TBD
@@ -15,14 +15,10 @@ def _update(handle):
 
 def _install(handle, t, repos, name):
     ok, pkg = pycman.action_sync.find_sync_package(name, repos)
-    if not type(pkg) is pyalpm.Package:
-        raise
     t.add_pkg(pkg)
 
 def _remove(handle, t, repos, name):
     pkg = handle.get_localdb().get_pkg(name)
-    if not type(pkg) is pyalpm.Package:
-        raise
     t.remove_pkg(pkg)
 
 def operation(op, prefixes, pkgs, exclusions):
