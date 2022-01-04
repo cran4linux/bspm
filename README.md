@@ -49,7 +49,7 @@ regular user. Download the latest version from CRAN or GitHub and proceed with
 the installation (note `sudo`):
 
 ```bash
-sudo R CMD INSTALL bspm_[version].tar.gz
+$ sudo R CMD INSTALL bspm_[version].tar.gz
 ```
 
 Further configuration options:
@@ -69,7 +69,7 @@ Further configuration options:
 To enable it by default, put the following into the `Rprofile.site`:
 
 ```r
-bspm::enable() # wrap it in suppressMessages() to avoid the initial message
+> bspm::enable() # wrap it in suppressMessages() to avoid the initial message
 ```
 
 Then, run `install.packages` as usual, and available system packages will be
