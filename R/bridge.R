@@ -6,7 +6,7 @@
 #' and a fallback mechanism. When installed as a system package, interacts
 #' with the system's package manager without requiring administrative
 #' privileges via an integrated D-Bus service; otherwise, uses sudo.
-#' Currently, the following backends are supported: DNF, APT.
+#' Currently, the following backends are supported: DNF, APT, ALPM.
 #'
 #' @author Iñaki Ucar
 #'
