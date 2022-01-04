@@ -3,6 +3,7 @@
 - Force `sudo` unconditionally also with autodetection (#27, #28).
 - Call `update_cache` in DNF install transactions (#29).
 - Add ALPM backend (#35 addressing #34).
+- Fix repeated installation issue in APT backend (#36).
 
 # bspm 0.3.8
 

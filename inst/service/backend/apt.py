@@ -26,8 +26,6 @@ def operation(op, prefixes, pkgs, exclusions):
     def cc(cache, method):
         def wrapper(pkgname):
             getattr(cache[pkgname], "mark_" + method)()
-            if not getattr(cache[pkgname], "marked_" + method):
-                raise Exception("cannot " + method + " " + pkgname)
         return wrapper
     
     oprogress = apt.progress.text.OpProgress()
