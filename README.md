@@ -135,13 +135,16 @@ Sometimes, a restart is required so that the new systemd service is recognized.
 
 ### Arch
 
-There are a number of binary packages available via the
-[ArchRPkgs](https://github.com/dvdesolve/ArchRPkgs) repo:
+There are a number of binary CRAN packages available via the
+[ArchRPkgs](https://github.com/dvdesolve/ArchRPkgs) repo
+as well as Bioconductor packages via the
+[BioArchLinux](https://github.com/BioArchLinux/Packages) repo:
 
 ```bash
 $ echo -e "\n[desolve]\nServer = https://desolve.ru/archrepo/\$arch" \
+  "\n[BioArchLinux]\nServer = https://repo.bioarchlinux.org/\$arch" \
   | sudo tee -a /etc/pacman.conf
-$ sudo pacman -Sy && sudo pacman -S r pyaplm python-{dbus,gobject}
+$ sudo pacman -Sy && sudo pacman -S r pyalpm python-{dbus,gobject}
 ```
 
 Then, install `bspm` as a system package from CRAN:
