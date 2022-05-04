@@ -1,3 +1,9 @@
+# bspm 0.3.9.1
+
+- Check backend availability on `enable()`, and trigger a warning if the
+  service is required but not found. This check can be disabled by setting
+  `options(bspm.backend.check=FALSE)` (#40).
+
 # bspm 0.3.9
 
 - Force `sudo` unconditionally also with autodetection (#27, #28).

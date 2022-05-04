@@ -12,6 +12,10 @@
 #' into the \code{Rprofile.site} file. To enable it just for a particular user,
 #' move that line to the user's \code{~/.Rprofile} instead.
 #'
+#' By default, enabling \pkg{bspm} triggers a check of the backend, and a
+#' warning is raised if the system service is required but not available. To
+#' avoid this check, \code{options(bspm.backend.check=FALSE)} can be set.
+#'
 #' @seealso \code{\link{manager}}
 #'
 #' @examples
@@ -28,6 +32,8 @@
 #' @name integration
 #' @export
 enable <- function() {
+  if (getOption("bspm.backend.check", TRUE))
+    backend_check()
   expr <- quote(if (!is.null(repos)) pkgs <- bspm::install_sys(pkgs))
   trace(utils::install.packages, expr, print=FALSE)
   invisible()

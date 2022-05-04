@@ -22,12 +22,29 @@ utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))
 
 system2nowarn <- function(...) suppressWarnings(system2(...))
 
+backend_check <- function() {
+  if (!root() && !sudo_preferred() && !dbus_service_alive())
+    warning(call.=FALSE, paste(
+      sep="\n\n", "D-Bus service not found!",
+      paste0(collapse="\n", strwrap(exdent=2, paste(
+        "- If you are in a container environment, please consider adding",
+        "the following to your configuration to silence this warning:"
+      ))),
+      "  options(bspm.sudo = TRUE)",
+      paste0(collapse="\n", strwrap(exdent=2, paste(
+        "- If you are in a desktop/server environment, please remove any",
+        "'bspm' installation from the user library and force a new system",
+        "installation as follows:"
+      ))),
+      "  $ sudo Rscript --vanilla -e 'install.packages(\"bspm\", repos=\"https://cran.r-project.org\")'"
+    ))
+}
+
 backend_call <- function(method, pkgs=NULL) {
   if (root())
     return(invisible(root_call(method, pkgs)))
 
-  sudo <- getOption("bspm.sudo.autodetect", FALSE) && sudo_available()
-  if (sudo || getOption("bspm.sudo", FALSE))
+  if (sudo_preferred())
     return(invisible(sudo_call(method, pkgs, force=TRUE)))
 
   if (dbus_service_alive())
@@ -117,4 +134,9 @@ sudo_available <- function() {
   nopass <- !system2nowarn("sudo", c("-n", "true"), stdout=FALSE, stderr=FALSE)
   toolbox <- file.exists("/run/.toolboxenv") # see #27
   nopass || toolbox
+}
+
+sudo_preferred <- function() {
+  sudo <- getOption("bspm.sudo.autodetect", FALSE) && sudo_available()
+  sudo || getOption("bspm.sudo", FALSE)
 }
