@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^docs$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^debian
