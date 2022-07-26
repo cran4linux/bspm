@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Binary R Packages for Linux: Past, Present and Future</title>
+    <meta charset="utf-8" />
+    <script src="lib/header-attrs-2.11/header-attrs.js"></script>
+    <link href="lib/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="lib/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="lib/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="lib/styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Binary R Packages for Linux: Past, Present and Future
+## cran2copr project and bspm
+### <p><span style="display:inline-block;width:100%"> <span style="float:left"> <br><strong>Iñaki Ucar</strong><br> .font80[Universidad Carlos III de Madrid | Fedora Project]<br> .font80[<a href="mailto:inaki.ucar@uc3m.es" class="email">inaki.ucar@uc3m.es</a> | <a href="mailto:iucar@fedoraproject.org" class="email">iucar@fedoraproject.org</a>] </span> <span style="float:right"> <br>Dirk Eddelbuettel<br> .font80[University of Illinois at Urbana-Champaign | Debian Project | R Project]<br> .font80[<a href="mailto:dirk@eddelbuettel.com" class="email">dirk@eddelbuettel.com</a> | <a href="mailto:edd@debian.org" class="email">edd@debian.org</a>] </span> </span></p>
+### <p><br>Regular talk for <em>useR! 2021</em> <br>9 July 2021</p>
+
+---
+
+
+# Motivation
+
+.pull-left-33[
+![](img/cran.png)
+![](img/needcomp.png)
+]
+
+.pull-right-66[.font120[
+## Comprehensive R Archive Network (CRAN)
+
+- More than **17,700** packages (!)
+- Many of them use compiled code (Fortran, C, C++...)
+- Compilation offers performance, integration, use of libraries...
+]]
+
+--
+
+.pull-right-66[.font120[
+- Pick a package at random:&lt;br&gt;**80% chance of requiring compilation**
+- Up to 50% of the 1% most popular require compilation
+]]
+
+--
+
+.pull-right-66[.font120[
+- Compiling requires an appropriate **toolchain** and **libraries**
+- Compiling requires a lot of **time**
+- Debugging build and compilation failures requires **skills**
+]]
+
+---
+
+# Motivation
+
+![](img/cran-rstanarm.png)
+
+--
+
+&lt;div style="position:absolute; bottom:20px; padding:5px; background-color:white; left:5%; font-weight:bold"&gt;
+Windows &amp; macOS desktop users
+&lt;/div&gt;
+![:scale 49%](img/fascinating-so-whats-the-problem.jpg)
+
+--
+
+&lt;div style="position:absolute; bottom:20px; padding:5px; background-color:white; left:52%; font-weight:bold"&gt;
+Linux desktop users
+&lt;/div&gt;
+![:scale 49%](img/crying.jpg)
+
+--
+
+&lt;div style="position:absolute; bottom:50px; padding:5px; background-color:white; left:52%; font-weight:bold"&gt;
+Cloud deployments, containers, CI/CD systems...
+&lt;/div&gt;
+
+---
+
+# We can do better
+
+.left-column[
+### Entire tidyverse&lt;br&gt;&lt;br&gt;in **36 seconds**&lt;br&gt;&lt;br&gt;on Fedora
+]
+
+.right-column[
+![](img/tidyverse.jpg)
+]
+
+---
+
+# Challenges
+
+.pull-left[.font120[
+## OS support
+
+- Many distributions
+- Different package managers
+- Different philosophies, conventions
+- Different update cycles
+
+&lt;br&gt;
+
+## Scalability
+
+- Build and distribute thousands of packages 
+- Accomodate constant growth at CRAN
+- Accomodate new platforms (hello, arm64)
+]]
+
+.pull-right[.font120[
+## Dependency management
+
+- External dependencies
+- Static vs. shared (system libraries)
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+## Integration
+
+- Built-in `install.packages`
+- Dependencies via system package manager
+- Need for admin privileges
+]]
+
+---
+
+# Related work
+
+.left-column[
+### Official repos
+]
+
+.right-column[.font120[
+Most distributions maintain R and a number of R packages. In Fedora,
+
+```bash
+$ dnf repoquery --repo=fedora-source R-* | wc -l
+```
+```
+## 384
+```
+]]
+
+--
+
+.right-column[.font120[
+.pros[
+- Dependency management and multi-tenancy
+- Works out-of-the-box, no additional repos required
+].cons[
+- **Does not scale**: every R package requires a peer review (even for CRAN packages!)
+- **No integration**: mixed used of distro-specific package manager (with admin privileges) and `install.packages`
+]
+]]
+
+---
+
+# Related work
+
+.left-column[
+### Official repos
+### cran2deb&lt;br&gt;cran2obs
+]
+
+.right-column[.font120[
+- `cran2deb` started by Albrecht Gebhard, picked up by Dirk et al
+- Significantly extented and polished by Charles Blundell 
+- Don Armstrong maintained a parallel setup called `debian-r`
+- **Michael Rutter** maintains the `c2d4u` repos, based on `cran2deb`, in Launchpad
+  (~ 4.7k packages for several R versions) for Debian/Ubuntu
+- **Detlef Steuer** maintains the `autoCRAN` repo, based on `cran2obs`, in OBS
+  (~16k packages) for openSUSE
+]]
+
+--
+
+.right-column[.font120[
+.pros[
+- Dependency management and multi-tenancy
+- Better scalability: scripts for automated conversion + PPA / OBS
+].cons[
+- **No integration**: mixed used of distro-specific package manager (with admin privileges) and `install.packages`
+]
+]]
+
+---
+
+# Related work
+
+.left-column[
+### Official repos
+### cran2deb&lt;br&gt;cran2obs
+### RSPM
+]
+
+.right-column[.font120[
+- **RStudio's Public Package Manager**, announced on July 1, 2020
+- Based on the proprietary product **RSPM** (RStudio Package Manager)
+]]
+
+--
+
+.right-column[.font120[
+&lt;br&gt;
+.pros[
+- Better OS support: builds for multiple distributions
+- Better scalability: builds probably based on Docker containers
+- Better integration: drop-in replacement for CRAN repo for `install.packages`
+].cons[
+- **No dependencies**:
+  - system package manager still required to install system dependencies
+  - version mismatches can happen
+]
+]]
+
+---
+class: inverse, center, middle
+
+# Meet cran2copr...
+
+&lt;div style="padding-bottom:120px"&gt;
+![:scale 15%](img/fedora.svg)
+&lt;svg class="heart" viewBox="0 0 32 29.6" style="padding:65px"&gt;
+  &lt;path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/&gt;
+&lt;/svg&gt;
+![:scale 20%](img/R.png)
+&lt;/div&gt;
+
+# ... and bspm
+
+---
+
+# Meet cran2copr
+
+.left-column[
+### A primer
+]
+
+.right-column[
+```bash
+$ sudo dnf install 'dnf-command(copr)'
+$ sudo dnf copr enable iucar/cran
+$ sudo dnf install R-CoprManager
+```
+]
+
+--
+
+.right-column[
+```r
+install.packages("units")
+```
+```
+## Install system packages as root...
+## (1/3): R-CRAN-units-0.6.7-3.fc32.x86_64.rpm    5.2 MB/s | 787 kB     00:00
+## (2/3): R-CRAN-Rcpp-1.0.5-2.fc32.x86_64.rpm     2.0 MB/s | 2.0 MB     00:00
+## (3/3): udunits2-2.2.26-6.fc32.x86_64.rpm       420 kB/s | 617 kB     00:01
+##   Preparing        :                                                        1/1
+##   Installing       : udunits2-2.2.26-6.fc32.x86_64                          1/3
+##   Installing       : R-CRAN-Rcpp-1.0.5-2.fc32.x86_64                        2/3
+##   Installing       : R-CRAN-units-0.6.7-3.fc32.x86_64                       3/3
+##   Running scriptlet: R-CRAN-units-0.6.7-3.fc32.x86_64                       3/3
+##   Verifying        : R-CRAN-Rcpp-1.0.5-2.fc32.x86_64                        1/3
+##   Verifying        : R-CRAN-units-0.6.7-3.fc32.x86_64                       2/3
+##   Verifying        : udunits2-2.2.26-6.fc32.x86_64                          3/3
+```
+]
+
+---
+
+# Meet cran2copr
+
+.left-column[
+### A primer
+### Under the hood
+]
+
+.right-column[.font120[
+- **cran2copr** uses the Fedora **Copr buildsystem** to build packages and publish RPM contributed repos
+- (Almost) the **entire CRAN available** (~17.3k packages and growing)
+- **Automated daily updates** via GitHub Actions
+- **Full integration** with `install.packages` via **bspm** (`CoprManager`)
+]
+&lt;br&gt;
+
+|             | Official repos | cran2deb | cran2obs | cran2copr |
+|------------:|:--------------:|:--------:|:--------:|:---------:|
+|   OS support|    &amp;#x25cf;    | &amp;#x25cf; | &amp;#x25cf; | &amp;#x25cf;  |
+| Dependencies|    &amp;#10004;    | &amp;#10004; | &amp;#10004; | &amp;#10004;  |
+|  Scalability|                | &amp;#x25cf; | &amp;#10004; | &amp;#10004;  |
+|  Integration|                |          |          | &amp;#10004;  |
+]
+
+---
+
+# Meet bspm
+
+.left-column[
+### A primer
+### Under the hood
+### The magic
+]
+
+.right-column[.font120[
+- `bspm`: **Bridge to System Package Manager**
+- Extensible multi-distro integration (currently supports DNF and APT)
+- cran2copr's `CoprManager` is just a _branded_ version of `bspm`
+]]
+
+--
+
+.right-column[
+&lt;div style="margin-top:-35px"&gt;
+.font120[
+- Available on CRAN, and as Debian/Ubuntu package (`r-cran-bspm`)
+- Available in the **rocker** project (`rocker/r-bspm`)
+- Provides integration to other projects
+]
+
+|             |           Official repos            |              cran2deb               |              cran2obs               | cran2copr |
+|------------:|:-----------------------------------:|:-----------------------------------:|:-----------------------------------:|:---------:|
+|   OS support|              &amp;#x25cf;               |              &amp;#x25cf;               |              &amp;#x25cf;               | &amp;#x25cf;  |
+| Dependencies|              &amp;#10004;               |              &amp;#10004;               |              &amp;#10004;               | &amp;#10004;  |
+|  Scalability|                                     |              &amp;#x25cf;               |              &amp;#10004;               | &amp;#10004;  |
+|  Integration| &lt;span class='badge'&gt;&amp;#10004;&lt;/span&gt; | &lt;span class='badge'&gt;&amp;#10004;&lt;/span&gt; | &lt;span class='badge'&gt;&amp;#10004;&lt;/span&gt; | &amp;#10004;  |
+&lt;/div&gt;
+]
+
+---
+
+# Meet bspm
+
+&lt;div class="mermaid" style="padding-top:20px"&gt;
+flowchart LR
+  subgraph Debian/Ubuntu
+    cran2deb[cran2deb&lt;br&gt;5k packages]
+  end
+  style Debian/Ubuntu fill:#CE0056,stroke:none,color:white
+  subgraph openSUSE
+    cran2obs[cran2obs&lt;br&gt;16k packages]
+  end
+  style openSUSE fill:#73BA25,stroke:none,color:white
+  subgraph Fedora
+    cran2copr[cran2copr&lt;br&gt;17k packages]
+  end
+  style Fedora fill:#3c6eb4,stroke:none,color:white
+  subgraph bspm[bspm package]
+    subgraph system service
+      backend --- apt
+      backend --- dnf
+    end
+    enable["enable()"]
+    is["install_sys(...)"]
+    is --&gt; |desktop/server&lt;br&gt;via D-Bus|backend
+    is --&gt; |containers&lt;br&gt;via root/sudo|backend
+  end
+  style bspm fill:none
+  subgraph R[R session]
+    ip["install.packages(...)"]
+    ip -.-o enable
+    ip --&gt; is
+    is --&gt; |not available|ip
+  end
+  apt --&gt; cran2deb
+  dnf --&gt; cran2obs
+  dnf --&gt; cran2copr
+&lt;/div&gt;
+
+---
+
+# Example: rspm vs. bspm
+
+.left-column[
+### Missing dependencies
+]
+
+.right-column[
+&lt;video id="video" src="img/RSPMvsFedoraBSPM.webm"&gt;&lt;/video&gt;
+&lt;span class="font80" style="position:relative;top:-540px;"&gt;
+  See another cool Ubuntu-based animation at https://dirk.eddelbuettel.com/blog/2020/08/26/
+&lt;/span&gt;
+]
+
+---
+
+# Example: geospatial stack via bspm
+
+.left-column[
+`rocker/geospatial`:
+- 25 packages
+
+Dependencies:
+- 139 packages
+- 69 system libraries
+
+Size:
+- ~300 MB download
+- ~800 MB on disk
+
+### **68 seconds**
+]
+
+.right-column[
+![](img/geospatial.jpg)
+]
+
+---
+
+# Thanks
+
+.pull-left[
+[![](img/tweet1.jpg)](https://twitter.com/rdataberlin/status/1408379823970557954)
+]
+
+.pull-right[
+[![](img/tweet2.jpg)](https://twitter.com/rmflight/status/1409684842703327234)
+
+Links:
+- https://github.com/Enchufa2/cran2copr
+- https://github.com/Enchufa2/bspm
+- https://github.com/rocker-org/rocker/tree/master/r-bspm
+]
+
+---
+class: inverse, center, middle
+
+&lt;div style="margin-top:-65px"&gt;
+![:scale 13%](img/tux.svg)
+&lt;svg class="heart" viewBox="0 0 32 29.6" style="padding:65px"&gt;
+  &lt;path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/&gt;
+&lt;/svg&gt;
+![:scale 20%](img/R.png)
+&lt;/div&gt;
+
+---
+
+# Appendix: installation instructions
+
+.left-column[
+&lt;h3 style="color:#3c6eb4"&gt;Fedora:&lt;/h3&gt;
+&lt;h3 style="color:#CE0056;padding-top:45px"&gt;Ubuntu:&lt;/h3&gt;
+&lt;h3 style="color:#73BA25;padding-top:90px"&gt;openSUSE:&lt;/h3&gt;
+&lt;h3 style="color:#1A292C;padding-top:125px"&gt;then...&lt;/h3&gt;
+]
+
+.right-column[
+&lt;div class="fedora"&gt;
+```bash
+$ sudo dnf install 'dnf-command(copr)'
+$ sudo dnf copr enable iucar/cran
+$ sudo dnf install R-CoprManager
+```
+&lt;/div&gt;
+&lt;div class="debian"&gt;
+```bash
+$ sudo add-apt-repository ppa:marutter/rrutter4.0   # R v4.0 and higher
+$ sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+  # R packages
+$ sudo apt-get update
+$ sudo apt-get install r-cran-bspm python3-{dbus,gi,apt}
+$ echo "bspm::enable()" | sudo tee -a /etc/R/Rprofile.site
+```
+&lt;/div&gt;
+&lt;div class="opensuse"&gt;
+```bash
+$ sudo zypper ar -r https://download.opensuse.org/repositories/devel:/languages:/R:/patched/openSUSE_Tumbleweed/devel:languages:R:patched.repo
+$ sudo zypper ar -r https://download.opensuse.org/repositories/devel:/languages:/R:/autoCRAN/openSUSE_Tumbleweed/devel:languages:R:autoCRAN.repo
+$ sudo zypper install R-patched python3-dnf python38-dbus-python python3-gobject
+$ sudo ln -s /etc/zypp/repos.d /etc/yum.repos.d
+$ sudo Rscript -e 'install.packages("bspm", repos="https://cran.r-project.org")'
+$ echo "bspm::enable()" | sudo tee -a /usr/lib64/R/etc/Rprofile.site
+```
+&lt;/div&gt;
+```r
+install.packages(...) # enjoy!
+```
+]
+
+---
+
+# Appendix: installation instructions
+
+.left-column[
+### Other
+]
+
+.right-column[.font120[
+### General procedure
+
+If you are trying `bspm` in another distro, or you are packaging it as a system package, please refer to the [general procedure](https://github.com/Enchufa2/bspm#general-procedure).
+
+### Containerized applications (e.g., a Docker images)
+Refer to the [`rocker/r-bspm` images](https://github.com/rocker-org/rocker/tree/master/r-bspm).
+]]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="lib/remark-latest.min.js"></script>
+<script src="lib/macros.js"></script>
+<script src="lib/mermaid.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

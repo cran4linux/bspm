@@ -1,0 +1,78 @@
+.footnote {
+  bottom: 1em;
+}
+
+.pull-left-33 {
+  float: left;
+  width: 33%;
+}
+
+.pull-right-66 {
+  float: right;
+  width: 63%;
+}
+
+.badge {
+  display: inline-block;
+  padding: .25em .4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
+  color: #fff;
+  background-color: #28a745;
+}
+
+.vcenter {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translate(0%, -50%);
+  transform: translate(0%, -50%);
+}
+
+.pros ul, .cons ul {
+  list-style: none;
+}
+
+.pros li:before, .cons li:before {
+  padding-right: 3px;
+  margin-left: -1em;
+}
+
+.pros li:before {
+  content: "✔";
+  color: green;
+}
+
+.cons li:before {
+  content: "✗";
+  color: red;
+}
+
+.heart {
+  fill: red;
+  position: relative;
+  top: 5px;
+  width: 50px;
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.fedora code {
+  background: #3c6eb411 !important;
+}
+.debian code {
+  background: #CE005611 !important;
+}
+.opensuse code {
+  background: #73BA2511 !important;
+}
