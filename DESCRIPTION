@@ -17,7 +17,7 @@ Encoding: UTF-8
 OS_type: unix
 SystemRequirements: systemd, dbus-python, PyGObject, python-(dnf|apt|alpm)
 Suggests: tinytest
-URL: https://github.com/Enchufa2/bspm
+URL: https://enchufa2.github.io/bspm
 BugReports: https://github.com/Enchufa2/bspm/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Roxygen: list(old_usage = TRUE)

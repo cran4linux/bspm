@@ -14,7 +14,7 @@ privileges via an integrated D-Bus service; otherwise, uses sudo.
 Currently, the following backends are supported: DNF, APT, ALPM.
 }
 \references{
-\url{https://github.com/Enchufa2/bspm}
+\url{https://enchufa2.github.io/bspm}
 }
 \seealso{
 \code{\link{manager}}, \code{\link{integration}}

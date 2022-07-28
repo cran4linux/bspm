@@ -172,3 +172,28 @@ The last two functions receive a list of prefixes, a list of R package names and
 a list of exclusions, and must return a list with those package names that could
 not be processed (i.e., packages not found in the system repos). Any progress
 should be reported to stdout.
+
+## Support and troubleshooting
+
+If you are experiencing an issue that is not listed here, or the solution
+did not work for you, please do not hesitate to open a ticket at our
+[GitHub issue tracker](https://github.com/Enchufa2/bspm/issues).
+
+### Cannot connect to the system package manager
+
+Symptom: you tried to install a package and you got this message.
+
+```r
+> install.packages(<some_package>)
+Error in install.packages : cannot connect to the system package manager
+```
+
+This usually happens when `bspm` was installed in the user library or, as a
+system package, it is not properly configured for some reason. The solution is:
+
+1. First and foremost, **uninstall** any copy of `bspm` in your user library.
+2. Reinstall with admin privileges, e.g.:
+
+```bash
+$ sudo Rscript --vanilla -e 'install.packages("bspm", repos="https://cran.r-project.org")'
+```

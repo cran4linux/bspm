@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bspm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.9.1</span>
       </span>
     </div>
 
@@ -194,6 +194,24 @@
 <li><code>def remove(prefixes : list, pkgs : list, exclusions : list) -&gt; list</code></li>
 </ul>
 <p>The last two functions receive a list of prefixes, a list of R package names and a list of exclusions, and must return a list with those package names that could not be processed (i.e., packages not found in the system repos). Any progress should be reported to stdout.</p>
+</div>
+<div class="section level2">
+<h2 id="support-and-troubleshooting">Support and troubleshooting<a class="anchor" aria-label="anchor" href="#support-and-troubleshooting"></a>
+</h2>
+<p>If you are experiencing an issue that is not listed here, or the solution did not work for you, please do not hesitate to open a ticket at our <a href="https://github.com/Enchufa2/bspm/issues" class="external-link">GitHub issue tracker</a>.</p>
+<div class="section level3">
+<h3 id="cannot-connect-to-the-system-package-manager">Cannot connect to the system package manager<a class="anchor" aria-label="anchor" href="#cannot-connect-to-the-system-package-manager"></a>
+</h3>
+<p>Symptom: you tried to install a package and you got this message.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">install.packages</span>(<span class="sc">&lt;</span>some_package<span class="sc">&gt;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> install.packages <span class="sc">:</span> cannot connect to the system package manager</span></code></pre></div>
+<p>This usually happens when <code>bspm</code> was installed in the user library or, as a system package, it is not properly configured for some reason. The solution is:</p>
+<ol style="list-style-type: decimal">
+<li>First and foremost, <strong>uninstall</strong> any copy of <code>bspm</code> in your user library.</li>
+<li>Reinstall with admin privileges, e.g.:</li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">--vanilla</span> <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </div>

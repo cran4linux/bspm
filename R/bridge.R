@@ -10,7 +10,7 @@
 #'
 #' @author Iñaki Ucar
 #'
-#' @references \url{https://github.com/Enchufa2/bspm}
+#' @references \url{https://enchufa2.github.io/bspm}
 #'
 #' @docType package
 #' @name bspm-package

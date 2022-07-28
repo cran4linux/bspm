@@ -20,7 +20,7 @@ R repositories if not."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bspm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.9.1</span>
       </span>
     </div>
 
@@ -70,6 +70,9 @@ transparently from system repositories if available, and from the configured
 <p><code>suppressMessages(bspm::enable())</code></p>
 <p>into the <code>Rprofile.site</code> file. To enable it just for a particular user,
 move that line to the user's <code>~/.Rprofile</code> instead.</p>
+<p>By default, enabling <span class="pkg">bspm</span> triggers a check of the backend, and a
+warning is raised if the system service is required but not available. To
+avoid this check, <code>options(bspm.backend.check=FALSE)</code> can be set.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
