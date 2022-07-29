@@ -148,40 +148,41 @@
 <div class="section level3">
 <h3 id="ubuntu">Ubuntu<a class="anchor" aria-label="anchor" href="#ubuntu"></a>
 </h3>
-<p>There are thousands of binary packages available via the <a href="https://launchpad.net/~c2d4u.team/+archive/ubuntu/c2d4u4.0+" class="external-link">c2d4u.team/c2d4u4.0+</a> PPA repo. The <code>bspm</code> package is available as <code>r-cran-bspm</code>:</p>
+<p>There are thousands of binary packages available via the <a href="https://launchpad.net/~c2d4u.team/+archive/ubuntu/c2d4u4.0+" class="external-link">c2d4u.team/c2d4u4.0+</a> PPA repo:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo add-apt-repository ppa:marutter/rrutter4.0   <span class="co"># R v4.0 and higher</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+  <span class="co"># R packages</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get update</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install r-cran-bspm python3-<span class="dt">{dbus</span><span class="op">,</span><span class="dt">gi</span><span class="op">,</span><span class="dt">apt}</span></span></code></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt-get install python3-<span class="dt">{dbus</span><span class="op">,</span><span class="dt">gi</span><span class="op">,</span><span class="dt">apt}</span></span></code></pre></div>
+<p>Then, install <code>bspm</code> as a system package from CRAN:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
 <p>Then, to enable it system-wide (alternatively, use your <code>.Rprofile</code>):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"bspm::enable()"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /etc/R/Rprofile.site</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"bspm::enable()"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /etc/R/Rprofile.site</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="opensuse">openSUSE<a class="anchor" aria-label="anchor" href="#opensuse"></a>
 </h3>
 <p>There are thousands of binary packages available via the <a href="https://build.opensuse.org/project/show/devel:languages:R:autoCRAN" class="external-link">autoCRAN</a> OBS repo:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo zypper ar <span class="at">-r</span> https://download.opensuse.org/repositories/devel:/languages:/R:/patched/openSUSE_Tumbleweed/devel:languages:R:patched.repo</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo zypper ar <span class="at">-r</span> https://download.opensuse.org/repositories/devel:/languages:/R:/autoCRAN/openSUSE_Tumbleweed/devel:languages:R:autoCRAN.repo</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo zypper install R-patched python3-dnf python38-dbus-python python3-gobject</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo ln <span class="at">-s</span> /etc/zypp/repos.d /etc/yum.repos.d</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo zypper ar <span class="at">-r</span> https://download.opensuse.org/repositories/devel:/languages:/R:/patched/openSUSE_Tumbleweed/devel:languages:R:patched.repo</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo zypper ar <span class="at">-r</span> https://download.opensuse.org/repositories/devel:/languages:/R:/autoCRAN/openSUSE_Tumbleweed/devel:languages:R:autoCRAN.repo</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo zypper install R-patched python3-dnf python38-dbus-python python3-gobject</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo ln <span class="at">-s</span> /etc/zypp/repos.d /etc/yum.repos.d</span></code></pre></div>
 <p>Then, install <code>bspm</code> as a system package from CRAN:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
 <p>Then, to enable it system-wide (alternatively, use your <code>.Rprofile</code>):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"bspm::enable()"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /usr/lib64/R/etc/Rprofile.site</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"bspm::enable()"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /usr/lib64/R/etc/Rprofile.site</span></code></pre></div>
 <p>Sometimes, a restart is required so that the new systemd service is recognized.</p>
 </div>
 <div class="section level3">
 <h3 id="arch">Arch<a class="anchor" aria-label="anchor" href="#arch"></a>
 </h3>
 <p>There are a number of binary CRAN packages available via the <a href="https://github.com/dvdesolve/ArchRPkgs" class="external-link">ArchRPkgs</a> repo as well as Bioconductor packages via the <a href="https://github.com/BioArchLinux/Packages" class="external-link">BioArchLinux</a> repo:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="at">-e</span> <span class="st">"\n[desolve]\nServer = https://desolve.ru/archrepo/</span><span class="dt">\$</span><span class="st">arch"</span> <span class="dt">\</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\n[BioArchLinux]\nServer = https://repo.bioarchlinux.org/</span><span class="dt">\$</span><span class="st">arch"</span> <span class="dt">\</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /etc/pacman.conf</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacman <span class="at">-Sy</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> pacman <span class="at">-S</span> r pyalpm python-<span class="dt">{dbus</span><span class="op">,</span><span class="dt">gobject}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="at">-e</span> <span class="st">"\n[desolve]\nServer = https://desolve.ru/archrepo/</span><span class="dt">\$</span><span class="st">arch"</span> <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\n[BioArchLinux]\nServer = https://repo.bioarchlinux.org/</span><span class="dt">\$</span><span class="st">arch"</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /etc/pacman.conf</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacman <span class="at">-Sy</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> pacman <span class="at">-S</span> r pyalpm python-<span class="dt">{dbus</span><span class="op">,</span><span class="dt">gobject}</span></span></code></pre></div>
 <p>Then, install <code>bspm</code> as a system package from CRAN:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
 <p>Then, to enable it system-wide (alternatively, use your <code>.Rprofile</code>):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"bspm::enable()"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /usr/lib64/R/etc/Rprofile.site</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"bspm::enable()"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /usr/lib64/R/etc/Rprofile.site</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -203,14 +204,14 @@
 <h3 id="cannot-connect-to-the-system-package-manager">Cannot connect to the system package manager<a class="anchor" aria-label="anchor" href="#cannot-connect-to-the-system-package-manager"></a>
 </h3>
 <p>Symptom: you tried to install a package and you got this message.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">install.packages</span>(<span class="sc">&lt;</span>some_package<span class="sc">&gt;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> install.packages <span class="sc">:</span> cannot connect to the system package manager</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">install.packages</span>(<span class="sc">&lt;</span>some_package<span class="sc">&gt;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> install.packages <span class="sc">:</span> cannot connect to the system package manager</span></code></pre></div>
 <p>This usually happens when <code>bspm</code> was installed in the user library or, as a system package, it is not properly configured for some reason. The solution is:</p>
 <ol style="list-style-type: decimal">
 <li>First and foremost, <strong>uninstall</strong> any copy of <code>bspm</code> in your user library.</li>
 <li>Reinstall with admin privileges, e.g.:</li>
 </ol>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">--vanilla</span> <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">--vanilla</span> <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
 </div>
 </div>
 </div>
