@@ -1,5 +1,5 @@
 ## Patch release
-New ALPM backend for Arch-based distros + several fixes.
+Add a backend availability check with fixing instructions.
 
 ## Test environments
 - local R installation, R 4.0.5

@@ -1,4 +1,4 @@
-# bspm 0.3.9.1
+# bspm 0.3.10
 
 - Check backend availability on `enable()`, and trigger a warning if the
   service is required but not found. This check can be disabled by setting
