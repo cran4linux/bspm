@@ -15,6 +15,8 @@ def discover():
     pkgs = q.available().filterm(name__glob="R-*[!-debuginfo][!-devel]")
     prefixes = {"-".join(x.name.split("-")[:-1]) + "-" for x in pkgs}
 
+    base.close()
+
     return {
         "prefixes": sorted(list(prefixes - {"R-TH-"})),
         "exclusions": ["R-core", "R-core-devel", "R-devel", "R-java",

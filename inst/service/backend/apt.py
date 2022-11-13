@@ -14,9 +14,12 @@ def discover():
     cache = apt.Cache()
     cache_update(partial(cache.update, aprogress), force=True)
     cache.open()
+
     pkgs = [x for x in cache.keys() if re.match("^r-(.*)-(.*)", x)]
     prefixes = {"-".join(x.split("-")[0:2]) + "-" for x in pkgs}
-    
+
+    cache.close()
+
     return {
         "prefixes": list(prefixes - {"r-doc-", "r-base-"}),
         "exclusions": []
@@ -27,19 +30,19 @@ def operation(op, prefixes, pkgs, exclusions):
         def wrapper(pkgname):
             getattr(cache[pkgname], "mark_" + method)()
         return wrapper
-    
+
     oprogress = apt.progress.text.OpProgress()
     aprogress = apt.progress.text.AcquireProgress()
-    
+
     cache = apt.Cache(oprogress)
     cache_update(partial(cache.update, aprogress))
     cache.open(oprogress)
-    
+
     notavail = mark(cc(cache, op), prefixes, pkgs, exclusions, trans="lower")
-    
+
     cache.commit(aprogress)
     cache.close()
-    
+
     return notavail
 
 def install(prefixes, pkgs, exclusions):

@@ -55,25 +55,25 @@ def _remove(handle, t, repos, name):
 def operation(op, prefixes, pkgs, exclusions):
     args = pycman.action_sync.parse_options([])
     handle = pycman.config.init_with_config_and_options(args)
-    
+
     handle.dlcb = _cb_dl
     handle.eventcb = _cb_event
     handle.progresscb = _cb_progress
-    
+
     repos = dict((db.name, db) for db in handle.get_syncdbs())
     t = handle.init_transaction()
     _update(handle)
-    
+
     fun = partial(op, handle, t, repos)
     notavail = mark(fun, prefixes, pkgs, exclusions, trans="lower")
-    
+
     try:
         t.prepare()
         t.commit()
     except:
         pass
     t.release()
-    
+
     return notavail
 
 def install(prefixes, pkgs, exclusions):
