@@ -69,6 +69,12 @@ remove_sys <- function(pkgs) invisible(backend_call("remove", pkgs))
 available_sys <- function() {
   pkgs <- do.call(rbind, strsplit(backend_call("available"), " "))
   colnames(pkgs) <- c("Package", "Version", "Repository")
+
+  vers <- package_version(pkgs[, "Version"])
+  pkgs <- pkgs[order(pkgs[, "Package"], vers, decreasing=TRUE), ]
+  pkgs <- pkgs[!duplicated(pkgs[, "Package"]), ]
+  pkgs <- pkgs[order(pkgs[, "Package"]), ]
+
   rownames(pkgs) <- pkgs[, 1]
   pkgs
 }

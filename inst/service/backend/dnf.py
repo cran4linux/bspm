@@ -30,16 +30,17 @@ def available(prefixes, exclusions):
     base.fill_sack()
 
     q = base.sack.query().available().latest()
-    q = q.filterm(name__glob=[_ + "*" for _ in prefixes], arch="src")
+    q = q.filterm(name__glob=[_ + "*" for _ in prefixes])
     pkgs = []
     for pkg in q:
-        if pkg.name in exclusions:
+        if not pkg.source_name or pkg.name in exclusions:
             continue
         pkgs.append(" ".join([
-            pkg_strip(prefixes, pkg.name),
+            pkg_strip(sorted(prefixes, reverse=True), pkg.source_name),
             pkg.version,
             pkg.reponame
         ]))
+    pkgs = list(dict.fromkeys(pkgs))
 
     base.close()
 
