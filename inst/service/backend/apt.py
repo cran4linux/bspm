@@ -25,6 +25,33 @@ def discover():
         "exclusions": []
     }
 
+def available(prefixes, exclusions):
+    aprogress = apt.progress.text.AcquireProgress()
+    cache = apt.Cache()
+    cache_update(partial(cache.update, aprogress))
+    cache.open()
+
+    q = [x for x in cache.keys() if re.match("|".join(prefixes), x)]
+    pkgs = []
+    for pkg in q:
+        if pkg in exclusions:
+            continue
+        version = cache[pkg].candidate.version
+        version = list(reversed(version.split(":", 1)))[0]
+        version = version.rsplit("-", 1)[0]
+        version = version.rsplit("+")[0]
+        # remove things like .r79, see r-cran-rniftilib
+        version = re.sub("\.r[0-9]+", "", version)
+        pkgs.append(" ".join([
+            cache[pkg].candidate.source_name,
+            version,
+            cache[pkg].candidate.origins[0].origin
+        ]))
+
+    cache.close()
+
+    return pkgs
+
 def operation(op, prefixes, pkgs, exclusions):
     def cc(cache, method):
         def wrapper(pkgname):
