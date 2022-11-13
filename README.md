@@ -170,6 +170,7 @@ New backends for other package managers can be added to `inst/service/backend`.
 Each backend must implement the following functions:
 
 - `def discover() -> dict({ "prefixes" : list, "exclusions" : list })`
+- `def available(prefixes : list, exclusions : list) -> list`
 - `def install(prefixes : list, pkgs : list, exclusions : list) -> list`
 - `def remove(prefixes : list, pkgs : list, exclusions : list) -> list`
 

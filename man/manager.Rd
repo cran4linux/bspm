@@ -4,12 +4,15 @@
 \alias{manager}
 \alias{install_sys}
 \alias{remove_sys}
+\alias{available_sys}
 \alias{discover}
 \title{Manage Packages from System Repositories}
 \usage{
 install_sys(pkgs)
 
 remove_sys(pkgs)
+
+available_sys()
 
 discover()
 }
@@ -19,6 +22,10 @@ discover()
 \value{
 Functions \code{install_sys} and \code{remove_sys} return, invisibly,
 a character vector of the names of packages not available in the system.
+
+Function \code{available_sys} returns a matrix with one row per
+package. Row names are the package names, and column names include
+\code{"Package"}, \code{"Version"}, \code{"Repository"}.
 }
 \description{
 Talk to the system package manager to install/remove... packages from system
@@ -62,6 +69,9 @@ bspm::install_sys("units")
 
 # now remove it
 bspm::remove_sys("units")
+
+# get available packages
+bspm::available_sys()
 }
 
 }

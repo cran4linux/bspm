@@ -32,3 +32,8 @@ def cache_update(method, force=False):
     if force or time.time() - cache_time > CACHE_INVALIDATION_TIME * 60:
         method()
         Path(cache_file).touch()
+
+def pkg_strip(prefixes, pkg):
+    for prefix in prefixes:
+        pkg = pkg.replace(prefix, "")
+    return pkg

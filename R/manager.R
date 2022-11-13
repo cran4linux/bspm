@@ -39,6 +39,9 @@
 #'
 #' # now remove it
 #' bspm::remove_sys("units")
+#'
+#' # get available packages
+#' bspm::available_sys()
 #' }
 #'
 #' @name manager
@@ -50,12 +53,25 @@ install_sys <- function(pkgs) {
     deps <- unique(unlist(deps, use.names=FALSE))
     if (length(deps)) backend_call("install", deps)
   }
-  not.avail
+  invisible(not.avail)
 }
 
 #' @name manager
 #' @export
-remove_sys <- function(pkgs) backend_call("remove", pkgs)
+remove_sys <- function(pkgs) invisible(backend_call("remove", pkgs))
+
+#' @return Function \code{available_sys} returns a matrix with one row per
+#' package. Row names are the package names, and column names include
+#' \code{"Package"}, \code{"Version"}, \code{"Repository"}.
+#'
+#' @name manager
+#' @export
+available_sys <- function() {
+  pkgs <- do.call(rbind, strsplit(backend_call("available"), " "))
+  colnames(pkgs) <- c("Package", "Version", "Repository")
+  rownames(pkgs) <- pkgs[, 1]
+  pkgs
+}
 
 #' @details The \code{discover} method is only needed when e.g. a new repository
 #' is added that contains packages with different prefixes (for example, your
@@ -66,4 +82,4 @@ remove_sys <- function(pkgs) backend_call("remove", pkgs)
 #'
 #' @name manager
 #' @export
-discover <- function() backend_call("discover")
+discover <- function() invisible(backend_call("discover"))
