@@ -23,6 +23,11 @@ bspm.pref <- system.file("service/bspm.pref", package="bspm")
 bspm.excl <- system.file("service/bspm.excl", package="bspm")
 expect_true(all(c(bspm.pref, bspm.excl) != ""))
 
+pkgs <- available_sys()
+expect_inherits(pkgs, "matrix")
+expect_equal(colnames(pkgs), c("Package", "Version", "Repository"))
+expect_true("Rcpp" %in% rownames(pkgs))
+
 pkgs <- install_sys(c("Rcpp", "NOTAPACKAGE"))
 expect_true(requireNamespace("Rcpp", quietly=TRUE))
 expect_equal(pkgs, "NOTAPACKAGE")
