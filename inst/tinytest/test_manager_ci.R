@@ -26,7 +26,7 @@ expect_true(all(c(bspm.pref, bspm.excl) != ""))
 pkgs <- available_sys()
 expect_inherits(pkgs, "matrix")
 expect_equal(colnames(pkgs), c("Package", "Version", "Repository"))
-expect_true(length(grep("Rcpp", rownames(pkgs), ignore.case=TRUE)) == 1)
+expect_true(length(grep("Rcpp", rownames(pkgs), ignore.case=TRUE)) > 0)
 
 pkgs <- install_sys(c("Rcpp", "NOTAPACKAGE"))
 expect_true(requireNamespace("Rcpp", quietly=TRUE))
