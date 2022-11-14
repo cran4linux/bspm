@@ -12,7 +12,7 @@ repositories (see details for further options)."><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.10.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,6 +58,8 @@ repositories (see details for further options).</p>
 <span></span>
 <span><span class="fu">remove_sys</span><span class="op">(</span><span class="va">pkgs</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">available_sys</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">discover</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -73,6 +75,11 @@ repositories (see details for further options).</p>
 
 <p>Functions <code>install_sys</code> and <code>remove_sys</code> return, invisibly,
 a character vector of the names of packages not available in the system.</p>
+
+
+<p>Function <code>available_sys</code> returns a matrix with one row per
+package. Row names are the package names, and column names include
+<code>"Package"</code>, <code>"Version"</code>, <code>"Repository"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -116,6 +123,9 @@ regenerating the internal configuration files.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># now remove it</span></span></span>
 <span class="r-in"><span><span class="fu">bspm</span><span class="fu">::</span><span class="fu">remove_sys</span><span class="op">(</span><span class="st">"units"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get available packages</span></span></span>
+<span class="r-in"><span><span class="fu">bspm</span><span class="fu">::</span><span class="fu">available_sys</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.10.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -192,6 +192,7 @@
 <p>New backends for other package managers can be added to <code>inst/service/backend</code>. Each backend must implement the following functions:</p>
 <ul>
 <li><code>def discover() -&gt; dict({ "prefixes" : list, "exclusions" : list })</code></li>
+<li><code>def available(prefixes : list, exclusions : list) -&gt; list</code></li>
 <li><code>def install(prefixes : list, pkgs : list, exclusions : list) -&gt; list</code></li>
 <li><code>def remove(prefixes : list, pkgs : list, exclusions : list) -&gt; list</code></li>
 </ul>
