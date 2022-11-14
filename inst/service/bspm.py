@@ -85,19 +85,19 @@ def run_as_service():
         @handle_exceptions(10)
         @redirect_output
         def available(self, pid):
-            call_backend("available")
+            return call_backend("available")
 
         @dbus.service.method(IFACE, in_signature="ias", out_signature="as")
         @handle_exceptions(10)
         @redirect_output
         def install(self, pid, pkgs):
-            call_backend("install", pkgs)
+            return call_backend("install", pkgs)
 
         @dbus.service.method(IFACE, in_signature="ias", out_signature="as")
         @handle_exceptions(10)
         @redirect_output
         def remove(self, pid, pkgs):
-            call_backend("remove", pkgs)
+            return call_backend("remove", pkgs)
 
     def sigterm_handler(_signo, _stack_frame):
         mainloop.quit()
