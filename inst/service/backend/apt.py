@@ -1,4 +1,4 @@
-from ._utils import mark, cache_update, ver_strip
+from ._utils import mark, cache_update, pkg_record
 from functools import partial
 import re
 import apt
@@ -36,14 +36,12 @@ def available(prefixes, exclusions):
     for pkg in q:
         if pkg in exclusions:
             continue
-        version = ver_strip(cache[pkg].candidate.version)
-        # remove things like .r79, see r-cran-rniftilib
-        version = re.sub("\.r[0-9]+", "", version)
-        pkgs.append(";".join([
+        pkgs.append(pkg_record(
+            prefixes,
             cache[pkg].candidate.source_name,
-            version,
-            cache[pkg].candidate.origins[0].origin.replace(" ", "_")
-        ]))
+            cache[pkg].candidate.version,
+            cache[pkg].candidate.origins[0].origin
+        ))
 
     cache.close()
 

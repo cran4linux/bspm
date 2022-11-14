@@ -1,4 +1,4 @@
-from ._utils import mark, pkg_strip, ver_strip
+from ._utils import mark, pkg_record
 from functools import partial
 import pycman
 
@@ -73,11 +73,12 @@ def available(prefixes, exclusions):
     for pkg in q:
         if pkg.name in exclusions:
             continue
-        pkgs.append(";".join([
-            pkg_strip(prefixes, pkg.name),
-            ver_strip(pkg.version),
-            pkg.db.name.replace(" ", "_")
-        ]))
+        pkgs.append(pkg_record(
+            prefixes,
+            pkg.name,
+            pkg.version,
+            pkg.db.name
+        ))
 
     return pkgs
 

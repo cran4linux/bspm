@@ -1,4 +1,4 @@
-from ._utils import mark, pkg_strip
+from ._utils import mark, pkg_record
 import sys
 import dnf
 import dnf.cli.progress
@@ -37,11 +37,12 @@ def available(prefixes, exclusions):
     for pkg in q:
         if not pkg.source_name or pkg.name in exclusions:
             continue
-        pkgs.append(";".join([
-            pkg_strip(prefixes, pkg.source_name),
+        pkgs.append(pkg_record(
+            prefixes,
+            pkg.source_name,
             pkg.version,
-            pkg.reponame.replace(" ", "_")
-        ]))
+            pkg.reponame
+        ))
     pkgs = list(dict.fromkeys(pkgs))
 
     base.close()

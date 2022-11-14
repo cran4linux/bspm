@@ -1,7 +1,7 @@
 from contextlib import suppress
 from pathlib import Path
 from os import path
-import time
+import time, re
 
 CACHE_INVALIDATION_TIME = 5 # minutes
 
@@ -33,13 +33,22 @@ def cache_update(method, force=False):
         method()
         Path(cache_file).touch()
 
-def pkg_strip(prefixes, pkg):
+def pkg_strip(prefixes, name):
     for prefix in sorted(prefixes, reverse=True):
-        pkg = pkg.replace(prefix, "")
-    return pkg
+        name = name.replace(prefix, "")
+    return name
 
 def ver_strip(version):
     version = list(reversed(version.split(":", 1)))[0]
     version = version.rsplit("-", 1)[0]
     version = version.rsplit("+")[0]
+    # remove things like .r79, see r-cran-rniftilib
+    version = re.sub("\.r[0-9]+$", "", version)
     return version
+
+def pkg_record(prefixes, name, version, repo):
+    return ";".join([
+        pkg_strip(prefixes, name),
+        ver_strip(version),
+        repo.replace(" ", "_")
+    ])
