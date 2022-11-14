@@ -39,7 +39,7 @@ def available(prefixes, exclusions):
         version = ver_strip(cache[pkg].candidate.version)
         # remove things like .r79, see r-cran-rniftilib
         version = re.sub("\.r[0-9]+", "", version)
-        pkgs.append(" ".join([
+        pkgs.append(";".join([
             cache[pkg].candidate.source_name,
             version,
             cache[pkg].candidate.origins[0].origin

@@ -37,7 +37,7 @@ def available(prefixes, exclusions):
     for pkg in q:
         if not pkg.source_name or pkg.name in exclusions:
             continue
-        pkgs.append(" ".join([
+        pkgs.append(";".join([
             pkg_strip(sorted(prefixes, reverse=True), pkg.source_name),
             pkg.version,
             pkg.reponame
