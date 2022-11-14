@@ -1,3 +1,8 @@
+# bspm 0.3.10.1
+
+- New function `available_sys()` returns a matrix of available packages with
+  `"Package"`, `"Version"`, and `"Repository"` (#47 addressing #41).
+
 # bspm 0.3.10
 
 - Check backend availability on `enable()`, and trigger a warning if the

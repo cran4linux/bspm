@@ -1,5 +1,5 @@
 libnames = ["dnf", "apt", "alpm"]
-attrs = ["discover", "install", "remove"]
+attrs = ["discover", "available", "install", "remove"]
 
 for libname in libnames:
     try:

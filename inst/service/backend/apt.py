@@ -1,4 +1,4 @@
-from ._utils import mark, cache_update
+from ._utils import mark, cache_update, pkg_record
 from functools import partial
 import re
 import apt
@@ -14,32 +14,57 @@ def discover():
     cache = apt.Cache()
     cache_update(partial(cache.update, aprogress), force=True)
     cache.open()
+
     pkgs = [x for x in cache.keys() if re.match("^r-(.*)-(.*)", x)]
     prefixes = {"-".join(x.split("-")[0:2]) + "-" for x in pkgs}
-    
+
+    cache.close()
+
     return {
         "prefixes": list(prefixes - {"r-doc-", "r-base-"}),
         "exclusions": []
     }
+
+def available(prefixes, exclusions):
+    aprogress = apt.progress.text.AcquireProgress()
+    cache = apt.Cache()
+    cache_update(partial(cache.update, aprogress))
+    cache.open()
+
+    q = [x for x in cache.keys() if re.match("|".join(prefixes), x)]
+    pkgs = []
+    for pkg in q:
+        if pkg in exclusions:
+            continue
+        pkgs.append(pkg_record(
+            prefixes,
+            cache[pkg].candidate.source_name,
+            cache[pkg].candidate.version,
+            cache[pkg].candidate.origins[0].origin
+        ))
+
+    cache.close()
+
+    return pkgs
 
 def operation(op, prefixes, pkgs, exclusions):
     def cc(cache, method):
         def wrapper(pkgname):
             getattr(cache[pkgname], "mark_" + method)()
         return wrapper
-    
+
     oprogress = apt.progress.text.OpProgress()
     aprogress = apt.progress.text.AcquireProgress()
-    
+
     cache = apt.Cache(oprogress)
     cache_update(partial(cache.update, aprogress))
     cache.open(oprogress)
-    
+
     notavail = mark(cc(cache, op), prefixes, pkgs, exclusions, trans="lower")
-    
+
     cache.commit(aprogress)
     cache.close()
-    
+
     return notavail
 
 def install(prefixes, pkgs, exclusions):

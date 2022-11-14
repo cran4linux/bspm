@@ -42,16 +42,16 @@ backend_check <- function() {
 
 backend_call <- function(method, pkgs=NULL) {
   if (root())
-    return(invisible(root_call(method, pkgs)))
+    return(root_call(method, pkgs))
 
   if (sudo_preferred())
-    return(invisible(sudo_call(method, pkgs, force=TRUE)))
+    return(sudo_call(method, pkgs, force=TRUE))
 
   if (dbus_service_alive())
-    return(invisible(dbus_call(method, pkgs)))
+    return(dbus_call(method, pkgs))
 
   if (interactive())
-    return(invisible(sudo_call(method, pkgs)))
+    return(sudo_call(method, pkgs))
 
   stop("cannot connect to the system package manager", call.=FALSE)
 }
@@ -71,9 +71,9 @@ root_call <- function(method, pkgs=NULL, sudo=NULL) {
   on.exit(unlink(tmp2, recursive=TRUE, force=TRUE))
 
   cmd <- system.file("service/bspm.py", package="bspm")
-  args <- method
+  args <- c(method, "-o", tmp)
   if (!is.null(pkgs))
-    args <- c(args, "-o", tmp, pkgs)
+    args <- c(args, pkgs)
   if (!is.null(sudo)) {
     args <- c(cmd, args)
     cmd <- sudo
@@ -104,6 +104,7 @@ dbus_call <- function(method, pkgs=NULL) {
   args <- c("call", "--timeout=1h", BUS_NAME, OPATH, IFACE, method)
   if (!is.null(pkgs))
     args <- c(args, "ias", Sys.getpid(), length(pkgs), pkgs)
+  else args <- c(args, "i", Sys.getpid())
   out <- system2nowarn(cmd, args, stdout=TRUE, stderr=TRUE)
 
   if (!length(out))
