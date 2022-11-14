@@ -37,3 +37,9 @@ def pkg_strip(prefixes, pkg):
     for prefix in prefixes:
         pkg = pkg.replace(prefix, "")
     return pkg
+
+def ver_strip(version):
+    version = list(reversed(version.split(":", 1)))[0]
+    version = version.rsplit("-", 1)[0]
+    version = version.rsplit("+")[0]
+    return version
