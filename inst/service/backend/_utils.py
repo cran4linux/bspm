@@ -34,7 +34,7 @@ def cache_update(method, force=False):
         Path(cache_file).touch()
 
 def pkg_strip(prefixes, pkg):
-    for prefix in prefixes:
+    for prefix in sorted(prefixes, reverse=True):
         pkg = pkg.replace(prefix, "")
     return pkg
 

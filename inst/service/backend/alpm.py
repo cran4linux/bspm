@@ -74,9 +74,9 @@ def available(prefixes, exclusions):
         if pkg.name in exclusions:
             continue
         pkgs.append(";".join([
-            pkg_strip(sorted(prefixes, reverse=True), pkg.name),
+            pkg_strip(prefixes, pkg.name),
             ver_strip(pkg.version),
-            pkg.db.name
+            pkg.db.name.replace(" ", "_")
         ]))
 
     return pkgs

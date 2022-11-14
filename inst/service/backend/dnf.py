@@ -38,9 +38,9 @@ def available(prefixes, exclusions):
         if not pkg.source_name or pkg.name in exclusions:
             continue
         pkgs.append(";".join([
-            pkg_strip(sorted(prefixes, reverse=True), pkg.source_name),
+            pkg_strip(prefixes, pkg.source_name),
             pkg.version,
-            pkg.reponame
+            pkg.reponame.replace(" ", "_")
         ]))
     pkgs = list(dict.fromkeys(pkgs))
 

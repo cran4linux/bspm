@@ -42,7 +42,7 @@ def available(prefixes, exclusions):
         pkgs.append(";".join([
             cache[pkg].candidate.source_name,
             version,
-            cache[pkg].candidate.origins[0].origin
+            cache[pkg].candidate.origins[0].origin.replace(" ", "_")
         ]))
 
     cache.close()
