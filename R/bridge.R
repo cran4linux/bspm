@@ -40,7 +40,10 @@ backend_check <- function() {
     ))
 }
 
-backend_call <- function(method, pkgs=NULL) {
+backend_call <- function(method, pkgs) {
+  if (!missing(pkgs) && !length(pkgs))
+    return(invisible())
+
   if (root())
     return(root_call(method, pkgs))
 
@@ -60,7 +63,7 @@ root <- function() {
   Sys.info()["effective_user"] == "root"
 }
 
-root_call <- function(method, pkgs=NULL, sudo=NULL) {
+root_call <- function(method, pkgs, sudo=NULL) {
   tmp <- tmp2 <- tempfile()
   # workaround, see #13
   if (length(strsplit(tmp2, "/")[[1]]) == 3) {
@@ -72,7 +75,7 @@ root_call <- function(method, pkgs=NULL, sudo=NULL) {
 
   cmd <- system.file("service/bspm.py", package="bspm")
   args <- c(method, "-o", tmp)
-  if (!is.null(pkgs))
+  if (!missing(pkgs))
     args <- c(args, pkgs)
   if (!is.null(sudo)) {
     args <- c(cmd, args)
@@ -97,12 +100,12 @@ dbus_service_alive <- function() {
   return(TRUE)
 }
 
-dbus_call <- function(method, pkgs=NULL) {
+dbus_call <- function(method, pkgs) {
   source(system.file("service/dbus-paths", package="bspm"), local=TRUE)
 
   cmd <- Sys.which("busctl")
   args <- c("call", "--timeout=1h", BUS_NAME, OPATH, IFACE, method)
-  if (!is.null(pkgs))
+  if (!missing(pkgs))
     args <- c(args, "ias", Sys.getpid(), length(pkgs), pkgs)
   else args <- c(args, "i", Sys.getpid())
   out <- system2nowarn(cmd, args, stdout=TRUE, stderr=TRUE)
@@ -119,7 +122,7 @@ dbus_call <- function(method, pkgs=NULL) {
   out
 }
 
-sudo_call <- function(method, pkgs=NULL, force=FALSE) {
+sudo_call <- function(method, pkgs, force=FALSE) {
   if (!isatty(stdin()) && !force)
     cmd <- "pkexec"
   else cmd <- "sudo"

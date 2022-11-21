@@ -19,5 +19,5 @@ SystemRequirements: systemd, dbus-python, PyGObject, python-(dnf|apt|alpm)
 Suggests: tinytest
 URL: https://enchufa2.github.io/bspm/
 BugReports: https://github.com/Enchufa2/bspm/issues
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Roxygen: list(old_usage = TRUE)
