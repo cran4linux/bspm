@@ -1,7 +1,9 @@
-# bspm 0.3.10.1
+# bspm 0.3.10.2
 
 - New function `available_sys()` returns a matrix of available packages with
   `"Package"`, `"Version"`, and `"Repository"` (#47 addressing #41).
+- Honor `type` option, set by default to `"both"`, which means 'use binary
+  if available and current, otherwise try source' (#48 addressing #46).
 
 # bspm 0.3.10
 
