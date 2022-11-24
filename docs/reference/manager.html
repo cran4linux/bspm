@@ -12,7 +12,7 @@ repositories (see details for further options)."><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.10.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,14 +95,6 @@ you need to set <code>options(bspm.sudo=TRUE)</code>.</p>
 whether it is running in an environment where password-less <code>sudo</code> can
 be used (e.g., in a containerized environment such as a Fedora Toolbox) for
 every call, and then uses <code>sudo</code> accordingly.</p>
-<p>By default, if a package is not available in the system repositories, it is
-installed from R's configured repositories along with all its dependencies.
-This behavior can be changed via <code>options(bspm.always.install.deps=TRUE)</code>,
-which tries to install from system repositories recursive dependencies of
-those packages that are not available. For example, if <span class="pkg">A</span> depends on
-<span class="pkg">B</span>, and <span class="pkg">B</span> is available in the system repositories but <span class="pkg">A</span> is
-not, then only <span class="pkg">A</span> will be installed from CRAN with this option enabled,
-and both will be installed from CRAN with this option disabled (default).</p>
 <p>The <code>discover</code> method is only needed when e.g. a new repository
 is added that contains packages with different prefixes (for example, your
 system repositories may provide packages called <code>r-cran-*</code> and

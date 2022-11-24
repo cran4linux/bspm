@@ -6,3 +6,4 @@
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^debian
+^CRAN-SUBMISSION$

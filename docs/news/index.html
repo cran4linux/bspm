@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.10.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,8 +45,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.10.1" id="bspm-03101">bspm 0.3.10.1<a class="anchor" aria-label="anchor" href="#bspm-03101"></a></h2>
-<ul><li>New function <code><a href="../reference/manager.html">available_sys()</a></code> returns a matrix of available packages with <code>"Package"</code>, <code>"Version"</code>, and <code>"Repository"</code> (<a href="https://github.com/Enchufa2/bspm/issues/47" class="external-link">#47</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/41" class="external-link">#41</a>).</li></ul></div>
+<h2 class="pkg-version" data-toc-text="0.4.0" id="bspm-040">bspm 0.4.0<a class="anchor" aria-label="anchor" href="#bspm-040"></a></h2>
+<ul><li>New function <code><a href="../reference/manager.html">available_sys()</a></code> returns a matrix of available packages with <code>"Package"</code>, <code>"Version"</code>, and <code>"Repository"</code> (<a href="https://github.com/Enchufa2/bspm/issues/47" class="external-link">#47</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/41" class="external-link">#41</a>).</li>
+<li>Honor <code>type</code> option, set by default to <code>"both"</code>, which means ‘use binary if available and current, otherwise try source’ (<a href="https://github.com/Enchufa2/bspm/issues/48" class="external-link">#48</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/46" class="external-link">#46</a>). As a consequence, the option <code>bspm.always.install.deps</code> has been removed.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.10" id="bspm-0310">bspm 0.3.10<a class="anchor" aria-label="anchor" href="#bspm-0310"></a></h2><p class="text-muted">CRAN release: 2022-08-05</p>
 <ul><li>Check backend availability on <code><a href="../reference/integration.html">enable()</a></code>, and trigger a warning if the service is required but not found. This check can be disabled by setting <code>options(bspm.backend.check=FALSE)</code> (<a href="https://github.com/Enchufa2/bspm/issues/40" class="external-link">#40</a>).</li></ul></div>
