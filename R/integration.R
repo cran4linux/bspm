@@ -48,7 +48,7 @@ enable <- function() {
 
     if (is.null(repos)) {
       type <- "source"
-    } else if (grepl("[.]tar[.](gz|bz2|xz)$", pkgs)) {
+    } else if (any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs))) {
       repos <- NULL
       type <- "source"
       message("inferring 'repos = NULL' from 'pkgs'")
