@@ -44,7 +44,11 @@ enable <- function() {
   options(pkgType="both")
 
   trace(utils::install.packages, print=FALSE, tracer=quote({
-    if (type == "both") {
+    if (grepl("[.]tar[.](gz|bz2|xz)$", pkgs)) {
+      repos <- NULL
+      type <- "source"
+      message("inferring 'repos = NULL' from 'pkgs'")
+    } else if (type == "both") {
       if (is.null(repos))
         stop("type == \"both\" cannot be used with 'repos = NULL'")
 
