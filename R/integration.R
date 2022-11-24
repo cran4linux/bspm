@@ -44,7 +44,11 @@ enable <- function() {
   options(pkgType="both")
 
   trace(utils::install.packages, print=FALSE, tracer=quote({
-    if (grepl("[.]tar[.](gz|bz2|xz)$", pkgs)) {
+    if (missing(pkgs)) stop("no packages were specified")
+
+    if (is.null(repos)) {
+      type <- "source"
+    } else if (grepl("[.]tar[.](gz|bz2|xz)$", pkgs)) {
       repos <- NULL
       type <- "source"
       message("inferring 'repos = NULL' from 'pkgs'")
