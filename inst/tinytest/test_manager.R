@@ -25,12 +25,6 @@ pkgs <- install_sys(c("Rcpp", "simmer"))
 expect_equal(pkgs, "simmer")
 expect_equal(installed, "Rcpp")
 
-options(bspm.always.install.deps=TRUE)
-installed <- NULL
-pkgs <- install_sys(c("Rcpp", "simmer"))
-expect_equal(pkgs, "simmer")
-expect_equal(installed, c("Rcpp", "Rcpp", "magrittr"))
-
 # restore mocked functions and options
 options(bspm.always.install.deps=NULL)
 mock("available.packages", .available.packages, "utils")

@@ -13,8 +13,8 @@ disable()
 \description{
 Functions to enable or disable the integration of \code{\link{install_sys}}
 into \code{\link{install.packages}}. When enabled, packages are installed
-transparently from system repositories if available, and from the configured
-\R repositories if not.
+transparently from system repositories if available, including dependencies,
+and from the configured \R repositories if not.
 }
 \details{
 To enable \pkg{bspm} system-wide by default, include the following:
@@ -27,6 +27,12 @@ move that line to the user's \code{~/.Rprofile} instead.
 By default, enabling \pkg{bspm} triggers a check of the backend, and a
 warning is raised if the system service is required but not available. To
 avoid this check, \code{options(bspm.backend.check=FALSE)} can be set.
+
+Enabling \pkg{bspm} sets default installation \code{type} to \code{"both"},
+which means 'use binary if available and current, otherwise try source'.
+The action if there are source packages which are preferred is controlled by
+\code{getOption("install.packages.compile.from.source")}. Set this option to
+\code{"never"} to always prefer binaries over source packages.
 }
 \examples{
 \dontrun{
