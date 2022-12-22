@@ -1,3 +1,9 @@
+# bspm 0.4.0.1
+
+- New `type="binary-source"` option (or _fast mode_) tries to install as many
+  binaries as possible (requested packages and dependencies), and then falls
+  back to source installation (per @eddelbuettel's wish).
+
 # bspm 0.4.0
 
 - New function `available_sys()` returns a matrix of available packages with

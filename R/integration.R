@@ -95,6 +95,16 @@ enable <- function() {
       # try just binaries and fail otherwise
       if (!length(pkgs <- bspm::install_sys(pkgs)))
         type <- "source"
+    } else if (type == "binary-source") {
+      # install as many binaries as possible and fallback to source
+      if (length(pkgs <- bspm::install_sys(pkgs))) {
+        inst <- row.names(installed.packages(.Library.site))
+        deps <- tools::package_dependencies(pkgs, recursive=TRUE)
+        deps <- lapply(deps, function(x) setdiff(x, inst))
+        deps <- unique(unlist(deps, use.names=FALSE))
+        if (length(deps)) bspm::install_sys(deps)
+      }
+      type <- "source"
     }
   }))
 
