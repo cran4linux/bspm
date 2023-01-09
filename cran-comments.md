@@ -1,6 +1,5 @@
-## Minor release
-Enhance integration to imitate the mixed installation mechanism available
-on Windows and macOS.
+## Patch release
+Fixes a bug report.
 
 ## Test environments
 - local R installation, R 4.2.2

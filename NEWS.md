@@ -1,8 +1,10 @@
-# bspm 0.4.0.1
+# bspm 0.4.1
 
 - New `type="binary-source"` option (or _fast mode_) tries to install as many
   binaries as possible (requested packages and dependencies), and then falls
   back to source installation (per @eddelbuettel's wish).
+- Fix the call to `available.packages()` when the `repos` argument is specified
+  (#52 addressing #51).
 
 # bspm 0.4.0
 
