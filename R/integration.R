@@ -50,8 +50,9 @@ enable <- function() {
       type <- "source"
     } else if (type == "both") {
       # get pkgs with non-installed dependencies
-      dbs <- available.packages(type="source")
-      inst <- row.names(installed.packages(.Library.site))
+      dbs <- available.packages(contriburl=contriburl, method=method,
+                                type="source", ...)
+      inst <- row.names(installed.packages(.Library.site, ...))
       pkgs <- tools::package_dependencies(pkgs, dbs, recursive=TRUE)
       pkgs <- lapply(pkgs, function(x) setdiff(x, inst))
       pkgs <- unique(c(names(pkgs), unlist(pkgs, use.names=FALSE)))
@@ -98,7 +99,7 @@ enable <- function() {
     } else if (type == "binary-source") {
       # install as many binaries as possible and fallback to source
       if (length(pkgs <- bspm::install_sys(pkgs))) {
-        inst <- row.names(installed.packages(.Library.site))
+        inst <- row.names(installed.packages(.Library.site, ...))
         deps <- tools::package_dependencies(pkgs, recursive=TRUE)
         deps <- lapply(deps, function(x) setdiff(x, inst))
         deps <- unique(unlist(deps, use.names=FALSE))
