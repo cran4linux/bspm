@@ -15,8 +15,7 @@ jobs:
         config:
         - {image: 'fedora', tag: 'latest'}
         - {image: 'debian', tag: 'latest'}
-        - {image: 'ubuntu', tag: '18.04'}
-        - {image: 'ubuntu', tag: '20.04'}
+        - {image: 'ubuntu', tag: 'latest'}
 
     steps:
     - uses: actions/checkout@v3
