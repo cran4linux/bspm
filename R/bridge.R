@@ -82,10 +82,11 @@ root_call <- function(method, pkgs, sudo=NULL) {
     cmd <- sudo
   }
   out <- system2nowarn(cmd, args, stderr=FALSE)
+  tmp <- readLines(tmp)
 
   if (out != 0)
-    stop("cannot connect to the system package manager", call.=FALSE)
-  readLines(tmp)
+    stop(paste(tmp, collapse="\n"), call.=FALSE)
+  tmp
 }
 
 dbus_service_alive <- function() {

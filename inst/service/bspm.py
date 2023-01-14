@@ -121,7 +121,13 @@ def run_as_root(args):
         pkgs = None
         if hasattr(args, "pkg"):
             pkgs = args.pkg
-        pkgs = call_backend(args.cmd, pkgs, root=True)
+        try:
+            pkgs = call_backend(args.cmd, pkgs, root=True)
+        except Exception as err:
+            if args.o is not None:
+                with open(args.o, "a") as f:
+                    print(str(err), file=f)
+            raise err
         if args.o is not None:
             with open(args.o, "a") as f:
                 for pkg in pkgs:

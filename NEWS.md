@@ -1,3 +1,7 @@
+# bspm 0.4.1.1
+
+- Fix error forwarding in root mode (#54).
+
 # bspm 0.4.1
 
 - New `type="binary-source"` option (or _fast mode_) tries to install as many
