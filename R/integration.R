@@ -63,7 +63,8 @@ enable <- function() {
       bins <- pkgs[tolower(pkgs) %in% row.names(dbb)]
       srcs <- pkgs[! pkgs %in% bins]
       binvers <- dbb[tolower(bins), "Version"]
-      srcvers <- dbs[bins, "Version"]
+      srcvers <- sapply(bins, function(bin) # may not be in dbs
+        if (bin %in% row.names(dbs)) dbs[bin, "Version"] else "0")
       later <- as.numeric_version(binvers) < srcvers
 
       # determine whether later versions should be installed
