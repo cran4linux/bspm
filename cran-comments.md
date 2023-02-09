@@ -1,5 +1,5 @@
 ## Patch release
-Fixes a bug report.
+Several bug fixes.
 
 ## Test environments
 - local R installation, R 4.2.2

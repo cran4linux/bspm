@@ -1,4 +1,4 @@
-# bspm 0.4.1.3
+# bspm 0.4.2
 
 - Fix error forwarding in root mode (#54).
 - Fix installation error when `options(pkgType="binary-source")` is set and
