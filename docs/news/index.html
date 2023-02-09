@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4.1" id="bspm-041">bspm 0.4.1<a class="anchor" aria-label="anchor" href="#bspm-041"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.4.2" id="bspm-042">bspm 0.4.2<a class="anchor" aria-label="anchor" href="#bspm-042"></a></h2>
+<ul><li>Fix error forwarding in root mode (<a href="https://github.com/Enchufa2/bspm/issues/54" class="external-link">#54</a>).</li>
+<li>Fix installation error when <code>options(pkgType="binary-source")</code> is set and a package without binary version available is requested (<a href="https://github.com/Enchufa2/bspm/issues/56" class="external-link">#56</a>).</li>
+<li>Fix installation error in <code>options(pkgType="both")</code> mode (default) when an available binary is not available as source (<a href="https://github.com/Enchufa2/bspm/issues/57" class="external-link">#57</a>).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.1" id="bspm-041">bspm 0.4.1<a class="anchor" aria-label="anchor" href="#bspm-041"></a></h2><p class="text-muted">CRAN release: 2023-01-09</p>
 <ul><li>New <code>type="binary-source"</code> option (or <em>fast mode</em>) tries to install as many binaries as possible (requested packages and dependencies), and then falls back to source installation (per <a href="https://github.com/eddelbuettel" class="external-link">@eddelbuettel</a>’s wish).</li>
 <li>Fix the call to <code><a href="https://rdrr.io/r/utils/available.packages.html" class="external-link">available.packages()</a></code> when the <code>repos</code> argument is specified (<a href="https://github.com/Enchufa2/bspm/issues/52" class="external-link">#52</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/51" class="external-link">#51</a>).</li>
 </ul></div>
