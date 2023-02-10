@@ -4,6 +4,7 @@
 \alias{manager}
 \alias{install_sys}
 \alias{remove_sys}
+\alias{moveto_sys}
 \alias{available_sys}
 \alias{discover}
 \title{Manage Packages from System Repositories}
@@ -12,16 +13,23 @@ install_sys(pkgs)
 
 remove_sys(pkgs)
 
+moveto_sys(lib)
+
 available_sys()
 
 discover()
 }
 \arguments{
 \item{pkgs}{character vector of names of packages.}
+
+\item{lib}{a character vector giving the library directories to remove the
+packages from. If missing, defaults to the first element in
+\code{\link{.libPaths}()}.}
 }
 \value{
-Functions \code{install_sys} and \code{remove_sys} return, invisibly,
-a character vector of the names of packages not available in the system.
+Functions \code{install_sys}, \code{remove_sys}, and \code{moveto_sys}
+return, invisibly, a character vector of the names of packages not available
+in the system.
 
 Function \code{available_sys} returns a matrix with one row per
 package. Row names are the package names, and column names include
@@ -45,6 +53,12 @@ If \code{options(bspm.sudo.autodetect=TRUE)}, \pkg{bspm} tries to detect
 whether it is running in an environment where password-less \code{sudo} can
 be used (e.g., in a containerized environment such as a Fedora Toolbox) for
 every call, and then uses \code{sudo} accordingly.
+
+The \code{moveto_sys} method detects existing user packages
+and moves them to the system library to avoid \emph{package shadowing}
+(i.e., installs the available system packages and removes copies from
+the user library). This provides a mechanism to easily deploy \pkg{bspm}
+on an existing R installation with a populated user library.
 
 The \code{discover} method is only needed when e.g. a new repository
 is added that contains packages with different prefixes (for example, your
