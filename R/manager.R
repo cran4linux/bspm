@@ -45,8 +45,9 @@ install_sys <- function(pkgs) invisible(backend_call("install", pkgs))
 remove_sys <- function(pkgs) invisible(backend_call("remove", pkgs))
 
 #' @param lib a character vector giving the library directories to remove the
-#' packages from. If missing, defaults to the first element in
-#' \code{\link{.libPaths}()}.
+#' packages from. If missing, defaults to the first element in \code{R_LIBS_USER}.
+#' @param newer whether to move newer packages from the user library.
+#' The special value \code{"ask"} is also supported.
 #'
 #' @details The \code{moveto_sys} method detects existing user packages
 #' and moves them to the system library to avoid \emph{package shadowing}
@@ -56,14 +57,30 @@ remove_sys <- function(pkgs) invisible(backend_call("remove", pkgs))
 #'
 #' @name manager
 #' @export
-moveto_sys <- function(lib) {
-  if (missing(lib)) lib <- .libPaths()[1]
+moveto_sys <- function(lib, newer=FALSE) {
+  stopifnot(is.logical(newer) || newer == "ask")
+  if (missing(lib)) lib <- user_lib()
+  if (!dir.exists(lib)) return(invisible())
 
-  pkgs <- utils::installed.packages(lib)[, "Package"]
-  notavail <- install_sys(pkgs)
-  utils::remove.packages(setdiff(pkgs, notavail), lib)
-  invisible(notavail)
+  if (isTRUE(newer)) {
+    pkgs <- utils::installed.packages(lib)[, "Package"]
+    notavail <- install_sys(pkgs)
+    utils::remove.packages(setdiff(pkgs, notavail), lib)
+    invisible(notavail)
+  } else {
+    db <- utils::installed.packages(lib)
+    pkgs <- row.names(db)
+    pkgs <- check_versions(pkgs, db)
+    later <- pkgs$later; if (interactive() && newer == "ask")
+      later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
+    install_sys(pkgs$bins[!later])
+    utils::remove.packages(pkgs$bins[!later])
+    invisible(c(pkgs$bins[later], pkgs$srcs))
+  }
 }
+
+user_lib <- function()
+  unlist(strsplit(Sys.getenv("R_LIBS_USER"), .Platform$path.sep))[1L]
 
 #' @return Function \code{available_sys} returns a matrix with one row per
 #' package. Row names are the package names, and column names include

@@ -13,7 +13,7 @@ install_sys(pkgs)
 
 remove_sys(pkgs)
 
-moveto_sys(lib)
+moveto_sys(lib, newer = FALSE)
 
 available_sys()
 
@@ -23,8 +23,10 @@ discover()
 \item{pkgs}{character vector of names of packages.}
 
 \item{lib}{a character vector giving the library directories to remove the
-packages from. If missing, defaults to the first element in
-\code{\link{.libPaths}()}.}
+packages from. If missing, defaults to the first element in \code{R_LIBS_USER}.}
+
+\item{newer}{whether to move newer packages from the user library.
+The special value \code{"ask"} is also supported.}
 }
 \value{
 Functions \code{install_sys}, \code{remove_sys}, and \code{moveto_sys}
