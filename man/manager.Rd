@@ -56,11 +56,11 @@ whether it is running in an environment where password-less \code{sudo} can
 be used (e.g., in a containerized environment such as a Fedora Toolbox) for
 every call, and then uses \code{sudo} accordingly.
 
-The \code{moveto_sys} method detects existing user packages
-and moves them to the system library to avoid \emph{package shadowing}
-(i.e., installs the available system packages and removes copies from
-the user library). This provides a mechanism to easily deploy \pkg{bspm}
-on an existing R installation with a populated user library.
+The \code{moveto_sys} method moves existing user packages to the
+system library to avoid \emph{package shadowing} (i.e., installs the
+available system packages and removes copies from the user library).
+This provides a mechanism to easily deploy \pkg{bspm} on an existing R
+installation with a populated user library.
 
 The \code{discover} method is only needed when e.g. a new repository
 is added that contains packages with different prefixes (for example, your
@@ -83,5 +83,5 @@ bspm::available_sys()
 
 }
 \seealso{
-\code{\link{integration}}
+\code{\link{integration}}, \code{\link{scripts}}
 }

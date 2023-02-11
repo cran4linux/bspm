@@ -22,7 +22,7 @@
 #' be used (e.g., in a containerized environment such as a Fedora Toolbox) for
 #' every call, and then uses \code{sudo} accordingly.
 #'
-#' @seealso \code{\link{integration}}
+#' @seealso \code{\link{integration}}, \code{\link{scripts}}
 #'
 #' @examples
 #' \dontrun{
@@ -49,11 +49,11 @@ remove_sys <- function(pkgs) invisible(backend_call("remove", pkgs))
 #' @param newer whether to move newer packages from the user library.
 #' The special value \code{"ask"} is also supported.
 #'
-#' @details The \code{moveto_sys} method detects existing user packages
-#' and moves them to the system library to avoid \emph{package shadowing}
-#' (i.e., installs the available system packages and removes copies from
-#' the user library). This provides a mechanism to easily deploy \pkg{bspm}
-#' on an existing R installation with a populated user library.
+#' @details The \code{moveto_sys} method moves existing user packages to the
+#' system library to avoid \emph{package shadowing} (i.e., installs the
+#' available system packages and removes copies from the user library).
+#' This provides a mechanism to easily deploy \pkg{bspm} on an existing R
+#' installation with a populated user library.
 #'
 #' @name manager
 #' @export
@@ -74,7 +74,7 @@ moveto_sys <- function(lib, newer=FALSE) {
     later <- pkgs$later; if (interactive() && newer == "ask")
       later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
     install_sys(pkgs$bins[!later])
-    utils::remove.packages(pkgs$bins[!later])
+    utils::remove.packages(pkgs$bins[!later], lib)
     invisible(c(pkgs$bins[later], pkgs$srcs))
   }
 }
