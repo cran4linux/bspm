@@ -164,6 +164,32 @@ Then, to enable it system-wide (alternatively, use your `.Rprofile`):
 $ echo "bspm::enable()" | sudo tee -a /usr/lib64/R/etc/Rprofile.site
 ```
 
+## Moving the user library
+
+After installing and enabling `bspm` in a system with a populated user library,
+_package shadowing_ will prevent system packages from loading, because the user
+library takes precedence in `.libPaths()`. To solve this, it is necessary to
+install packages available in the system repos and remove them from the user
+library, leaving there only GitHub packages, development versions, and so on.
+This is achieved simply by calling `bspm::moveto_sys()`.
+
+Additionally, `bspm` provides a script for mass-calling `bspm::moveto_sys()`
+for several users and/or libraries, which allows sysadmins to easily deploy
+`bspm` in a multi-user server. The script, which requires `sudo` privileges,
+is called as follows:
+
+```bash
+$ Rscript -e bspm:::scripts mass_move user1 [user2 ...] [lib1 [lib2 ...]]
+```
+
+By default, it does a dry run, meaning that it won't touch anything and will
+just report the user libraries found. To actually run the script, the `--run`
+flag must be provided:
+
+```bash
+$ Rscript -e bspm:::scripts mass_move --run user1 [user2 ...] [lib1 [lib2 ...]]
+```
+
 ## Developing new backends
 
 New backends for other package managers can be added to `inst/service/backend`.
