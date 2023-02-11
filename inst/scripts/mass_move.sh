@@ -60,10 +60,9 @@ for lib in "${LIBS[@]}"; do
   if [ "$RUN" = true ] ; then
     # ask user by default
     [ "$YES" != true ] && { proceed || continue; }
-    # move, and count again
+    # move, count again, and report
     sudo -u $user Rscript -e "bspm::moveto_sys('$lib')" > /dev/null
     n_after=$(ls "$lib" | wc -l)
-    # report results
     echo "Moved $(($n_before-$n_after)) ($n_after left) from $user's $lib"
   fi
 done
