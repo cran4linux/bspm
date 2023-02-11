@@ -54,13 +54,13 @@ done
 for lib in "${LIBS[@]}"; do
   # get library owner and report
   user=$(ls -ld "$lib" | cut -d" " -f3)
-  echo "Found $user's $lib"
+  n_before=$(ls "$lib" | wc -l)
+  echo "Found $n_before packages in $user's $lib"
   # proceed only if run flag was specified
   if [ "$RUN" = true ] ; then
     # ask user by default
     [ "$YES" != true ] && { proceed || continue; }
-    # count, move, and count again
-    n_before=$(ls "$lib" | wc -l)
+    # move, and count again
     sudo -u $user Rscript -e "bspm::moveto_sys('$lib')" > /dev/null
     n_after=$(ls "$lib" | wc -l)
     # report results
