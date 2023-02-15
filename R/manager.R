@@ -70,7 +70,7 @@ moveto_sys <- function(lib, newer=FALSE) {
   } else {
     db <- utils::installed.packages(lib)
     pkgs <- row.names(db)
-    pkgs <- check_versions(pkgs, db)
+    pkgs <- remotes_as_newer(check_versions(pkgs, db), lib)
     later <- pkgs$later; if (interactive() && newer == "ask")
       later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
     install_sys(pkgs$bins[!later])

@@ -23,6 +23,14 @@ check_versions <- function(pkgs, db) {
   list(bins=bins, srcs=srcs, binvers=binvers, srcvers=srcvers, later=later)
 }
 
+# consider as "later" packages with the same version installed from remotes
+remotes_as_newer <- function(pkgs, lib) {
+  for (i in which(as.numeric_version(pkgs$binvers) == pkgs$srcvers))
+    if (!is.na(utils::packageDescription(pkgs$bins[i], lib, "RemoteSha")))
+      pkgs$later[i] <- TRUE
+  pkgs
+}
+
 # adapted from install.packages
 ask_user <- function(later, bins, binvers, srcvers) {
   if (!any(later)) return(later)
