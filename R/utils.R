@@ -1,3 +1,58 @@
+#' Find Shadowed Packages
+#'
+#' Find packages that are \emph{shadowed} by others in library locations
+#' with a higher priority.
+#'
+#' @param lib.loc character vector describing the location of the \R library
+#' trees to search through, or \code{NULL} for all known trees
+#' (see \code{\link{.libPaths}}).
+#' @return A \code{data.frame} with one row per package, row names the package
+#' names and column names (currently) "Package", "LibPath", "Version",
+#' "Shadow.LibPath", "Shadow.Version", "Shadow.Newer".
+#'
+#' @details \R supports setting several locations for library trees. This is a
+#' powerful feature, but many times packages end up installed in multiple
+#' locations, and in such cases \R silently uses the one in the path with the
+#' highest priority (appearing first in \code{\link{.libPaths}}), thus
+#' \emph{shadowing} packages in locations with a lower priority.
+#'
+#' For \pkg{bspm} installations, this means that outdated user packages may
+#' break system libraries. This utility reports packages that are shadowed
+#' (one per row) with information on which location ("Shadow.LibPath")
+#' and version ("Shadow.Version") has priority over it.
+#' The \code{\link{moveto_sys}} method is a great complement to move such
+#' outdated versions to the system libraries.
+#'
+#' @seealso \code{\link{moveto_sys}}
+#' @export
+shadowed_packages <- function(lib.loc=NULL) {
+  if (is.null(lib.loc)) lib.loc <- .libPaths()
+
+  fields <- c("Package", "LibPath", "Version")
+  sfields <- paste("Shadow", fields, sep=".")
+  shadow <- data.frame(matrix(nrow=0, ncol=5))
+  colnames(shadow) <- c(fields, sfields[-1])
+
+  pkgs <- data.frame(utils::installed.packages(lib.loc)[, fields])
+  pkgs <- split(pkgs, factor(pkgs$LibPath, levels=lib.loc))
+
+  idx <- seq_along(pkgs)
+  for (i in idx) {
+    colnames(pkgs[[i]]) <- sfields
+    for (j in idx[-seq_len(i)]) {
+      hidden <- merge(pkgs[[j]], pkgs[[i]], by.x=fields[1], by.y=sfields[1])
+      shadow <- rbind(shadow, hidden)
+    }
+  }
+
+  row.names(shadow) <- shadow[, "Package"]
+  shadow$Version <- as.package_version(shadow$Version)
+  shadow$Shadow.Version <- as.package_version(shadow$Shadow.Version)
+  newer <- shadow[, "Version"] < shadow[, "Shadow.Version"]
+  shadow <- cbind(shadow, Shadow.Newer = newer)
+  shadow
+}
+
 pkg_deps <- function(pkgs, db, ..., all=TRUE) {
   inst <- row.names(utils::installed.packages(.Library.site, ...))
   pkgs <- tools::package_dependencies(pkgs, db, recursive=TRUE)
