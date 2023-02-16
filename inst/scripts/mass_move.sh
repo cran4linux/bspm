@@ -48,13 +48,13 @@ for user in "${USERS[@]}"; do
   id $user > /dev/null 2>&1 || continue
   # retrieve user library and append if exists
   lib=$(sudo -u $user Rscript -e "cat(bspm:::user_lib(), fill=TRUE)")
-  [ -d "$lib" ] && LIBS+=("$lib")
+  sudo -u $user [ -d "$lib" ] && LIBS+=("$lib")
 done
 
 for lib in "${LIBS[@]}"; do
   # get library owner and report
-  user=$(ls -ld "$lib" | cut -d" " -f3)
-  n_before=$(ls "$lib" | wc -l)
+  user=$(sudo ls -ld "$lib" | cut -d" " -f3)
+  n_before=$(sudo -u $user ls "$lib" | wc -l)
   echo "Found $n_before packages in $user's $lib"
   # proceed only if run flag was specified
   if [ "$RUN" = true ] ; then
@@ -62,7 +62,7 @@ for lib in "${LIBS[@]}"; do
     [ "$YES" != true ] && { proceed || continue; }
     # move, count again, and report
     sudo -u $user Rscript -e "bspm::moveto_sys('$lib')" > /dev/null
-    n_after=$(ls "$lib" | wc -l)
+    n_after=$(sudo -u $user ls "$lib" | wc -l)
     echo "Moved $(($n_before-$n_after)) ($n_after left) from $user's $lib"
   fi
 done
