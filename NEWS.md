@@ -1,3 +1,10 @@
+# bspm 0.4.2.1
+
+- New function `moveto_sys()` moves existing user packages to the system
+  library to avoid _package shadowing_; the associated script `mass_move`
+  enables mass-calling this function for several users and/or libraries to
+  facilitate `bspm` deployment in multitenant servers (#60 addressing #59).
+
 # bspm 0.4.2
 
 - Fix error forwarding in root mode (#54).

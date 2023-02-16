@@ -4,8 +4,9 @@
 #' repositories (see details for further options).
 #'
 #' @param pkgs character vector of names of packages.
-#' @return Functions \code{install_sys} and \code{remove_sys} return, invisibly,
-#' a character vector of the names of packages not available in the system.
+#' @return Functions \code{install_sys}, \code{remove_sys}, and \code{moveto_sys}
+#' return, invisibly, a character vector of the names of packages not available
+#' in the system.
 #'
 #' @details If \R runs with root privileges (e.g., in a docker container), these
 #' functions talk directly to the system package manager. Regular users are also
@@ -21,7 +22,7 @@
 #' be used (e.g., in a containerized environment such as a Fedora Toolbox) for
 #' every call, and then uses \code{sudo} accordingly.
 #'
-#' @seealso \code{\link{integration}}
+#' @seealso \code{\link{integration}}, \code{\link{scripts}}
 #'
 #' @examples
 #' \dontrun{
@@ -42,6 +43,44 @@ install_sys <- function(pkgs) invisible(backend_call("install", pkgs))
 #' @name manager
 #' @export
 remove_sys <- function(pkgs) invisible(backend_call("remove", pkgs))
+
+#' @param lib a character vector giving the library directories to remove the
+#' packages from. If missing, defaults to the first element in \code{R_LIBS_USER}.
+#' @param newer whether to move newer packages from the user library.
+#' The special value \code{"ask"} is also supported.
+#'
+#' @details The \code{moveto_sys} method moves existing user packages to the
+#' system library to avoid \emph{package shadowing} (i.e., installs the
+#' available system packages and removes copies from the user library).
+#' This provides a mechanism to easily deploy \pkg{bspm} on an existing R
+#' installation with a populated user library.
+#'
+#' @name manager
+#' @export
+moveto_sys <- function(lib, newer=FALSE) {
+  stopifnot(is.logical(newer) || newer == "ask")
+  if (missing(lib)) lib <- user_lib()
+  if (!dir.exists(lib)) return(invisible())
+
+  if (isTRUE(newer)) {
+    pkgs <- utils::installed.packages(lib)[, "Package"]
+    notavail <- install_sys(pkgs)
+    utils::remove.packages(setdiff(pkgs, notavail), lib)
+    invisible(notavail)
+  } else {
+    db <- utils::installed.packages(lib)
+    pkgs <- row.names(db)
+    pkgs <- remotes_as_newer(check_versions(pkgs, db), lib)
+    later <- pkgs$later; if (interactive() && newer == "ask")
+      later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
+    install_sys(pkgs$bins[!later])
+    utils::remove.packages(pkgs$bins[!later], lib)
+    invisible(c(pkgs$bins[later], pkgs$srcs))
+  }
+}
+
+user_lib <- function()
+  unlist(strsplit(Sys.getenv("R_LIBS_USER"), .Platform$path.sep))[1L]
 
 #' @return Function \code{available_sys} returns a matrix with one row per
 #' package. Row names are the package names, and column names include

@@ -50,48 +50,21 @@ enable <- function() {
       type <- "source"
     } else if (type == "both") {
       # get pkgs with non-installed dependencies
-      dbs <- available.packages(contriburl=contriburl, method=method,
-                                type="source", ...)
-      inst <- row.names(installed.packages(.Library.site, ...))
-      pkgs <- tools::package_dependencies(pkgs, dbs, recursive=TRUE)
-      pkgs <- lapply(pkgs, function(x) setdiff(x, inst))
-      pkgs <- unique(c(names(pkgs), unlist(pkgs, use.names=FALSE)))
+      db <- available.packages(contriburl=contriburl, method=method,
+                               type="source", ...)
+      pkg_deps <- getFromNamespace("pkg_deps", asNamespace("bspm"))
+      pkgs <- pkg_deps(pkgs, db, ..., all=TRUE)
 
       # get available binaries and pkgs with later versions available
-      dbb <- bspm::available_sys()
-      row.names(dbb) <- tolower(row.names(dbb))
-      bins <- pkgs[tolower(pkgs) %in% row.names(dbb)]
-      srcs <- pkgs[! pkgs %in% bins]
-      binvers <- dbb[tolower(bins), "Version"]
-      srcvers <- sapply(bins, function(bin) # may not be in dbs
-        if (bin %in% row.names(dbs)) dbs[bin, "Version"] else "0")
-      later <- as.numeric_version(binvers) < srcvers
+      check_versions <- getFromNamespace("check_versions", asNamespace("bspm"))
+      pkgs <- check_versions(pkgs, db)
 
       # determine whether later versions should be installed
-      if (any(later)) {
-        msg <- ngettext(
-          sum(later),
-          "There is a binary version available but the source version is later",
-          "There are binary versions available but the source versions are later")
-        cat("\n", paste(strwrap(msg, indent = 2, exdent = 2), collapse = "\n"),
-            ":\n", sep = "")
-        print(data.frame(`binary` = binvers, `source` = srcvers,
-                         row.names = bins, check.names = FALSE)[later, ])
-        cat("\n")
-        action <- getOption("install.packages.compile.from.source", "interactive")
-        if (action == "interactive" && interactive()) {
-          msg <- gettext("Do you want to install later versions from sources?")
-          res <- utils::askYesNo(msg)
-          if (is.na(res)) stop("Cancelled by user")
-          if (!isTRUE(res)) later <- FALSE
-        } else if (action == "never") {
-          cat("  Binaries will be installed\n")
-          later <- FALSE
-        }
-      }
+      ask_user <- getFromNamespace("ask_user", asNamespace("bspm"))
+      later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
 
       # install binaries and forward the rest
-      pkgs <- c(bspm::install_sys(bins[!later]), bins[later], srcs)
+      pkgs <- c(bspm::install_sys(pkgs$bins[!later]), pkgs$bins[later], pkgs$srcs)
       type <- "source"
     } else if (type == "binary") {
       # try just binaries and fail otherwise
@@ -100,13 +73,11 @@ enable <- function() {
     } else if (type == "binary-source") {
       # install as many binaries as possible and fallback to source
       if (length(pkgs <- bspm::install_sys(pkgs))) {
-        dbs <- available.packages(contriburl=contriburl, method=method,
-                                  type="source", ...)
-        inst <- row.names(installed.packages(.Library.site, ...))
-        deps <- tools::package_dependencies(pkgs, dbs, recursive=TRUE)
-        deps <- lapply(deps, function(x) setdiff(x, inst))
-        deps <- unique(unlist(deps, use.names=FALSE))
-        if (length(deps)) bspm::install_sys(deps)
+        db <- available.packages(contriburl=contriburl, method=method,
+                                 type="source", ...)
+        pkg_deps <- getFromNamespace("pkg_deps", asNamespace("bspm"))
+        pkgs <- pkg_deps(pkgs, db, ..., all=FALSE)
+        if (length(pkgs)) bspm::install_sys(pkgs)
       }
       type <- "source"
     }
