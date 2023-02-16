@@ -58,7 +58,8 @@ every call, and then uses \code{sudo} accordingly.
 
 The \code{moveto_sys} method moves existing user packages to the
 system library to avoid \emph{package shadowing} (i.e., installs the
-available system packages and removes copies from the user library).
+available system packages and removes copies from the user library;
+see \code{\link{shadowed_packages}}).
 This provides a mechanism to easily deploy \pkg{bspm} on an existing R
 installation with a populated user library.
 
