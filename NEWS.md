@@ -1,9 +1,11 @@
-# bspm 0.4.2.1
+# bspm 0.4.2.2
 
 - New function `moveto_sys()` moves existing user packages to the system
   library to avoid _package shadowing_; the associated script `mass_move`
   enables mass-calling this function for several users and/or libraries to
   facilitate `bspm` deployment in multitenant servers (#60 addressing #59).
+- New function `shadowed_packages()` analyzes the library tree and reports
+  which packages, one per row, are shadowed by others (#62 addressing #58).
 
 # bspm 0.4.2
 

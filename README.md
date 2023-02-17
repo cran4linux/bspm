@@ -168,7 +168,8 @@ $ echo "bspm::enable()" | sudo tee -a /usr/lib64/R/etc/Rprofile.site
 
 After installing and enabling `bspm` in a system with a populated user library,
 _package shadowing_ will prevent system packages from loading, because the user
-library takes precedence in `.libPaths()`. To solve this, it is necessary to
+library takes precedence in `.libPaths()` (see `?bspm::shadowed_packages` for
+an utility to find shadowed packages). To solve this, it is necessary to
 install packages available in the system repos and remove them from the user
 library, leaving there only GitHub packages, development versions, and so on.
 This is achieved simply by calling `bspm::moveto_sys()`.
