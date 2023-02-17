@@ -32,7 +32,12 @@ Enabling \pkg{bspm} sets default installation \code{type} to \code{"both"},
 which means 'use binary if available and current, otherwise try source'.
 The action if there are source packages which are preferred is controlled by
 \code{getOption("install.packages.compile.from.source")}. Set this option to
-\code{"never"} to always prefer binaries over source packages.
+\code{"never"} to always prefer binaries over source packages, with an
+informative message about newer versions available from source.
+
+If binaries are always preferred and no message is required,
+a special \emph{fast} mode can be enabled via \code{options(bspm.fast=TRUE)},
+which completely skips version checking.
 }
 \examples{
 \dontrun{

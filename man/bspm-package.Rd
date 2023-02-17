@@ -17,7 +17,8 @@ Currently, the following backends are supported: DNF, APT, ALPM.
 \url{https://enchufa2.github.io/bspm/}
 }
 \seealso{
-\code{\link{manager}}, \code{\link{integration}}, \code{\link{scripts}}
+\code{\link{manager}}, \code{\link{integration}}, \code{\link{scripts}},
+\code{\link{bspm-options}}
 }
 \author{
 Iñaki Ucar
