@@ -1,4 +1,4 @@
-# bspm 0.4.2.3
+# bspm 0.4.2.4
 
 - New function `moveto_sys()` moves existing user packages to the system
   library to avoid _package shadowing_; the associated script `mass_move`
@@ -9,6 +9,9 @@
 - Add new `options(bspm.fast=TRUE)` (not set by default) to globally enable
   `binary-source` installation type (#61).
 - Add a specific manual page `bspm-options` documenting all supported options.
+- Add support for the installation of binary Suggests and Enhances if they are
+  supplied to the `dependencies` argument of `install.packages`.
+  `LinkingTo` now is omitted for binary packages as documented (#32).
 
 # bspm 0.4.2
 

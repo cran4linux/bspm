@@ -61,7 +61,7 @@ enable <- function() {
       db <- available.packages(contriburl=contriburl, method=method,
                                type="source", ...)
       pkg_deps <- getFromNamespace("pkg_deps", asNamespace("bspm"))
-      pkgs <- pkg_deps(pkgs, db, ..., all=TRUE)
+      pkgs <- pkg_deps(pkgs, dependencies, db, ..., all=TRUE)
 
       # get available binaries and pkgs with later versions available
       check_versions <- getFromNamespace("check_versions", asNamespace("bspm"))
@@ -84,7 +84,7 @@ enable <- function() {
         db <- available.packages(contriburl=contriburl, method=method,
                                  type="source", ...)
         pkg_deps <- getFromNamespace("pkg_deps", asNamespace("bspm"))
-        pkgs <- pkg_deps(pkgs, db, ..., all=FALSE)
+        pkgs <- pkg_deps(pkgs, NA, db, ..., all=FALSE)
         if (length(pkgs)) bspm::install_sys(pkgs)
       }
       type <- "source"

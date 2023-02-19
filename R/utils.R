@@ -53,11 +53,24 @@ shadowed_packages <- function(lib.loc=NULL) {
   shadow
 }
 
-pkg_deps <- function(pkgs, db, ..., all=TRUE) {
+pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
+  pkgs <- unique(pkgs)
   inst <- row.names(utils::installed.packages(.Library.site, ...))
-  pkgs <- tools::package_dependencies(pkgs, db, recursive=TRUE)
-  pkgs <- lapply(pkgs, function(x) setdiff(x, inst))
-  pkgs <- unique(c(if (all) names(pkgs), unlist(pkgs, use.names=FALSE)))
+  deps <- tools::package_dependencies(pkgs, db, c("Depends", "Imports"), recursive=TRUE)
+  deps <- unlist(deps, use.names=FALSE)
+  if (!all) {
+    hard <- tools::package_dependencies(pkgs, db, "LinkingTo", recursive=FALSE)
+    deps <- c(deps, unlist(hard, use.names=FALSE))
+  }
+  if (isTRUE(dependencies) || "Suggests" %in% dependencies) {
+    soft <- tools::package_dependencies(pkgs, db, "Suggests", recursive=FALSE)
+    deps <- c(deps, unlist(soft, use.names=FALSE))
+  }
+  if ("Enhances" %in% dependencies) {
+    enha <- tools::package_dependencies(pkgs, db, "Enhances", recursive=FALSE)
+    deps <- c(deps, unlist(enha, use.names=FALSE))
+  }
+  pkgs <- c(setdiff(unique(deps), inst), if (all) pkgs)
   pkgs
 }
 
