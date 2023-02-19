@@ -51,7 +51,7 @@ enable <- function() {
   trace(utils::install.packages, print=FALSE, tracer=quote({
     if (missing(pkgs)) stop("no packages were specified")
 
-    if (type == "both" && getOption("bspm.version.check", TRUE))
+    if (type == "both" && !getOption("bspm.version.check", TRUE))
       type <- "binary-source"
 
     if (is.null(repos)) {
