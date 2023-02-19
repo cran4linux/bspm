@@ -1,5 +1,5 @@
-## Patch release
-Several bug fixes.
+## Minor release
+Major rewrite for new features and an important bug fix.
 
 ## Test environments
 - local R installation, R 4.2.2

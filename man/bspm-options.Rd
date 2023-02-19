@@ -11,9 +11,9 @@ List of \code{\link{options}()} supported to configure \pkg{bspm}'s behavior.
 \describe{
 \item{\code{bspm.backend.check}:}{logical, default \code{TRUE}. If false,
   the initial check on \code{\link{enable}()} is not performed.}
-\item{\code{bspm.fast}:}{logical, default \code{FALSE}. If true, as many
-  binaries are installed as possible without any version check, and then
-  installation from source is used as a fallback.}
+\item{\code{bspm.version.check}:}{logical, default \code{TRUE}. If false,
+  as many binaries are installed as possible without any version check,
+  and then installation from source is used as a fallback.}
 \item{\code{bspm.sudo.autodetect}:}{logical, default \code{FALSE}. If true,
   enables autodetection and selection of password-less \code{sudo}.}
 \item{\code{bspm.sudo}:}{logical, default \code{FALSE}. If true, forces

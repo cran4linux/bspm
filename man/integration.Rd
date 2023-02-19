@@ -35,9 +35,9 @@ The action if there are source packages which are preferred is controlled by
 \code{"never"} to always prefer binaries over source packages, with an
 informative message about newer versions available from source.
 
-If binaries are always preferred and no message is required,
-a special \emph{fast} mode can be enabled via \code{options(bspm.fast=TRUE)},
-which completely skips version checking.
+If binaries are always preferred and no message is required, a special
+\emph{fast} mode can be enabled via \code{options(bspm.version.check=FALSE)},
+(true by default) which completely skips version checking.
 }
 \examples{
 \dontrun{
