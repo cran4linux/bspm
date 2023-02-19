@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,9 +45,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4.2" id="bspm-042">bspm 0.4.2<a class="anchor" aria-label="anchor" href="#bspm-042"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.0" id="bspm-050">bspm 0.5.0<a class="anchor" aria-label="anchor" href="#bspm-050"></a></h2>
+<ul><li>New function <code><a href="../reference/manager.html">moveto_sys()</a></code> moves existing user packages to the system library to avoid <em>package shadowing</em>; the associated script <code>mass_move</code> enables mass-calling this function for several users and/or libraries to facilitate <code>bspm</code> deployment in multitenant servers (<a href="https://github.com/Enchufa2/bspm/issues/60" class="external-link">#60</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/59" class="external-link">#59</a>).</li>
+<li>New function <code><a href="../reference/shadowed_packages.html">shadowed_packages()</a></code> analyzes the library tree and reports which packages, one per row, are shadowed by others (<a href="https://github.com/Enchufa2/bspm/issues/62" class="external-link">#62</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/58" class="external-link">#58</a>).</li>
+<li>Add new <code>options(bspm.version.check=FALSE)</code> (true by default) to globally enable <code>binary-source</code> installation type (<a href="https://github.com/Enchufa2/bspm/issues/61" class="external-link">#61</a>).</li>
+<li>Add a specific manual page <code>bspm-options</code> documenting all supported options.</li>
+<li>Add support for the installation of binary Suggests and Enhances if they are supplied to the <code>dependencies</code> argument of <code>install.packages</code>. <code>LinkingTo</code> now is omitted for binary packages as documented (<a href="https://github.com/Enchufa2/bspm/issues/32" class="external-link">#32</a>).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.2" id="bspm-042">bspm 0.4.2<a class="anchor" aria-label="anchor" href="#bspm-042"></a></h2><p class="text-muted">CRAN release: 2023-02-09</p>
 <ul><li>Fix error forwarding in root mode (<a href="https://github.com/Enchufa2/bspm/issues/54" class="external-link">#54</a>).</li>
-<li>Fix installation error when <code>options(pkgType="binary-source")</code> is set and a package without binary version available is requested (<a href="https://github.com/Enchufa2/bspm/issues/56" class="external-link">#56</a>).</li>
+<li>Fix installation error when <code>type="binary-source"</code> is set and a package without binary version available is requested (<a href="https://github.com/Enchufa2/bspm/issues/56" class="external-link">#56</a>).</li>
 <li>Fix installation error in <code>options(pkgType="both")</code> mode (default) when an available binary is not available as source (<a href="https://github.com/Enchufa2/bspm/issues/57" class="external-link">#57</a>).</li>
 </ul></div>
     <div class="section level2">

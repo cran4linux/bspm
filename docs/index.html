@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,6 +187,15 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="moving-the-user-library">Moving the user library<a class="anchor" aria-label="anchor" href="#moving-the-user-library"></a>
+</h2>
+<p>After installing and enabling <code>bspm</code> in a system with a populated user library, <em>package shadowing</em> will prevent system packages from loading, because the user library takes precedence in <code><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths()</a></code> (see <code><a href="reference/shadowed_packages.html">?bspm::shadowed_packages</a></code> for an utility to find shadowed packages). To solve this, it is necessary to install packages available in the system repos and remove them from the user library, leaving there only GitHub packages, development versions, and so on. This is achieved simply by calling <code><a href="reference/manager.html">bspm::moveto_sys()</a></code>.</p>
+<p>Additionally, <code>bspm</code> provides a script for mass-calling <code><a href="reference/manager.html">bspm::moveto_sys()</a></code> for several users and/or libraries, which allows sysadmins to easily deploy <code>bspm</code> in a multi-user server. The script, which requires <code>sudo</code> privileges, is called as follows:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> Rscript <span class="at">-e</span> bspm:::scripts mass_move user1 [user2 ...] [lib1 [lib2 ...]]</span></code></pre></div>
+<p>By default, it does a dry run, meaning that it won’t touch anything and will just report the user libraries found. To actually run the script, the <code>--run</code> flag must be provided:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> Rscript <span class="at">-e</span> bspm:::scripts mass_move <span class="at">--run</span> user1 [user2 ...] [lib1 [lib2 ...]]</span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="developing-new-backends">Developing new backends<a class="anchor" aria-label="anchor" href="#developing-new-backends"></a>
 </h2>
 <p>New backends for other package managers can be added to <code>inst/service/backend</code>. Each backend must implement the following functions:</p>
@@ -206,14 +215,14 @@
 <h3 id="cannot-connect-to-the-system-package-manager">Cannot connect to the system package manager<a class="anchor" aria-label="anchor" href="#cannot-connect-to-the-system-package-manager"></a>
 </h3>
 <p>Symptom: you tried to install a package and you got this message.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">install.packages</span>(<span class="sc">&lt;</span>some_package<span class="sc">&gt;</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> install.packages <span class="sc">:</span> cannot connect to the system package manager</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">install.packages</span>(<span class="sc">&lt;</span>some_package<span class="sc">&gt;</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> install.packages <span class="sc">:</span> cannot connect to the system package manager</span></code></pre></div>
 <p>This usually happens when <code>bspm</code> was installed in the user library or, as a system package, it is not properly configured for some reason. The solution is:</p>
 <ol style="list-style-type: decimal">
 <li>First and foremost, <strong>uninstall</strong> any copy of <code>bspm</code> in your user library.</li>
 <li>Reinstall with admin privileges, e.g.:</li>
 </ol>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">--vanilla</span> <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo Rscript <span class="at">--vanilla</span> <span class="at">-e</span> <span class="st">'install.packages("bspm", repos="https://cran.r-project.org")'</span></span></code></pre></div>
 </div>
 </div>
 </div>

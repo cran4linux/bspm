@@ -12,7 +12,7 @@ repositories (see details for further options)."><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,6 +58,8 @@ repositories (see details for further options).</p>
 <span></span>
 <span><span class="fu">remove_sys</span><span class="op">(</span><span class="va">pkgs</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">moveto_sys</span><span class="op">(</span><span class="va">lib</span>, newer <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">available_sys</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">discover</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -68,13 +70,26 @@ repositories (see details for further options).</p>
     <dl><dt>pkgs</dt>
 <dd><p>character vector of names of packages.</p></dd>
 
+
+<dt>lib</dt>
+<dd><p>a character vector giving the library directories to remove the
+packages from. If missing, defaults to the first element in <code>R_LIBS_USER</code>.</p></dd>
+
+
+<dt>newer</dt>
+<dd><p>whether to move newer packages from the user library.
+The special value <code>"ask"</code> is also supported.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Functions <code>install_sys</code> and <code>remove_sys</code> return, invisibly,
-a character vector of the names of packages not available in the system.</p>
+<p>Functions <code>install_sys</code>, <code>remove_sys</code>, and <code>moveto_sys</code></p>
+
+
+<p>return, invisibly, a character vector of the names of packages not available
+in the system.</p>
 
 
 <p>Function <code>available_sys</code> returns a matrix with one row per
@@ -95,6 +110,12 @@ you need to set <code>options(bspm.sudo=TRUE)</code>.</p>
 whether it is running in an environment where password-less <code>sudo</code> can
 be used (e.g., in a containerized environment such as a Fedora Toolbox) for
 every call, and then uses <code>sudo</code> accordingly.</p>
+<p>The <code>moveto_sys</code> method moves existing user packages to the
+system library to avoid <em>package shadowing</em> (i.e., installs the
+available system packages and removes copies from the user library;
+see <code><a href="shadowed_packages.html">shadowed_packages</a></code>).
+This provides a mechanism to easily deploy <span class="pkg">bspm</span> on an existing R
+installation with a populated user library.</p>
 <p>The <code>discover</code> method is only needed when e.g. a new repository
 is added that contains packages with different prefixes (for example, your
 system repositories may provide packages called <code>r-cran-*</code> and
@@ -104,7 +125,7 @@ regenerating the internal configuration files.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="integration.html">integration</a></code></p></div>
+    <div class="dont-index"><p><code><a href="integration.html">integration</a></code>, <code><a href="scripts.html">scripts</a></code></p></div>
     </div>
 
     <div class="section level2">

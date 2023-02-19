@@ -16,6 +16,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/bspm-options.html</loc>
+  </url>
+  <url>
     <loc>/reference/bspm-package.html</loc>
   </url>
   <url>
@@ -26,6 +29,12 @@
   </url>
   <url>
     <loc>/reference/manager.html</loc>
+  </url>
+  <url>
+    <loc>/reference/scripts.html</loc>
+  </url>
+  <url>
+    <loc>/reference/shadowed_packages.html</loc>
   </url>
   <url>
     <loc>/slides/20210709-useR2021_talk.html</loc>
