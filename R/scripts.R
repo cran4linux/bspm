@@ -25,10 +25,10 @@ scripts <- function(x, ...) {
 
   ## Borrowed with love from docopt.R: coexist with littler
   if (exists("argv", where = .GlobalEnv, inherits = FALSE)) {
-      argv <- get("argv", envir = .GlobalEnv)
-      if (is.null(argv)) argv <- character()
+    argv <- get("argv", envir = .GlobalEnv)
+    if (is.null(argv)) argv <- character()
   } else {
-      argv <- commandArgs(TRUE)
+    argv <- commandArgs(TRUE)
   }
 
   scrp <- list.files(system.file("scripts", package="bspm"), full.names=TRUE)
