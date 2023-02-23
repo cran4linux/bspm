@@ -53,6 +53,7 @@ shadowed_packages <- function(lib.loc=NULL) {
   shadow
 }
 
+# get package dependencies
 pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
   pkgs <- unique(pkgs)
   inst <- row.names(utils::installed.packages(.Library.site, ...))
@@ -75,6 +76,7 @@ pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
 }
 
 # adapted from install.packages
+# get available binaries and pkgs with later versions available
 check_versions <- function(pkgs, db) {
   dbb <- available_sys()
   row.names(dbb) <- tolower(row.names(dbb))
@@ -100,6 +102,7 @@ remotes_as_newer <- function(pkgs, lib) {
 }
 
 # adapted from install.packages
+# determine whether later versions should be preferred
 ask_user <- function(later, bins, binvers, srcvers) {
   if (!any(later)) return(later)
 
@@ -119,7 +122,7 @@ ask_user <- function(later, bins, binvers, srcvers) {
     if (is.na(res)) stop("Cancelled by user")
     if (!isTRUE(res)) later <- FALSE
   } else if (action == "never") {
-    cat("  Binaries will be installed\n")
+    cat("  Binaries will be preferred\n")
     later <- FALSE
   }
 
