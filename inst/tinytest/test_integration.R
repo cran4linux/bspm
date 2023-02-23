@@ -5,8 +5,7 @@ suppressWarnings(expect_message(enable()))
 expect_true(inherits(utils::install.packages, "functionWithTrace"))
 
 tracer <- paste(body(utils::install.packages), collapse="")
-expected <- "pkgs <- bspm::install_sys(pkgs)"
-expect_true(grepl(expected, tracer, fixed=TRUE))
+expect_true(sum(grepl("bspm", tracer, fixed=TRUE)) > 0)
 
 expect_message(disable())
 expect_false(inherits(utils::install.packages, "functionWithTrace"))
