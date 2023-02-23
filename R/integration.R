@@ -87,15 +87,15 @@ install_both <- function(pkgs, contriburl, method, dependencies, ...) {
   pkgs <- pkg_deps(pkgs, dependencies, db, ..., all=TRUE)
   pkgs <- check_versions(pkgs, db)
   later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
-  pkgs <- c(bspm::install_sys(pkgs$bins[!later]), pkgs$bins[later], pkgs$srcs)
+  pkgs <- c(install_sys(pkgs$bins[!later]), pkgs$bins[later], pkgs$srcs)
   pkgs
 }
 
 # install as many binaries as possible and fallback to source
 install_fast <- function(pkgs, contriburl, method, ...) {
-  if (length(pkgs <- bspm::install_sys(pkgs))) {
+  if (length(pkgs <- install_sys(pkgs))) {
     db <- utils::available.packages(contriburl=contriburl, method=method, ...)
-    bspm::install_sys(pkg_deps(pkgs, NA, db, ..., all=FALSE))
+    install_sys(pkg_deps(pkgs, NA, db, ..., all=FALSE))
   }
   pkgs
 }
