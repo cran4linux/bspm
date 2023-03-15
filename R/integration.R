@@ -46,7 +46,7 @@ enable <- function() {
   if (getOption("bspm.backend.check", TRUE))
     backend_check()
   options(pkgType="both")
-  trace(utils::install.packages, print=FALSE, tracer=shim)
+  trace(utils::install.packages, print=FALSE, tracer=body(shim))
   invisible()
 }
 
@@ -58,7 +58,7 @@ disable <- function() {
   invisible()
 }
 
-shim <- quote({
+shim <- function() {
   if (missing(pkgs)) stop("no packages were specified")
 
   if (type == "both" && !getOption("bspm.version.check", TRUE))
@@ -67,7 +67,7 @@ shim <- quote({
   if (is.null(repos)) {
     type <- "source"
   } else if (type == "both") { # regular install, with version check
-    pkgs <- getFromNamespace("install_both", asNamespace("bspm"))(
+    pkgs <- utils::getFromNamespace("install_both", asNamespace("bspm"))(
       pkgs, contriburl, method, dependencies, ...)
     type <- "source"
   } else if (type == "binary") { # install binaries and fail otherwise
@@ -75,11 +75,14 @@ shim <- quote({
       type <- "source"
   } else if (type == "binary-source") { # fast path, no version check
     type <- "both" # restore
-    pkgs <- getFromNamespace("install_fast", asNamespace("bspm"))(
+    pkgs <- utils::getFromNamespace("install_fast", asNamespace("bspm"))(
       pkgs, contriburl, method, ...)
     type <- "source"
   }
-})
+}
+
+formals(shim) <- formals(utils::install.packages)
+utils::globalVariables("contrib.url") # argument
 
 # install binaries with checks for newer versions from source
 install_both <- function(pkgs, contriburl, method, dependencies, ...) {

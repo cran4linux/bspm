@@ -47,3 +47,9 @@ jobs:
       with:
         name: r-${{ matrix.config.image }}-${{ matrix.config.tag }}-results
         path: check
+
+    - name: Test coverage
+      if: ${{ success() && matrix.config.image == 'fedora' }}
+      run: |
+        dnf -y install R-covr
+        Rscript -e 'covr::codecov()'

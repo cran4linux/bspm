@@ -21,7 +21,7 @@ expect_equal(getOption("pkgType"), "source")
 test_shim <- function(pkgs, repos = "https://cran.r-project.org",
                       contriburl = contrib.url(repos, type), method,
                       dependencies = NA, type = getOption("pkgType"), ...) {
-  eval(bspm:::shim)
+  eval(body(bspm:::shim))
   list(pkgs=pkgs, type=type)
 }
 
