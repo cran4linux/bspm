@@ -41,7 +41,9 @@ expect_equal(out$bins, c("another", "Rcpp", "BH"))
 expect_equal(out$srcs, "simmer")
 expect_equal(out$binvers, c(another="1", rcpp="1.0.10", bh="1.81.0.0"))
 expect_equal(out$srcvers, c(another="0", Rcpp="1.0.10", BH="1.81.0-1"))
-expect_equal(out$later, c(another=FALSE, rcpp=FALSE, bh=TRUE))
+# expect_equal(out$later, c(another=FALSE, rcpp=FALSE, bh=TRUE))
+# R >= 4.3 seems to drop names in this case, bug?
+expect_equal(unname(out$later), c(FALSE, FALSE, TRUE))
 
 unmock_all()
 

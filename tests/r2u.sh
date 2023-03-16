@@ -3,7 +3,7 @@
 set -e
 echo "options(bspm.version.check=FALSE)" >> /etc/R/Rprofile.site
 eval $(cat /etc/os-release)
-RVER=$(Rscript -e 'cat(R.version$major, R.version$minor, sep=".")')
+RVER=$(Rscript -e 'cat(as.character(getRversion()))')
 
 echo "TEST: install GitHub package"
 installGithub.r MangoTheCat/visualTest
