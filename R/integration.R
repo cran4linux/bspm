@@ -98,7 +98,7 @@ install_both <- function(pkgs, contriburl, method, dependencies, ...) {
 install_fast <- function(pkgs, contriburl, method, ...) {
   if (length(pkgs <- install_sys(pkgs))) {
     db <- utils::available.packages(contriburl=contriburl, method=method, ...)
-    install_sys(pkg_deps(pkgs, NA, db, ..., all=FALSE))
+    install_sys(pkg_deps(pkgs, NA, db=db, ..., all=FALSE))
   }
   pkgs
 }

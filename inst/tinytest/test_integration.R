@@ -70,4 +70,28 @@ expect_equal(res, list(pkgs="notavail", type="source"))
 
 unmock_all()
 
+# install functions ----
+
+pkgs_sys <- c("BH", "Rcpp", "another")
+db <- readRDS("db.rds")
+
+mock("available.packages", function(...) db, "utils")
+mock("installed.packages", pkg="utils", function(...)
+  matrix(1, dimnames=list(c("codetools"), NULL)))
+mock("install_sys", function(pkgs) setdiff(pkgs, pkgs_sys), "bspm")
+mock("available_sys", pkg="bspm", function() matrix(
+  c(pkgs_sys, "1.81.0.0", "1.0.10", "1"), ncol=2,
+  dimnames=list(tolower(pkgs_sys), c("Package", "Version"))
+))
+
+pkgs <- c("another", "simmer", "rticles")
+deps <- c(unname(unlist(tools::package_dependencies(pkgs, recursive=TRUE))), pkgs)
+deps <- setdiff(deps, bspm:::available_sys()[, "Package"])
+deps <- setdiff(deps, rownames(utils::installed.packages()))
+
+expect_equal(bspm:::install_both(pkgs, dependencies=NA), deps)
+expect_equal(bspm:::install_fast(pkgs, dependencies=NA), c("simmer", "rticles"))
+
+unmock_all()
+
 source("teardown.R")
