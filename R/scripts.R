@@ -24,10 +24,10 @@ scripts <- function(x, ...) {
   }
 
   ## Borrowed with love from docopt.R: coexist with littler
-  if (exists("argv", where = .GlobalEnv, inherits = FALSE)) {
+  if (exists("argv", where = .GlobalEnv, inherits = FALSE)) { # nocov start
     argv <- get("argv", envir = .GlobalEnv)
     if (is.null(argv)) argv <- character()
-  } else {
+  } else {                                                    # nocov end
     argv <- commandArgs(TRUE)
   }
 
@@ -48,5 +48,5 @@ scripts <- function(x, ...) {
 class(scripts) <- "bspm cli"
 
 .onLoad <- function(libname, pkgname) {
-  registerS3method("print", "bspm cli", scripts, asNamespace(pkgname))
+  registerS3method("print", "bspm cli", scripts, asNamespace(pkgname)) # nocov
 }
