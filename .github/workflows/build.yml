@@ -60,12 +60,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: eddelbuettel/r2u:jammy
-
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - uses: actions/checkout@v3
-
     - name: Install development version
       run: R CMD INSTALL .
-
     - name: Run tests
       run: ./tests/r2u.sh
