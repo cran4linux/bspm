@@ -1,6 +1,7 @@
-# bspm 0.5.0.1
+# bspm 0.5.1
 
 - Add support for littler in scripts (@eddelbuettel in #64).
+- Refactor + fixes + improve testing (#66 addressing #63).
 
 # bspm 0.5.0
 
