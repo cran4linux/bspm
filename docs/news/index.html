@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.0" id="bspm-050">bspm 0.5.0<a class="anchor" aria-label="anchor" href="#bspm-050"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.1" id="bspm-051">bspm 0.5.1<a class="anchor" aria-label="anchor" href="#bspm-051"></a></h2>
+<ul><li>Add support for littler in scripts (<a href="https://github.com/eddelbuettel" class="external-link">@eddelbuettel</a> in <a href="https://github.com/Enchufa2/bspm/issues/64" class="external-link">#64</a>).</li>
+<li>Refactor + fixes + improve testing (<a href="https://github.com/Enchufa2/bspm/issues/66" class="external-link">#66</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/63" class="external-link">#63</a>).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.0" id="bspm-050">bspm 0.5.0<a class="anchor" aria-label="anchor" href="#bspm-050"></a></h2><p class="text-muted">CRAN release: 2023-02-19</p>
 <ul><li>New function <code><a href="../reference/manager.html">moveto_sys()</a></code> moves existing user packages to the system library to avoid <em>package shadowing</em>; the associated script <code>mass_move</code> enables mass-calling this function for several users and/or libraries to facilitate <code>bspm</code> deployment in multitenant servers (<a href="https://github.com/Enchufa2/bspm/issues/60" class="external-link">#60</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/59" class="external-link">#59</a>).</li>
 <li>New function <code><a href="../reference/shadowed_packages.html">shadowed_packages()</a></code> analyzes the library tree and reports which packages, one per row, are shadowed by others (<a href="https://github.com/Enchufa2/bspm/issues/62" class="external-link">#62</a> addressing <a href="https://github.com/Enchufa2/bspm/issues/58" class="external-link">#58</a>).</li>
 <li>Add new <code>options(bspm.version.check=FALSE)</code> (true by default) to globally enable <code>binary-source</code> installation type (<a href="https://github.com/Enchufa2/bspm/issues/61" class="external-link">#61</a>).</li>
