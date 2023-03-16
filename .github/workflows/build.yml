@@ -53,3 +53,19 @@ jobs:
       run: |
         dnf -y install R-covr
         Rscript -e 'covr::codecov()'
+
+  r2u:
+    needs: build
+    name: r2u tests
+    runs-on: ubuntu-latest
+    container:
+      image: eddelbuettel/r2u:jammy
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install development version
+      run: R CMD INSTALL .
+
+    - name: Run tests
+      run: ./tests/r2u.sh
