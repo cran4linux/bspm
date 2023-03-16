@@ -45,52 +45,8 @@
 enable <- function() {
   if (getOption("bspm.backend.check", TRUE))
     backend_check()
-
   options(pkgType="both")
-
-  trace(utils::install.packages, print=FALSE, tracer=quote({
-    if (missing(pkgs)) stop("no packages were specified")
-
-    if (type == "both" && !getOption("bspm.version.check", TRUE))
-      type <- "binary-source"
-
-    if (is.null(repos)) {
-      type <- "source"
-    } else if (type == "both") {
-      # get pkgs with non-installed dependencies
-      db <- available.packages(contriburl=contriburl, method=method,
-                               type="source", ...)
-      pkg_deps <- getFromNamespace("pkg_deps", asNamespace("bspm"))
-      pkgs <- pkg_deps(pkgs, dependencies, db, ..., all=TRUE)
-
-      # get available binaries and pkgs with later versions available
-      check_versions <- getFromNamespace("check_versions", asNamespace("bspm"))
-      pkgs <- check_versions(pkgs, db)
-
-      # determine whether later versions should be installed
-      ask_user <- getFromNamespace("ask_user", asNamespace("bspm"))
-      later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
-
-      # install binaries and forward the rest
-      pkgs <- c(bspm::install_sys(pkgs$bins[!later]), pkgs$bins[later], pkgs$srcs)
-      type <- "source"
-    } else if (type == "binary") {
-      # try just binaries and fail otherwise
-      if (!length(pkgs <- bspm::install_sys(pkgs)))
-        type <- "source"
-    } else if (type == "binary-source") {
-      # install as many binaries as possible and fallback to source
-      if (length(pkgs <- bspm::install_sys(pkgs))) {
-        db <- available.packages(contriburl=contriburl, method=method,
-                                 type="source", ...)
-        pkg_deps <- getFromNamespace("pkg_deps", asNamespace("bspm"))
-        pkgs <- pkg_deps(pkgs, NA, db, ..., all=FALSE)
-        if (length(pkgs)) bspm::install_sys(pkgs)
-      }
-      type <- "source"
-    }
-  }))
-
+  trace(utils::install.packages, print=FALSE, tracer=body(shim))
   invisible()
 }
 
@@ -100,4 +56,49 @@ disable <- function() {
   options(pkgType="source")
   untrace(utils::install.packages)
   invisible()
+}
+
+shim <- function() {
+  if (missing(pkgs)) stop("no packages were specified")
+
+  if (type == "both" && !getOption("bspm.version.check", TRUE))
+    type <- "binary-source"
+
+  if (is.null(repos)) {
+    type <- "source"
+  } else if (type == "both") { # regular install, with version check
+    pkgs <- utils::getFromNamespace("install_both", asNamespace("bspm"))(
+      pkgs, contriburl, method, dependencies, ...)
+    type <- "source"
+  } else if (type == "binary") { # install binaries and fail otherwise
+    if (!length(pkgs <- bspm::install_sys(pkgs)))
+      type <- "source"
+  } else if (type == "binary-source") { # fast path, no version check
+    type <- "both" # restore
+    pkgs <- utils::getFromNamespace("install_fast", asNamespace("bspm"))(
+      pkgs, contriburl, method, ...)
+    type <- "source"
+  }
+}
+
+formals(shim) <- formals(utils::install.packages)
+utils::globalVariables("contrib.url") # argument
+
+# install binaries with checks for newer versions from source
+install_both <- function(pkgs, contriburl, method, dependencies, ...) {
+  db <- utils::available.packages(contriburl=contriburl, method=method, ...)
+  pkgs <- pkg_deps(pkgs, dependencies, db, ..., all=TRUE)
+  pkgs <- check_versions(pkgs, db)
+  later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
+  pkgs <- c(install_sys(pkgs$bins[!later]), pkgs$bins[later], pkgs$srcs)
+  pkgs
+}
+
+# install as many binaries as possible and fallback to source
+install_fast <- function(pkgs, contriburl, method, ...) {
+  if (length(pkgs <- install_sys(pkgs))) {
+    db <- utils::available.packages(contriburl=contriburl, method=method, ...)
+    install_sys(pkg_deps(pkgs, NA, db=db, ..., all=FALSE))
+  }
+  pkgs
 }
