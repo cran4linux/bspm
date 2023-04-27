@@ -1,3 +1,7 @@
+# bspm devel
+
+- Fix package deduplication in dependency getter (#68 addressing #67).
+
 # bspm 0.5.1
 
 - Add support for littler in scripts (@eddelbuettel in #64).
