@@ -14,7 +14,7 @@
 #' Rscript -e bspm:::scripts <script_name> [args]
 #' }
 #'
-#' @name scripts
+#' @name bspm-scripts
 NULL
 
 scripts <- function(x, ...) {
