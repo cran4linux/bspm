@@ -71,7 +71,7 @@ pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
     enha <- tools::package_dependencies(pkgs, db, "Enhances", recursive=FALSE)
     deps <- c(deps, unlist(enha, use.names=FALSE))
   }
-  pkgs <- c(setdiff(unique(deps), inst), if (all) pkgs)
+  pkgs <- unique(c(setdiff(deps, inst), if (all) pkgs))
   pkgs
 }
 
