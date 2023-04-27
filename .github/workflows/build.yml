@@ -27,7 +27,8 @@ jobs:
     - name: Install dependencies (Fedora)
       if: ${{ matrix.config.image == 'fedora' }}
       run: |
-        dnf install -y R-core devscripts-checkbashisms python3-dnf
+        echo "install_weak_deps=False" >> /etc/dnf/dnf.conf
+        dnf install -y R-core-devel devscripts-checkbashisms python3-dnf
 
     - name: Install dependencies (Debian, Ubuntu)
       if: ${{ matrix.config.image != 'fedora' }}
