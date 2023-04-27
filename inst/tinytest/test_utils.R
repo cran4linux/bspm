@@ -13,7 +13,7 @@ expect_equal(df$Version < df$Shadow.Version, df$Shadow.Newer)
 mock("installed.packages", pkg="utils", function(...)
   matrix(1:2, dimnames=list(c("codetools", "rticles"), NULL)))
 
-pkgs <- c("simmer", "simmer")
+pkgs <- c("simmer", "simmer", "utils")
 db <- readRDS("db.rds")
 
 deps <- c("Rcpp", "magrittr", "utils", "methods", "BH")
