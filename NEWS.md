@@ -1,4 +1,4 @@
-# bspm devel
+# bspm 0.5.2
 
 - Fix package deduplication in dependency getter (#68 addressing #67).
 - Rename scripts manual page to `bspm-scripts`.

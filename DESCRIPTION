@@ -1,7 +1,7 @@
 Package: bspm
 Type: Package
 Title: Bridge to System Package Manager
-Version: 0.5.1.1
+Version: 0.5.2
 Authors@R: c(
     person("Iñaki", "Ucar", email="iucar@fedoraproject.org",
       role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")))
