@@ -15,8 +15,8 @@
 #' @docType package
 #' @name bspm-package
 #'
-#' @seealso \code{\link{manager}}, \code{\link{integration}}, \code{\link{scripts}},
-#' \code{\link{bspm-options}}
+#' @seealso \code{\link{manager}}, \code{\link{integration}},
+#' \code{\link{bspm-scripts}}, \code{\link{bspm-options}}
 NULL
 
 utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))

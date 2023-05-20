@@ -84,5 +84,5 @@ bspm::available_sys()
 
 }
 \seealso{
-\code{\link{integration}}, \code{\link{scripts}}
+\code{\link{integration}}, \code{\link{bspm-scripts}}
 }

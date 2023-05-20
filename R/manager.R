@@ -22,7 +22,7 @@
 #' be used (e.g., in a containerized environment such as a Fedora Toolbox) for
 #' every call, and then uses \code{sudo} accordingly.
 #'
-#' @seealso \code{\link{integration}}, \code{\link{scripts}}
+#' @seealso \code{\link{integration}}, \code{\link{bspm-scripts}}
 #'
 #' @examples
 #' \dontrun{
