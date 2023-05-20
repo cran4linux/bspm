@@ -7,7 +7,7 @@ setHook(packageEvent("pkgdown", "onLoad"), function(...) {
 setHook(packageEvent("pkgdown", "onLoad"), function(...) {
   fun <- getFromNamespace("highlight_examples", asNamespace("pkgdown"))
   assignInNamespace("highlight_examples", function (code, topic, env) {
-    if (topic == "scripts")
+    if (topic == "bspm-scripts")
       pkgdown:::highlight_text(code)
     else fun(code, topic, env)
   }, "pkgdown")

@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,6 +76,7 @@
 <div class="page-header"><h1 id="bspm-bridge-to-system-package-manager">bspm: Bridge to System Package Manager<a class="anchor" aria-label="anchor" href="#bspm-bridge-to-system-package-manager"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p>Enables binary package installations on Linux distributions. Provides functions to manage packages via the distribution’s package manager. Also provides transparent integration with R’s install.packages() and a fallback mechanism. When installed as a system package, interacts with the system’s package manager without requiring administrative privileges via an integrated D-Bus service; otherwise, uses sudo. Currently, the following backends are supported: DNF, APT, ALPM.</p>
 <p>See our contributed talk at <em>useR! 2021</em>: [<a href="https://youtu.be/GMMGBlyl_ok?t=1170" class="external-link">video</a>, <a href="https://enchufa2.github.io/bspm/slides/20210709-useR2021_talk.html" class="external-link">slides</a>].</p>
 <div class="section level2">
@@ -92,6 +93,12 @@
 </h3>
 <p>Installation from source requires (apart from R) the folllowing Python bindings:</p>
 <table class="table">
+<colgroup>
+<col width="20%">
+<col width="22%">
+<col width="32%">
+<col width="25%">
+</colgroup>
 <thead><tr class="header">
 <th></th>
 <th>Package manager</th>
@@ -127,7 +134,7 @@
 </table>
 <p>(*) Optional, only required if you plan to run <code>bspm</code> as a regular user (non-root) in a (systemd-based) desktop/server setting.</p>
 <p>Then, you should install <code>bspm</code> as a system package to be able to use it as a regular user. Download the latest version from CRAN or GitHub and proceed with the installation (note <code>sudo</code>):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo R CMD INSTALL bspm_[version].tar.gz</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo R CMD INSTALL bspm_<span class="pp">[</span><span class="ss">version</span><span class="pp">]</span>.tar.gz</span></code></pre></div>
 <p>Further configuration options:</p>
 <ul>
 <li>If you plan to run it only as root (e.g., in a docker container), then you don’t need the D-Bus service, so you can disable its installation by adding <code>--configure-args="--without-dbus-service"</code>.</li>
