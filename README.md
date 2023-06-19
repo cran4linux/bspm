@@ -148,7 +148,7 @@ as well as Bioconductor packages via the
 
 ```bash
 $ echo -e "\n[desolve]\nServer = https://desolve.ru/archrepo/\$arch" \
-  "\n[BioArchLinux]\nServer = https://repo.bioarchlinux.org/\$arch" \
+  "\n[bioarchlinux]\nServer = https://repo.bioarchlinux.org/\$arch" \
   | sudo tee -a /etc/pacman.conf
 $ sudo pacman -Sy && sudo pacman -S r pyalpm python-{dbus,gobject}
 ```

@@ -92,6 +92,7 @@ user_lib <- function()
 available_sys <- function() {
   pkgs <- do.call(rbind, strsplit(backend_call("available"), ";"))
   colnames(pkgs) <- c("Package", "Version", "Repository")
+  pkgs[, "Version"] <- gsub("_", "-", pkgs[, "Version"], fixed=TRUE) #71 Arch
 
   vers <- package_version(pkgs[, "Version"])
   pkgs <- pkgs[order(pkgs[, "Package"], vers, decreasing=TRUE), ]

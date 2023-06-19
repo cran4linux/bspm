@@ -1,3 +1,8 @@
+# bspm devel
+
+- Add workaround for underscores in Arch package versions (#71).
+- Fix BioArchLinux instructions in README.
+
 # bspm 0.5.2
 
 - Fix package deduplication in dependency getter (#68 addressing #67).
