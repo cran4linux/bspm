@@ -2,6 +2,7 @@
 
 - Add workaround for underscores in Arch package versions (#71).
 - Fix BioArchLinux instructions in README.
+- Fix discovery of installed system packages in Arch (#73).
 
 # bspm 0.5.2
 

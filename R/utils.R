@@ -56,7 +56,8 @@ shadowed_packages <- function(lib.loc=NULL) {
 # get package dependencies
 pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
   pkgs <- unique(pkgs)
-  inst <- row.names(utils::installed.packages(.Library.site, ...))
+  libs <- unique(c(.Library.site, .Library))
+  inst <- row.names(utils::installed.packages(libs, ...))
   deps <- tools::package_dependencies(pkgs, db, c("Depends", "Imports"), recursive=TRUE)
   deps <- unlist(deps, use.names=FALSE)
   if (!all) {
