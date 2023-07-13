@@ -1,8 +1,8 @@
 ## Patch release
-Bug fixes.
+Several bug fixes for Arch systems.
 
 ## Test environments
-- local R installation, R 4.3.0
+- local up-to-date R installation
 - debian:latest, fedora:latest, ubuntu:latest on GitHub
 
 ## R CMD check results

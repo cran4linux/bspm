@@ -1,4 +1,4 @@
-# bspm devel
+# bspm 0.5.3
 
 - Add workaround for underscores in Arch package versions (#71).
 - Fix BioArchLinux instructions in README.
