@@ -64,7 +64,7 @@ jobs:
     name: r2u tests
     runs-on: ubuntu-latest
     container:
-      image: eddelbuettel/r2u:jammy
+      image: rocker/r2u:jammy
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
