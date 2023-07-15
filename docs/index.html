@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,7 +184,7 @@
 </h3>
 <p>There are a number of binary CRAN packages available via the <a href="https://github.com/dvdesolve/ArchRPkgs" class="external-link">ArchRPkgs</a> repo as well as Bioconductor packages via the <a href="https://github.com/BioArchLinux/Packages" class="external-link">BioArchLinux</a> repo:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="at">-e</span> <span class="st">"\n[desolve]\nServer = https://desolve.ru/archrepo/</span><span class="dt">\$</span><span class="st">arch"</span> <span class="dt">\</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\n[BioArchLinux]\nServer = https://repo.bioarchlinux.org/</span><span class="dt">\$</span><span class="st">arch"</span> <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\n[bioarchlinux]\nServer = https://repo.bioarchlinux.org/</span><span class="dt">\$</span><span class="st">arch"</span> <span class="dt">\</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /etc/pacman.conf</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacman <span class="at">-Sy</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> pacman <span class="at">-S</span> r pyalpm python-<span class="dt">{dbus</span><span class="op">,</span><span class="dt">gobject}</span></span></code></pre></div>
 <p>Then, install <code>bspm</code> as a system package from CRAN:</p>
