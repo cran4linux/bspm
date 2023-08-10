@@ -7,6 +7,7 @@ import dnf.cli.output
 def discover():
     progress = dnf.cli.progress.MultiFileProgressMeter(fo=sys.stdout)
     base = dnf.Base()
+    base.conf.read()
     base.read_all_repos()
     base.repos.all().set_progress_bar(progress)
     base.fill_sack()
@@ -26,6 +27,7 @@ def discover():
 def available(prefixes, exclusions):
     progress = dnf.cli.progress.MultiFileProgressMeter(fo=sys.stdout)
     base = dnf.Base()
+    base.conf.read()
     base.read_all_repos()
     base.repos.all().set_progress_bar(progress)
     base.update_cache()
@@ -52,6 +54,7 @@ def available(prefixes, exclusions):
 def install(prefixes, pkgs, exclusions):
     progress = dnf.cli.progress.MultiFileProgressMeter(fo=sys.stdout)
     base = dnf.Base()
+    base.conf.read()
     base.read_all_repos()
     base.repos.all().set_progress_bar(progress)
     base.update_cache()
@@ -68,6 +71,7 @@ def install(prefixes, pkgs, exclusions):
 
 def remove(prefixes, pkgs, exclusions):
     base = dnf.Base()
+    base.conf.read()
     base.fill_sack()
 
     notavail = mark(base.remove, prefixes, pkgs, exclusions)
