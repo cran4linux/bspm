@@ -27,7 +27,7 @@
 #' \emph{fast} mode can be enabled via \code{options(bspm.version.check=FALSE)},
 #' (true by default) which completely skips version checking.
 #'
-#' @seealso \code{\link{manager}}
+#' @seealso \code{\link{manager}}, \code{\link{bspm-options}}
 #'
 #' @examples
 #' \dontrun{

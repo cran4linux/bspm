@@ -52,5 +52,5 @@ install.packages("errors")
 
 }
 \seealso{
-\code{\link{manager}}
+\code{\link{manager}}, \code{\link{bspm-options}}
 }

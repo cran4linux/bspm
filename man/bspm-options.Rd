@@ -5,6 +5,7 @@
 \title{Package Options}
 \description{
 List of \code{\link{options}()} supported to configure \pkg{bspm}'s behavior.
+In general, these should be set \emph{before} calling any package function.
 }
 \section{Options specific to \pkg{bspm}}{
 
