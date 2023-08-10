@@ -1,3 +1,8 @@
+# bspm 0.5.4
+
+- Fix DNF backend to ensure that the system configuration is used (228407a).
+- Minor documentation improvements.
+
 # bspm 0.5.3
 
 - Add workaround for underscores in Arch package versions (#71).

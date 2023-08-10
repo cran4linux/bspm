@@ -1,5 +1,5 @@
 ## Patch release
-Several bug fixes for Arch systems.
+Bug fix for DNF-based systems.
 
 ## Test environments
 - local up-to-date R installation
