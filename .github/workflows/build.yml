@@ -28,14 +28,17 @@ jobs:
       if: ${{ matrix.config.image == 'fedora' }}
       run: |
         echo "install_weak_deps=False" >> /etc/dnf/dnf.conf
-        dnf install -y R-core-devel devscripts-checkbashisms python3-dnf
+        dnf install -y R-core-devel devscripts-checkbashisms python3-dnf \
+                       systemd python3-gobject python3-dbus dbus-daemon
 
     - name: Install dependencies (Debian, Ubuntu)
       if: ${{ matrix.config.image != 'fedora' }}
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        apt update && apt install -y r-base-core devscripts python3-apt
+        apt update && apt install -y --no-install-recommends \
+            r-base-core devscripts python3-apt \
+            python3-gi python3-dbus && apt install -y systemd dbus-daemon
 
     - name: Check
       env:
