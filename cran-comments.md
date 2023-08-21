@@ -1,5 +1,5 @@
 ## Patch release
-Bug fix for DNF-based systems.
+Fix test involving numeric_version per CRAN request.
 
 ## Test environments
 - local up-to-date R installation

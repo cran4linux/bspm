@@ -1,3 +1,7 @@
+# bspm 0.5.5
+
+- Fix test to feed character input to `numeric_version`.
+
 # bspm 0.5.4
 
 - Fix DNF backend to ensure that the system configuration is used (228407a).

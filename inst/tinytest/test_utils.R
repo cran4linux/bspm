@@ -55,8 +55,8 @@ mock("packageDescription", pkg="utils", function(bin, lib, field) {
 })
 
 pkgs <- list(
-  binvers = c(1, 1, 1),
-  srcvers = c(2, 1, 1),
+  binvers = as.character(c(1, 1, 1)),
+  srcvers = as.character(c(2, 1, 1)),
   bins = c("a", "a", "sha"),
   later = c(FALSE, FALSE, FALSE)
 )
