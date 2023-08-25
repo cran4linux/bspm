@@ -4,7 +4,7 @@ import re
 import apt
 
 # workaround for Ubuntu 18.04
-# https://github.com/Enchufa2/bspm/issues/15
+# https://github.com/cran4linux/bspm/issues/15
 import os
 if not os.getenv("PATH"):
     os.environ["PATH"] = "/usr/bin:/usr/sbin:/bin:/sbin"

@@ -1,8 +1,8 @@
 # bspm: Bridge to System Package Manager
 
 <!-- badges: start -->
-[![Build Status](https://github.com/Enchufa2/bspm/workflows/build/badge.svg)](https://github.com/Enchufa2/bspm/actions)
-[![Coverage Status](https://codecov.io/gh/Enchufa2/bspm/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Enchufa2/bspm)
+[![Build Status](https://github.com/cran4linux/bspm/workflows/build/badge.svg)](https://github.com/cran4linux/bspm/actions)
+[![Coverage Status](https://codecov.io/gh/cran4linux/bspm/branch/master/graph/badge.svg)](https://app.codecov.io/gh/cran4linux/bspm)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/bspm)](https://cran.r-project.org/package=bspm)
 <!-- badges: end -->
 
@@ -16,12 +16,12 @@ Currently, the following backends are supported: DNF, APT, ALPM.
 
 See our contributed talk at _useR! 2021_:
 [[video](https://youtu.be/GMMGBlyl_ok?t=1170),
-[slides](https://enchufa2.github.io/bspm/slides/20210709-useR2021_talk.html)].
+[slides](https://cran4linux.github.io/bspm/slides/20210709-useR2021_talk.html)].
 
 ## Installation
 
 Installation from system repositories is preferred, mainly to avoid issues on
-SELinux-enabled systems (see [#19](https://github.com/Enchufa2/bspm/issues/19)).
+SELinux-enabled systems (see [#19](https://github.com/cran4linux/bspm/issues/19)).
 
 - Follow these links if the target system is a desktop/server installation of
   one of the supported distributions:
@@ -211,7 +211,7 @@ should be reported to stdout.
 
 If you are experiencing an issue that is not listed here, or the solution
 did not work for you, please do not hesitate to open a ticket at our
-[GitHub issue tracker](https://github.com/Enchufa2/bspm/issues).
+[GitHub issue tracker](https://github.com/cran4linux/bspm/issues).
 
 ### Cannot connect to the system package manager
 

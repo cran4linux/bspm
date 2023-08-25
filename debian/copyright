@@ -41,8 +41,8 @@ For reference, the upstream DESCRIPTION file is included below:
   OS_type: unix
   SystemRequirements: systemd, python3-dbus, python3-gobject,
       python bindings for your distro's package manager
-  URL: https://github.com/Enchufa2/bspm
-  BugReports: https://github.com/Enchufa2/bspm/issues
+  URL: https://github.com/cran4linux/bspm
+  BugReports: https://github.com/cran4linux/bspm/issues
   RoxygenNote: 7.1.1
   Roxygen: list(old_usage = TRUE)
 

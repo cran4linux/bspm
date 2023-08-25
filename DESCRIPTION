@@ -1,7 +1,7 @@
 Package: bspm
 Type: Package
 Title: Bridge to System Package Manager
-Version: 0.5.5
+Version: 0.5.5.1
 Authors@R: c(
     person("Iñaki", "Ucar", email="iucar@fedoraproject.org",
       role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")))
@@ -17,7 +17,7 @@ Encoding: UTF-8
 OS_type: unix
 SystemRequirements: systemd, dbus-python, PyGObject, python-(dnf|apt|alpm)
 Suggests: tinytest
-URL: https://enchufa2.github.io/bspm/
-BugReports: https://github.com/Enchufa2/bspm/issues
+URL: https://cran4linux.github.io/bspm/
+BugReports: https://github.com/cran4linux/bspm/issues
 RoxygenNote: 7.2.3
 Roxygen: list(old_usage = TRUE)

@@ -1,3 +1,7 @@
+# bspm 0.5.5.1
+
+- Move to cran4linux org on GitHub, update URLs.
+
 # bspm 0.5.5
 
 - Fix test to feed character input to `numeric_version`.

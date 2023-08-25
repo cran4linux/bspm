@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="index.html">bspm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/Enchufa2/bspm/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/cran4linux/bspm/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -78,11 +78,11 @@
 <!-- badges: start -->
 
 <p>Enables binary package installations on Linux distributions. Provides functions to manage packages via the distribution’s package manager. Also provides transparent integration with R’s install.packages() and a fallback mechanism. When installed as a system package, interacts with the system’s package manager without requiring administrative privileges via an integrated D-Bus service; otherwise, uses sudo. Currently, the following backends are supported: DNF, APT, ALPM.</p>
-<p>See our contributed talk at <em>useR! 2021</em>: [<a href="https://youtu.be/GMMGBlyl_ok?t=1170" class="external-link">video</a>, <a href="https://enchufa2.github.io/bspm/slides/20210709-useR2021_talk.html" class="external-link">slides</a>].</p>
+<p>See our contributed talk at <em>useR! 2021</em>: [<a href="https://youtu.be/GMMGBlyl_ok?t=1170" class="external-link">video</a>, <a href="https://cran4linux.github.io/bspm/slides/20210709-useR2021_talk.html" class="external-link">slides</a>].</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Installation from system repositories is preferred, mainly to avoid issues on SELinux-enabled systems (see <a href="https://github.com/Enchufa2/bspm/issues/19" class="external-link">#19</a>).</p>
+<p>Installation from system repositories is preferred, mainly to avoid issues on SELinux-enabled systems (see <a href="https://github.com/cran4linux/bspm/issues/19" class="external-link">#19</a>).</p>
 <ul>
 <li>Follow these links if the target system is a desktop/server installation of one of the supported distributions: <a href="#fedora">Fedora</a>, <a href="#ubuntu">Ubuntu</a>, <a href="#opensuse">openSUSE</a>, <a href="#arch">Arch</a>.</li>
 <li>If the target system is a containerized application (e.g., a Docker image), refer to the <a href="https://github.com/rocker-org/rocker/tree/master/r-bspm" class="external-link"><code>rocker/r-bspm</code> images</a>.</li>
@@ -217,7 +217,7 @@
 <div class="section level2">
 <h2 id="support-and-troubleshooting">Support and troubleshooting<a class="anchor" aria-label="anchor" href="#support-and-troubleshooting"></a>
 </h2>
-<p>If you are experiencing an issue that is not listed here, or the solution did not work for you, please do not hesitate to open a ticket at our <a href="https://github.com/Enchufa2/bspm/issues" class="external-link">GitHub issue tracker</a>.</p>
+<p>If you are experiencing an issue that is not listed here, or the solution did not work for you, please do not hesitate to open a ticket at our <a href="https://github.com/cran4linux/bspm/issues" class="external-link">GitHub issue tracker</a>.</p>
 <div class="section level3">
 <h3 id="cannot-connect-to-the-system-package-manager">Cannot connect to the system package manager<a class="anchor" aria-label="anchor" href="#cannot-connect-to-the-system-package-manager"></a>
 </h3>
@@ -237,8 +237,8 @@
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=bspm" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/Enchufa2/bspm/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/Enchufa2/bspm/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/cran4linux/bspm/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/cran4linux/bspm/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -269,8 +269,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/Enchufa2/bspm/actions" class="external-link"><img src="https://github.com/Enchufa2/bspm/workflows/build/badge.svg" alt="Build Status"></a></li>
-<li><a href="https://app.codecov.io/gh/Enchufa2/bspm" class="external-link"><img src="https://codecov.io/gh/Enchufa2/bspm/branch/master/graph/badge.svg" alt="Coverage Status"></a></li>
+<li><a href="https://github.com/cran4linux/bspm/actions" class="external-link"><img src="https://github.com/cran4linux/bspm/workflows/build/badge.svg" alt="Build Status"></a></li>
+<li><a href="https://app.codecov.io/gh/cran4linux/bspm" class="external-link"><img src="https://codecov.io/gh/cran4linux/bspm/branch/master/graph/badge.svg" alt="Coverage Status"></a></li>
 <li><a href="https://cran.r-project.org/package=bspm" class="external-link"><img src="https://www.r-pkg.org/badges/version/bspm" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>

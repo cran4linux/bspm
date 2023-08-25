@@ -14,7 +14,7 @@ privileges via an integrated D-Bus service; otherwise, uses sudo.
 Currently, the following backends are supported: DNF, APT, ALPM.
 }
 \references{
-\url{https://enchufa2.github.io/bspm/}
+\url{https://cran4linux.github.io/bspm/}
 }
 \seealso{
 \code{\link{manager}}, \code{\link{integration}},
