@@ -87,10 +87,11 @@ utils::globalVariables("contrib.url") # argument
 # install binaries with checks for newer versions from source
 install_both <- function(pkgs, contriburl, method, dependencies, ...) {
   db <- utils::available.packages(contriburl=contriburl, method=method, ...)
-  pkgs <- pkg_deps(pkgs, dependencies, db, ..., all=TRUE)
+  pkgs <- pkg_deps(pkgs, dependencies, db, all=TRUE)
   pkgs <- check_versions(pkgs, db)
-  later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
-  pkgs <- c(install_sys(pkgs$bins[!later]), pkgs$bins[later], pkgs$srcs)
+  mask <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
+  hard <- hard_deps(pkgs, db, mask)
+  pkgs <- c(install_sys(c(pkgs$bins[!mask], hard)), pkgs$bins[mask], pkgs$srcs)
   pkgs
 }
 
@@ -98,7 +99,7 @@ install_both <- function(pkgs, contriburl, method, dependencies, ...) {
 install_fast <- function(pkgs, contriburl, method, ...) {
   if (length(pkgs <- install_sys(pkgs))) {
     db <- utils::available.packages(contriburl=contriburl, method=method, ...)
-    install_sys(pkg_deps(pkgs, NA, db=db, ..., all=FALSE))
+    install_sys(pkg_deps(pkgs, NA, db=db, all=FALSE))
   }
   pkgs
 }

@@ -1,5 +1,5 @@
 ## Patch release
-Fix test involving numeric_version per CRAN request.
+Minor fixes.
 
 ## Test environments
 - local up-to-date R installation

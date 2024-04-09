@@ -53,27 +53,38 @@ shadowed_packages <- function(lib.loc=NULL) {
   shadow
 }
 
-# get package dependencies
-pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
-  pkgs <- unique(pkgs)
+list_inst <- function() {
   libs <- unique(c(.Library.site, .Library))
-  inst <- row.names(utils::installed.packages(libs, ...))
-  deps <- tools::package_dependencies(pkgs, db, c("Depends", "Imports"), recursive=TRUE)
-  deps <- unlist(deps, use.names=FALSE)
-  if (!all) {
-    hard <- tools::package_dependencies(pkgs, db, "LinkingTo", recursive=FALSE)
-    deps <- c(deps, unlist(hard, use.names=FALSE))
-  }
-  if (isTRUE(dependencies) || "Suggests" %in% dependencies) {
-    soft <- tools::package_dependencies(pkgs, db, "Suggests", recursive=FALSE)
-    deps <- c(deps, unlist(soft, use.names=FALSE))
-  }
-  if ("Enhances" %in% dependencies) {
-    enha <- tools::package_dependencies(pkgs, db, "Enhances", recursive=FALSE)
-    deps <- c(deps, unlist(enha, use.names=FALSE))
-  }
-  pkgs <- unique(c(setdiff(deps, inst), if (all) pkgs))
-  pkgs
+  inst <- unique(row.names(utils::installed.packages(libs)))
+  inst
+}
+
+list_deps <- function(packages, db, which, recursive) {
+  deps <- tools::package_dependencies(packages, db, which, recursive)
+  deps <- unique(unlist(deps, use.names=FALSE))
+  deps
+}
+
+# get package dependencies
+pkg_deps <- function(pkgs, dependencies, db, all=TRUE) {
+  pkgs <- unique(pkgs)
+  deps <- list_deps(pkgs, db, c("Depends", "Imports"), recursive=TRUE)
+  if (!all)
+    deps <- c(deps, list_deps(pkgs, db, "LinkingTo", recursive=FALSE))
+  if (isTRUE(dependencies) || "Suggests" %in% dependencies)
+    deps <- c(deps, list_deps(pkgs, db, "Suggests", recursive=FALSE))
+  if ("Enhances" %in% dependencies)
+    deps <- c(deps, list_deps(pkgs, db, "Enhances", recursive=FALSE))
+  deps <- unique(c(setdiff(deps, list_inst()), if (all) pkgs))
+  deps
+}
+
+# get LinkingTo-only dependencies for src packages
+hard_deps <- function(pkgs, db, mask) {
+  srcs <- c(pkgs$bins[mask], pkgs$srcs)
+  deps <- list_deps(srcs, db, "LinkingTo", recursive=FALSE)
+  deps <- setdiff(deps, c(list_inst(), pkgs$bins, pkgs$srcs))
+  deps
 }
 
 # adapted from install.packages
