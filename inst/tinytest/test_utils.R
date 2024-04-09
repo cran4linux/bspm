@@ -8,7 +8,7 @@ expect_equal(colnames(df), c("Package", "LibPath", "Version",
                              "Shadow.LibPath", "Shadow.Version", "Shadow.Newer"))
 expect_equal(df$Version < df$Shadow.Version, df$Shadow.Newer)
 
-# pkg_deps ----
+# pkg_deps, hard_deps ----
 
 mock("installed.packages", pkg="utils", function(...)
   matrix(1:2, dimnames=list(c("codetools", "rticles"), NULL)))
@@ -23,6 +23,10 @@ expect_equal(sort(bspm:::pkg_deps(pkgs, NA, db, all=TRUE)), sort(deps))
 deps <- c(deps, "simmer.plot", "parallel", "testthat", "knitr", "rmarkdown")
 expect_equal(sort(bspm:::pkg_deps(pkgs, TRUE, db, all=TRUE)), sort(deps))
 expect_equal(sort(bspm:::pkg_deps(pkgs, "Suggests", db, all=TRUE)), sort(deps))
+
+deps <- bspm:::pkg_deps(pkgs, NA, db, all=TRUE)
+expect_equal(bspm:::hard_deps(list(bins=deps), db, FALSE), NULL)
+expect_equal(bspm:::hard_deps(list(bins=deps), db, TRUE), "BH")
 
 unmock_all()
 
