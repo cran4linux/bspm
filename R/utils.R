@@ -53,9 +53,9 @@ shadowed_packages <- function(lib.loc=NULL) {
   shadow
 }
 
-list_inst <- function(...) {
+list_inst <- function() {
   libs <- unique(c(.Library.site, .Library))
-  inst <- unique(row.names(utils::installed.packages(libs, ...)))
+  inst <- unique(row.names(utils::installed.packages(libs)))
   inst
 }
 
@@ -66,7 +66,7 @@ list_deps <- function(packages, db, which, recursive) {
 }
 
 # get package dependencies
-pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
+pkg_deps <- function(pkgs, dependencies, db, all=TRUE) {
   pkgs <- unique(pkgs)
   deps <- list_deps(pkgs, db, c("Depends", "Imports"), recursive=TRUE)
   if (!all)
@@ -75,15 +75,15 @@ pkg_deps <- function(pkgs, dependencies, db, ..., all=TRUE) {
     deps <- c(deps, list_deps(pkgs, db, "Suggests", recursive=FALSE))
   if ("Enhances" %in% dependencies)
     deps <- c(deps, list_deps(pkgs, db, "Enhances", recursive=FALSE))
-  deps <- unique(c(setdiff(deps, list_inst(...)), if (all) pkgs))
+  deps <- unique(c(setdiff(deps, list_inst()), if (all) pkgs))
   deps
 }
 
 # get LinkingTo-only dependencies for src packages
-hard_deps <- function(pkgs, db, ..., mask) {
+hard_deps <- function(pkgs, db, mask) {
   srcs <- c(pkgs$bins[mask], pkgs$srcs)
   deps <- list_deps(srcs, db, "LinkingTo", recursive=FALSE)
-  deps <- setdiff(deps, c(list_inst(...), pkgs$bins, pkgs$srcs))
+  deps <- setdiff(deps, c(list_inst(), pkgs$bins, pkgs$srcs))
   deps
 }
 
