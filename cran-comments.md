@@ -1,5 +1,5 @@
 ## Patch release
-Minor fixes.
+Avoid error messages during package installation per CRAN request.
 
 ## Test environments
 - local up-to-date R installation

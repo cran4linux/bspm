@@ -1,5 +1,9 @@
 #!/bin/sh
 
+[ "$(uname -s)" = "Linux" ] && {
+  [ $(id -u) -eq 0 ] || [ "$BUILD_ROOT" != "" ]
+} && true || exit 0
+
 . inst/service/dbus-paths
 
 subst() {
@@ -21,11 +25,7 @@ fi
 if [ "$1" != "--without-dbus-service" ]; then
   SERVICE_DIR="$BUILD_ROOT/usr/share/dbus-1/system-services"
   SYSCONF_DIR="$BUILD_ROOT/etc/dbus-1/system.d"
-  mkdir -p $SERVICE_DIR $SYSCONF_DIR
-  if [ ! -w "$SERVICE_DIR" ] || [ ! -w "$SYSCONF_DIR" ]; then
-    echo "* NOT installing D-Bus service"
-  else
-    subst inst/service dbus.service.in $SERVICE_DIR/$BUS_NAME.service
-    subst inst/service dbus.conf.in $SYSCONF_DIR/$BUS_NAME.conf
-  fi
+  mkdir -p $SERVICE_DIR $SYSCONF_DIR || exit 1
+  subst inst/service dbus.service.in $SERVICE_DIR/$BUS_NAME.service
+  subst inst/service dbus.conf.in $SYSCONF_DIR/$BUS_NAME.conf
 fi

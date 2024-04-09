@@ -1,3 +1,8 @@
+# bspm 0.5.7
+
+- Restrict D-Bus service configuration to installations in Linux machines
+  with admininistrative privileges.
+
 # bspm 0.5.6
 
 - Move to cran4linux org on GitHub, update URLs.
