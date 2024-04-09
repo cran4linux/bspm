@@ -89,8 +89,9 @@ install_both <- function(pkgs, contriburl, method, dependencies, ...) {
   db <- utils::available.packages(contriburl=contriburl, method=method, ...)
   pkgs <- pkg_deps(pkgs, dependencies, db, ..., all=TRUE)
   pkgs <- check_versions(pkgs, db)
-  later <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
-  pkgs <- c(install_sys(pkgs$bins[!later]), pkgs$bins[later], pkgs$srcs)
+  mask <- ask_user(pkgs$later, pkgs$bins, pkgs$binvers, pkgs$srcvers)
+  hard <- hard_deps(pkgs, db, ..., mask)
+  pkgs <- c(install_sys(c(pkgs$bins[!mask], hard)), pkgs$bins[mask], pkgs$srcs)
   pkgs
 }
 
