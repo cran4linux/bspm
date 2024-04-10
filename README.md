@@ -141,22 +141,15 @@ Sometimes, a restart is required so that the new systemd service is recognized.
 
 ### Arch
 
-There are a number of binary CRAN packages available via the
-[ArchRPkgs](https://github.com/dvdesolve/ArchRPkgs) repo
-as well as Bioconductor packages via the
+There are thousands of binary CRAN and Bioconductor packages available via the
 [BioArchLinux](https://github.com/BioArchLinux/Packages) repo:
 
 ```bash
-$ echo -e "\n[desolve]\nServer = https://desolve.ru/archrepo/\$arch" \
-  "\n[bioarchlinux]\nServer = https://repo.bioarchlinux.org/\$arch" \
+$ echo -e "\n[bioarchlinux]\nServer = https://repo.bioarchlinux.org/\$arch" \
   | sudo tee -a /etc/pacman.conf
-$ sudo pacman -Sy && sudo pacman -S r pyalpm python-{dbus,gobject}
-```
-
-Then, install `bspm` as a system package from CRAN:
-
-```bash
-$ sudo Rscript -e 'install.packages("bspm", repos="https://cran.r-project.org")'
+$ sudo pacman-key --recv-keys B1F96021DB62254D
+$ sudo pacman-key --lsign-key B1F96021DB62254D
+$ sudo pacman -Syu r-bspm
 ```
 
 Then, to enable it system-wide (alternatively, use your `.Rprofile`):
