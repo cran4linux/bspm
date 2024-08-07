@@ -1,6 +1,7 @@
 # bspm devel
 
 - Fix "invalid escape sequence" SyntaxWarning (@pekkarr in #84).
+- Catch and show early errors (e.g. no backend found) in root mode.
 
 # bspm 0.5.7
 

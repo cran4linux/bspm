@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import backend
-
 from os import path
 WDIR = path.dirname(path.realpath(__file__))
 exec(open(WDIR + "/dbus-paths").read())
@@ -13,6 +11,7 @@ def read_conf(force_discover=False):
 
     force_discover = force_discover and not path.exists(WDIR + "/nodiscover")
     if force_discover or not path.exists(pref) or not path.exists(excl):
+        import backend
         conf = backend.discover()
         with open(pref, "w") as fpref, open(excl, "w") as fexcl:
             for i in conf["prefixes"]:
@@ -24,6 +23,7 @@ def read_conf(force_discover=False):
         EXCL = [line.rstrip() for line in fexcl]
 
 def call_backend(cmd, pkgs=None, root=False):
+    import backend
     msg = cmd.capitalize() + " system packages"
     if root:
         msg = msg + " as root"
@@ -115,25 +115,26 @@ def run_as_service():
     mainloop.run()
 
 def run_as_root(args):
-    if args.cmd == "discover":
-        read_conf(True)
-    else:
+    try:
+        if args.cmd == "discover":
+            read_conf(True)
+            return
+        read_conf()
         pkgs = None
         if hasattr(args, "pkg"):
             pkgs = args.pkg
-        try:
-            pkgs = call_backend(args.cmd, pkgs, root=True)
-        except Exception as err:
-            if args.o is not None:
-                with open(args.o, "a") as f:
-                    print(str(err), file=f)
-            raise err
+        pkgs = call_backend(args.cmd, pkgs, root=True)
         if args.o is not None:
             with open(args.o, "a") as f:
                 for pkg in pkgs:
                     print(pkg, file=f)
         else:
             print("Result:", pkgs)
+    except Exception as err:
+        if args.o is not None:
+            with open(args.o, "a") as f:
+                print(str(err), file=f)
+        raise err
 
 if __name__ == "__main__":
     import argparse
@@ -147,9 +148,8 @@ if __name__ == "__main__":
     parser_install.add_argument("-o", metavar="file", type=str, help="output file")
 
     args = parser.parse_args()
-    read_conf()
-
     if args.cmd is None:
+        read_conf()
         run_as_service()
     else:
         run_as_root(args)
