@@ -43,7 +43,7 @@ def ver_strip(version):
     version = version.rsplit("-", 1)[0]
     version = version.rsplit("+")[0]
     # remove things like .r79, see r-cran-rniftilib
-    version = re.sub("\.r[0-9]+$", "", version)
+    version = re.sub(r"\.r[0-9]+$", "", version)
     return version
 
 def pkg_record(prefixes, name, version, repo):
