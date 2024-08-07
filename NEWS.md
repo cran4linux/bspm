@@ -1,3 +1,7 @@
+# bspm devel
+
+- Fix "invalid escape sequence" SyntaxWarning (@pekkarr in #84).
+
 # bspm 0.5.7
 
 - Restrict D-Bus service configuration to installations in Linux machines
