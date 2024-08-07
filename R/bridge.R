@@ -12,12 +12,11 @@
 #'
 #' @references \url{https://cran4linux.github.io/bspm/}
 #'
-#' @docType package
 #' @name bspm-package
 #'
 #' @seealso \code{\link{manager}}, \code{\link{integration}},
 #' \code{\link{bspm-scripts}}, \code{\link{bspm-options}}
-NULL
+"_PACKAGE"
 
 utils::globalVariables(c("BUS_NAME", "OPATH", "IFACE"))
 

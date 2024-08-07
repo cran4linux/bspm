@@ -2,6 +2,7 @@
 % Please edit documentation in R/bridge.R
 \docType{package}
 \name{bspm-package}
+\alias{bspm}
 \alias{bspm-package}
 \title{\pkg{bspm}: Bridge to System Package Manager}
 \description{

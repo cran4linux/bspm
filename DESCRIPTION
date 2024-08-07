@@ -19,5 +19,5 @@ SystemRequirements: systemd, dbus-python, PyGObject, python-(dnf|apt|alpm)
 Suggests: tinytest
 URL: https://cran4linux.github.io/bspm/
 BugReports: https://github.com/cran4linux/bspm/issues
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Roxygen: list(old_usage = TRUE)
