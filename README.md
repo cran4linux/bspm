@@ -90,7 +90,7 @@ $ sudo dnf install R-CoprManager
 
 ### Ubuntu
 
-There are thousands of binary packages available via the
+(Essentially) all of CRAN is available as binary packages via the
 [r2u](https://eddelbuettel.github.io/r2u/) repo:
 
 ```bash
