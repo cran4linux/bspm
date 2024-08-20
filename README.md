@@ -91,25 +91,12 @@ $ sudo dnf install R-CoprManager
 ### Ubuntu
 
 There are thousands of binary packages available via the
-[c2d4u.team/c2d4u4.0+](https://launchpad.net/~c2d4u.team/+archive/ubuntu/c2d4u4.0+)
-PPA repo:
+[r2u](https://eddelbuettel.github.io/r2u/) repo:
 
 ```bash
-$ sudo add-apt-repository ppa:marutter/rrutter4.0   # R v4.0 and higher
-$ sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+  # R packages
-$ sudo apt-get update && sudo apt-get install python3-{dbus,gi,apt}
-```
-
-Then, install `bspm` as a system package from CRAN:
-
-```bash
-$ sudo Rscript -e 'install.packages("bspm", repos="https://cran.r-project.org")'
-```
-
-Then, to enable it system-wide (alternatively, use your `.Rprofile`):
-
-```bash
-$ echo "bspm::enable()" | sudo tee -a /etc/R/Rprofile.site
+$ . /etc/os-release # to get UBUNTU_CODENAME
+$ URL="https://raw.githubusercontent.com/eddelbuettel/r2u/master/inst/scripts"
+$ curl -s "${URL}/add_cranapt_${UBUNTU_CODENAME}.sh" | sudo bash -s
 ```
 
 ### openSUSE
