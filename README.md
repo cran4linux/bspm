@@ -83,7 +83,7 @@ There are thousands of binary packages available via the
 The `bspm` package is available as `R-CoprManager`, and enabled by default:
 
 ```bash
-$ sudo dnf install 'dnf-command(copr)'
+$ dnf --version | grep -q dnf5 || sudo dnf install 'dnf-command(copr)'
 $ sudo dnf copr enable iucar/cran
 $ sudo dnf install R-CoprManager
 ```
