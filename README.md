@@ -4,6 +4,7 @@
 [![Build Status](https://github.com/cran4linux/bspm/workflows/build/badge.svg)](https://github.com/cran4linux/bspm/actions)
 [![Coverage Status](https://codecov.io/gh/cran4linux/bspm/branch/master/graph/badge.svg)](https://app.codecov.io/gh/cran4linux/bspm)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/bspm)](https://cran.r-project.org/package=bspm)
+[![Downloads](https://cranlogs.r-pkg.org/badges/bspm)](https://cran.r-project.org/package=bspm)
 <!-- badges: end -->
 
 Enables binary package installations on Linux distributions.
