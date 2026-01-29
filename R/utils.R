@@ -45,7 +45,7 @@ shadowed_packages <- function(lib.loc=NULL) {
     }
   }
 
-  row.names(shadow) <- shadow[, "Package"]
+  .rowNamesDF(shadow, make.names=TRUE) <- shadow[, "Package"]
   shadow$Version <- as.package_version(shadow$Version)
   shadow$Shadow.Version <- as.package_version(shadow$Shadow.Version)
   newer <- shadow[, "Version"] < shadow[, "Shadow.Version"]

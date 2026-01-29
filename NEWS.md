@@ -2,6 +2,7 @@
 
 - Fix "invalid escape sequence" SyntaxWarning (@pekkarr in #84).
 - Catch and show early errors (e.g. no backend found) in root mode.
+- Workaround for duplicated `row.names` in `shadowed_packages`.
 
 # bspm 0.5.7
 
