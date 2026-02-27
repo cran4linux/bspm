@@ -1,3 +1,7 @@
+# devel
+
+- Add `sysreqs()` function, based on the cran4linux/sysreqs database.
+
 # bspm 0.5.8
 
 - Fix "invalid escape sequence" SyntaxWarning (@pekkarr in #84).

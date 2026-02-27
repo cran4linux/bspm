@@ -53,6 +53,51 @@ shadowed_packages <- function(lib.loc=NULL) {
   shadow
 }
 
+#' Find System Requirements
+#'
+#' Compute the system requirements (system libraries; operating system packages)
+#' required by a set of R packages.
+#'
+#' @param pkgs character vector of R package names.
+#' @param ... unused, reserved for future expansion.
+#' @param type type of requirements: build- or run-time requirements, or both.
+#' @param distro name of the Linux distribution; if nothing is provided, the
+#' function tries to detect it automatically.
+#' @param collapse whether to collapse the requirements into a single line.
+#' @return A character vector of system requirements.
+#'
+#' @details This function relies on https://github.com/cran4linux/sysreqs.
+#'
+#' @export
+sysreqs <- function(pkgs, ..., type=c("build", "run"), distro=NULL, collapse=FALSE) {
+  type <- match.arg(type, several.ok=TRUE)
+
+  if (is.null(distro)) {
+    distro <- system(". /etc/os-release && echo $ID $ID_LIKE", intern=TRUE)
+    distro <- strsplit(distro, " ")[[1]]
+  }
+  distro <- tolower(distro)
+
+  if (any(distro %in% c("fedora", "rhel")))
+    distro <- "fedora_rhel"
+  else if (any(distro %in% c("debian", "ubuntu")))
+    distro <- "debian_ubuntu"
+  else stop("Distro ", distro, " not supported")
+
+  url <- "https://raw.githubusercontent.com/cran4linux/sysreqs/refs/heads/main"
+  if (!file.exists(srqdb.file <- file.path(tempdir(), "sysreqs.csv")))
+    download.file(file.path(url, "sysreqs.csv"), srqdb.file, quiet=TRUE)
+  srqdb <- utils::read.csv(srqdb.file)
+  if (!file.exists(pkgdb.file <- file.path(tempdir(), "pkgdb.csv")))
+    download.file(file.path(url, "pkgdb.csv"), pkgdb.file, quiet=TRUE)
+  pkgdb <- utils::read.csv(pkgdb.file)
+
+  reqs <- unlist(strsplit(unlist(pkgdb[pkgdb$name %in% pkgs, type]), " "))
+  reqs <- unique(srqdb[srqdb$name %in% reqs, distro])
+  if (collapse) reqs <- paste(reqs, collapse=" ")
+  reqs
+}
+
 list_inst <- function() {
   libs <- unique(c(.Library.site, .Library))
   inst <- unique(row.names(utils::installed.packages(libs)))
