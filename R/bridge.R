@@ -64,14 +64,13 @@ root <- function() {
 }
 
 root_call <- function(method, pkgs, sudo=NULL) {
-  tmp <- tmp2 <- tempfile()
-  # workaround, see #13
-  if (length(strsplit(tmp2, "/")[[1]]) == 3) {
-    dir.create(tmp)
-    tmp <- paste0(tmp, tempfile(tmpdir=""))
-  }
+  # root cannot open user files directly under sticky dirs, see #13
+  dir <- tempfile()
+  dir.create(dir)
+  on.exit(unlink(dir, recursive=TRUE, force=TRUE))
+  tmp <- file.path(dir, "out") # results or errors reported by the script
+  err <- file.path(dir, "err") # stderr, for errors the script cannot report
   file.create(tmp)
-  on.exit(unlink(tmp2, recursive=TRUE, force=TRUE))
 
   cmd <- system.file("service/bspm.py", package="bspm")
   args <- c(method, "-o", tmp)
@@ -81,11 +80,17 @@ root_call <- function(method, pkgs, sudo=NULL) {
     args <- c(cmd, args)
     cmd <- sudo
   }
-  out <- system2nowarn(cmd, args, stderr=FALSE)
+  out <- system2nowarn(cmd, args, stderr=err)
   tmp <- readLines(tmp)
 
-  if (out != 0)
+  if (out != 0) {
+    # the script may not get to report the error, e.g. if sudo fails, see #92
+    if (!any(nzchar(tmp)))
+      tmp <- readLines(err)
+    if (!any(nzchar(tmp)))
+      tmp <- paste("system package manager call failed with exit status", out)
     stop(paste(tmp, collapse="\n"), call.=FALSE)
+  }
   tmp
 }
 
