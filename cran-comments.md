@@ -1,5 +1,5 @@
-## Patch release
-Several fixes and improvements.
+## Minor release
+New dnf5 backend. New `sysreqs` function. Several fixes and improvements.
 
 ## Test environments
 - local up-to-date R installation

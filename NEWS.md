@@ -1,4 +1,4 @@
-# devel
+# bspm 0.6.0
 
 - Add a DNF5 backend, preferred over the DNF4 one if available (#77).
 - Add `sysreqs()` function, based on the cran4linux/sysreqs database.
