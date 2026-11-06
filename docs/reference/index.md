@@ -18,3 +18,5 @@
   [`discover()`](manager.md) : Manage Packages from System Repositories
 
 - [`shadowed_packages()`](shadowed_packages.md) : Find Shadowed Packages
+
+- [`sysreqs()`](sysreqs.md) : Find System Requirements

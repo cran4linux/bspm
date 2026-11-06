@@ -1,5 +1,19 @@
 # Changelog
 
+## bspm 0.6.0
+
+- Add a DNF5 backend, preferred over the DNF4 one if available
+  ([\#77](https://github.com/cran4linux/bspm/issues/77)).
+- Add [`sysreqs()`](../reference/sysreqs.md) function, based on the
+  cran4linux/sysreqs database.
+- Report failures that occur before the script can record them
+  (e.g. `sudo` authentication errors) in root and sudo modes, instead of
+  an empty error ([\#92](https://github.com/cran4linux/bspm/issues/92)).
+- Always use a private temporary directory to communicate with the
+  script, which extends the workaround for
+  [\#13](https://github.com/cran4linux/bspm/issues/13) to any sticky
+  directory (e.g. `/var/tmp`).
+
 ## bspm 0.5.8
 
 CRAN release: 2026-01-29

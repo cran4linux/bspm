@@ -32,12 +32,13 @@ issues on SELinux-enabled systems (see
 Installation from source requires (apart from R) the folllowing Python
 bindings:
 
-|               | Package manager | DBus (\*)              | GObject (\*)      |
-|---------------|-----------------|------------------------|-------------------|
-| Fedora/RedHat | `python3-dnf`   | `python3-dbus`         | `python3-gobject` |
-| Ubuntu/Debian | `python3-apt`   | `python3-dbus`         | `python3-gi`      |
-| openSUSE      | `python3-dnf`   | `python38-dbus-python` | `python3-gobject` |
-| Arch          | `pyalpm`        | `python-dbus`          | `python-gobject`  |
+|               | Package manager   | DBus (\*)              | GObject (\*)      |
+|---------------|-------------------|------------------------|-------------------|
+| Fedora \>= 41 | `python3-libdnf5` | `python3-dbus`         | `python3-gobject` |
+| Fedora/RedHat | `python3-dnf`     | `python3-dbus`         | `python3-gobject` |
+| Ubuntu/Debian | `python3-apt`     | `python3-dbus`         | `python3-gi`      |
+| openSUSE      | `python3-dnf`     | `python38-dbus-python` | `python3-gobject` |
+| Arch          | `pyalpm`          | `python-dbus`          | `python-gobject`  |
 
 (\*) Optional, only required if you plan to run `bspm` as a regular user
 (non-root) in a (systemd-based) desktop/server setting.
@@ -241,4 +242,6 @@ $ sudo Rscript --vanilla -e 'install.packages("bspm", repos="https://cran.r-proj
   [`discover()`](manager.md) : Manage Packages from System Repositories
 
 - [`shadowed_packages()`](shadowed_packages.md) : Find Shadowed Packages
+
+- [`sysreqs()`](sysreqs.md) : Find System Requirements
 
