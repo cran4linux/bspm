@@ -28,7 +28,7 @@ jobs:
       if: ${{ matrix.config.image == 'fedora' }}
       run: |
         echo "install_weak_deps=False" >> /etc/dnf/dnf.conf
-        dnf install -y R-core-devel devscripts-checkbashisms python3-dnf \
+        dnf install -y R-core-devel devscripts-checkbashisms python3-libdnf5 \
                        systemd python3-gobject python3-dbus dbus-daemon
 
     - name: Install dependencies (Debian, Ubuntu)

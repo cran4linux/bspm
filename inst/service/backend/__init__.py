@@ -1,4 +1,4 @@
-libnames = ["dnf", "apt", "alpm"]
+libnames = ["dnf5", "dnf", "apt", "alpm"]
 attrs = ["discover", "available", "install", "remove"]
 
 for libname in libnames:

@@ -1,7 +1,7 @@
 Package: bspm
 Type: Package
 Title: Bridge to System Package Manager
-Version: 0.5.8.2
+Version: 0.5.8.3
 Authors@R: c(
     person("Iñaki", "Ucar", email="iucar@fedoraproject.org",
       role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")))
@@ -15,7 +15,7 @@ Description: Enables binary package installations on Linux distributions.
 License: MIT + file LICENSE
 Encoding: UTF-8
 OS_type: unix
-SystemRequirements: systemd, dbus-python, PyGObject, python-(dnf|apt|alpm)
+SystemRequirements: systemd, dbus-python, PyGObject, python-(libdnf5|dnf|apt|alpm)
 Suggests: tinytest
 URL: https://cran4linux.github.io/bspm/
 BugReports: https://github.com/cran4linux/bspm/issues

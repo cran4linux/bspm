@@ -1,5 +1,6 @@
 # devel
 
+- Add a DNF5 backend, preferred over the DNF4 one if available (#77).
 - Add `sysreqs()` function, based on the cran4linux/sysreqs database.
 - Report failures that occur before the script can record them (e.g. `sudo`
   authentication errors) in root and sudo modes, instead of an empty error (#92).
