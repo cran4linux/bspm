@@ -38,6 +38,7 @@ Installation from source requires (apart from R) the folllowing Python bindings:
 
 |               | Package manager | DBus (\*)              | GObject (\*)      |
 |---------------|-----------------|------------------------|-------------------|
+| Fedora >= 41  | `python3-libdnf5` | `python3-dbus`       | `python3-gobject` |
 | Fedora/RedHat | `python3-dnf`   | `python3-dbus`         | `python3-gobject` |
 | Ubuntu/Debian | `python3-apt`   | `python3-dbus`         | `python3-gi`      |
 |      openSUSE | `python3-dnf`   | `python38-dbus-python` | `python3-gobject` |
