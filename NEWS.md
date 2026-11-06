@@ -1,6 +1,10 @@
 # devel
 
 - Add `sysreqs()` function, based on the cran4linux/sysreqs database.
+- Report failures that occur before the script can record them (e.g. `sudo`
+  authentication errors) in root and sudo modes, instead of an empty error (#92).
+- Always use a private temporary directory to communicate with the script, which
+  extends the workaround for #13 to any sticky directory (e.g. `/var/tmp`).
 
 # bspm 0.5.8
 
