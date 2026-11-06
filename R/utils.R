@@ -86,10 +86,10 @@ sysreqs <- function(pkgs, ..., type=c("build", "run"), distro=NULL, collapse=FAL
 
   url <- "https://raw.githubusercontent.com/cran4linux/sysreqs/refs/heads/main"
   if (!file.exists(srqdb.file <- file.path(tempdir(), "sysreqs.csv")))
-    download.file(file.path(url, "sysreqs.csv"), srqdb.file, quiet=TRUE)
+    utils::download.file(file.path(url, "sysreqs.csv"), srqdb.file, quiet=TRUE)
   srqdb <- utils::read.csv(srqdb.file)
   if (!file.exists(pkgdb.file <- file.path(tempdir(), "pkgdb.csv")))
-    download.file(file.path(url, "pkgdb.csv"), pkgdb.file, quiet=TRUE)
+    utils::download.file(file.path(url, "pkgdb.csv"), pkgdb.file, quiet=TRUE)
   pkgdb <- utils::read.csv(pkgdb.file)
 
   reqs <- unlist(strsplit(unlist(pkgdb[pkgdb$name %in% pkgs, type]), " "))
